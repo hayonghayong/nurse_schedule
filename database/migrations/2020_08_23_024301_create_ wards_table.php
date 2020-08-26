@@ -12,7 +12,7 @@
                  */
                 public function up()
                 {
-                    Schema::create(" wards", function (Blueprint $table) {
+                    Schema::create("wards", function (Blueprint $table) {
 						$table->increments('id');
 						$table->integer('hospital_id');
 						$table->string('name');

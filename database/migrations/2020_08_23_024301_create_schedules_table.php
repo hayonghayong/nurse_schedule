@@ -19,12 +19,11 @@
 						$table->integer('treatment_id');
 						$table->integer('patient_id');
 						$table->dateTime('start_date')->nullable();
+						$table->char('end_flg',1)->nullable();
 						$table->timestamps();
 						$table->softDeletes();
-
                     });
                 }
-    
                 /**
                  * Reverse the migrations.
                  *

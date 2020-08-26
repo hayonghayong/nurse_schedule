@@ -14,15 +14,25 @@ use Illuminate\Database\Seeder;
             
             $faker = Faker\Factory::create("ja_JP");
             
-            for( $i=0; $i<10; $i++ ){
 
-                App\Attendance::create([
-					"ward_id" => $faker->randomDigit(),
-					"user_id" => $faker->randomDigit(),
-					"attendance_flg" => $faker->randomDigit(),
+            
+                DB::table('attendances')->insert([
+					"ward_id" => 1,
+					"user_id" => 1,
+					"attendance_flg" => 0,
 					"created_at" => $faker->dateTime("now"),
 					"updated_at" => $faker->dateTime("now")
                 ]);
-            }
+                DB::table('attendances')->insert([
+					"ward_id" => 1,
+					"user_id" => 1,
+					"attendance_flg" => 1,
+					"created_at" => $faker->dateTime("now"),
+					"updated_at" => $faker->dateTime("now")
+                ]);
+
+
+
+
         }
     }

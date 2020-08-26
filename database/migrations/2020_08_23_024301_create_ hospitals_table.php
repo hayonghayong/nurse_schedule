@@ -12,7 +12,7 @@
                  */
                 public function up()
                 {
-                    Schema::create(" hospitals", function (Blueprint $table) {
+                    Schema::create("hospitals", function (Blueprint $table) {
 						$table->increments('id');
 						$table->string('name');
 						$table->timestamps();

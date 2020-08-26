@@ -14,14 +14,5 @@ use Illuminate\Database\Seeder;
             
             $faker = Faker\Factory::create("ja_JP");
             
-            for( $i=0; $i<10; $i++ ){
-
-                App\TeamUser::create([
-					"ward_id" => $faker->randomDigit(),
-					"user_id" => $faker->randomDigit(),
-					"created_at" => $faker->dateTime("now"),
-					"updated_at" => $faker->dateTime("now")
-                ]);
-            }
         }
     }
