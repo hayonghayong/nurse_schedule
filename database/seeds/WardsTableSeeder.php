@@ -14,14 +14,29 @@ use Illuminate\Database\Seeder;
             
             $faker = Faker\Factory::create("ja_JP");
             
-            for( $i=0; $i<10; $i++ ){
-
-                App\Ward::create([
-					"hospital_id" => $faker->randomDigit(),
-					"name" => $faker->name(),
-					"created_at" => $faker->dateTime("now"),
-					"updated_at" => $faker->dateTime("now")
-                ]);
-            }
+            DB::table('wards')->insert([
+                "hospital_id" => 1,
+                "name" => '一般病棟',
+                "created_at" => $faker->dateTime("now"),
+                "updated_at" => $faker->dateTime("now")
+            ]);
+            DB::table('wards')->insert([
+                "hospital_id" => 1,
+                "name" => '特殊病棟',
+                "created_at" => $faker->dateTime("now"),
+                "updated_at" => $faker->dateTime("now")
+            ]);
+            DB::table('wards')->insert([
+                "hospital_id" => 2,
+                "name" => '一般病棟',
+                "created_at" => $faker->dateTime("now"),
+                "updated_at" => $faker->dateTime("now")
+            ]);
+            DB::table('wards')->insert([
+                "hospital_id" => 2,
+                "name" => '特殊病棟',
+                "created_at" => $faker->dateTime("now"),
+                "updated_at" => $faker->dateTime("now")
+            ]);
         }
     }

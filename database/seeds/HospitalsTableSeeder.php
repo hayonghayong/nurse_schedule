@@ -13,14 +13,18 @@ use Illuminate\Database\Seeder;
             //Cmd: php artisan db:seed --class="HospitalsTableSeeder"
             
             $faker = Faker\Factory::create("ja_JP");
-            
-            for( $i=0; $i<10; $i++ ){
-
-                App\Hospital::create([
-					"name" => $faker->name(),
-					"created_at" => $faker->dateTime("now"),
-					"updated_at" => $faker->dateTime("now")
-                ]);
-            }
+            $data=[
+                [
+                    "name" => "ジーズ病院",
+                    "created_at" => $faker->dateTime("now"),
+                    "updated_at" => $faker->dateTime("now")
+                ],
+                [
+                    "name" => "アカデミー病院",
+                    "created_at" => $faker->dateTime("now"),
+                    "updated_at" => $faker->dateTime("now")
+                ]
+            ];
+            DB::table('hospitals')->insert($data);
         }
     }
