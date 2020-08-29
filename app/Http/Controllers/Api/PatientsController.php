@@ -145,23 +145,24 @@ use App\Patient;
      // $patients = Patient::where('ward_id','=', $wardId)
     // ->orderBy('room', 'asc')
     // ->get();
-    // $patients = Patient::orderBy('created_at', 'asc')->get();
     $patients = Patient::orderBy('room','asc')->get();
     return $patients;
   }
     // 新規患者追加
     public function add(Request $request) {
-      $patients = new Patient;
+    $patients = new Patient;
       // $patients->ward_id = Auth::ward_id();
+      // Auth使えるようになるまではward_id指定する
+      $patients->ward_id = "1";
       $patients->room = $request->room;
       $patients->name = $request->name;
       $patients->sex = $request->sex;
       $patients->birthday = $request->birthday;
-      $patients->hospitalization = $request->hospitalization;
-      $patients->surgery = $request->surgery;
+      $patients->hospitalization_date = $request->hospitalization;
+      $patients->surgery_date = $request->surgery;
       $patients->memo = $request->memo;
+      $patients->discharge_flg = "0";
       $patients->save();
-      $patients = Patient::all();
       return $patients;
     }
 
