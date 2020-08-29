@@ -17,3 +17,4 @@ const app = new Vue({
     },
     template: "<App />" // ルートコンポーネントを描画する
 });
+

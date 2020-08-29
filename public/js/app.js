@@ -2343,15 +2343,42 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 // コンポーネントのインポート
 // Vue
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {},
   data: function data() {
-    return {};
+    return {
+      patients: []
+    };
   },
-  created: function created() {},
-  methods: {}
+  methods: {
+    fetchPatients: function fetchPatients() {
+      var _this = this;
+
+      axios.get('/api/get').then(function (res) {
+        console.log('status:', res.status);
+        console.log('body:', res.data);
+        _this.patients = res.data;
+      })["catch"](function (err) {
+        console.log('err:', err);
+      });
+    }
+  },
+  created: function created() {
+    this.fetchPatients();
+  }
 });
 
 /***/ }),
@@ -2370,15 +2397,62 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 // コンポーネントのインポート
 // Vue
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {},
   data: function data() {
-    return {};
+    return {
+      patient: {
+        room: '',
+        name: '',
+        sex: '',
+        birthday: '',
+        hospitalization: '',
+        surgery: '',
+        memo: ''
+      }
+    };
   },
-  created: function created() {},
-  methods: {}
+  methods: {
+    add: function add() {
+      var _this = this;
+
+      axios.post('/api/add', {
+        room: this.room,
+        name: this.name,
+        sex: this.sex,
+        birthday: this.birthday,
+        hospitalization: this.hospitalization,
+        surgery: this.surgery,
+        memo: this.memo
+      }).then(function (res) {
+        console.log(res);
+        _this.patient = res.data;
+        _this.patient = "";
+      });
+    }
+  },
+  created: function created() {
+    this.add();
+  }
 });
 
 /***/ }),
@@ -2600,21 +2674,31 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
 // コンポーネントのインポート
 // Vue
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {},
   data: function data() {
-    return {};
+    return {
+      patients: []
+    };
   },
-  created: function created() {},
-  methods: {}
+  methods: {
+    fetchPatients: function fetchPatients() {
+      var _this = this;
+
+      axios.get('/api/get').then(function (res) {
+        console.log('status:', res.status);
+        console.log('body:', res.data);
+        _this.patients = res.data;
+      })["catch"](function (err) {
+        console.log('err:', err);
+      });
+    }
+  },
+  created: function created() {
+    this.fetchPatients();
+  }
 });
 
 /***/ }),
@@ -7276,7 +7360,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* スコープ付きのスタイル */\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* スコープ付きのスタイル */\n", ""]);
 
 // exports
 
@@ -7295,7 +7379,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* スコープ付きのスタイル */\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* スコープ付きのスタイル */\n", ""]);
 
 // exports
 
@@ -7428,7 +7512,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* スコープ付きのスタイル */\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* スコープ付きのスタイル */\n", ""]);
 
 // exports
 
@@ -40477,7 +40561,59 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("h1", [_vm._v("【リーダー】患者一覧 ")])
+  return _c(
+    "v-card",
+    [
+      _c(
+        "v-list-item",
+        [
+          _c(
+            "v-list-item-content",
+            [
+              _c("v-list-item-title", [_vm._v("【リーダー】患者一覧")]),
+              _vm._v(" "),
+              _c(
+                "ul",
+                _vm._l(_vm.patients, function(patient) {
+                  return _c(
+                    "li",
+                    { key: patient.id },
+                    [
+                      _vm._v(
+                        " " +
+                          _vm._s(patient.room) +
+                          " " +
+                          _vm._s(patient.name) +
+                          " \n          "
+                      ),
+                      _c(
+                        "v-btn",
+                        {
+                          staticClass: "ma-2",
+                          attrs: {
+                            outlined: "",
+                            color: "pink lighten-1",
+                            type: "submit"
+                          },
+                          on: { click: _vm.edit }
+                        },
+                        [_vm._v("編集")]
+                      )
+                    ],
+                    1
+                  )
+                }),
+                0
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -40501,7 +40637,124 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("h1", [_vm._v("【リーダー】患者登録 ")])
+  return _c(
+    "v-container",
+    { staticStyle: { "padding-top": "0" }, attrs: { fluid: "" } },
+    [
+      _c(
+        "v-card-text",
+        { staticStyle: { "padding-top": "0" } },
+        [
+          _c("h1", [_vm._v("【リーダー】患者登録 ")]),
+          _vm._v(" "),
+          _c(
+            "v-row",
+            [
+              _c(
+                "v-col",
+                [
+                  _c("v-text-field", {
+                    attrs: { label: "部屋番号" },
+                    model: {
+                      value: _vm.patient.room,
+                      callback: function($$v) {
+                        _vm.$set(_vm.patient, "room", $$v)
+                      },
+                      expression: "patient.room"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("v-text-field", {
+                    attrs: { label: "患者名" },
+                    model: {
+                      value: _vm.patient.name,
+                      callback: function($$v) {
+                        _vm.$set(_vm.patient, "name", $$v)
+                      },
+                      expression: "patient.name"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("v-text-field", {
+                    attrs: { label: "性別" },
+                    model: {
+                      value: _vm.patient.sex,
+                      callback: function($$v) {
+                        _vm.$set(_vm.patient, "sex", $$v)
+                      },
+                      expression: "patient.sex"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("v-text-field", {
+                    attrs: { label: "生年月日" },
+                    model: {
+                      value: _vm.patient.birthday,
+                      callback: function($$v) {
+                        _vm.$set(_vm.patient, "birthday", $$v)
+                      },
+                      expression: "patient.birthday"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("v-text-field", {
+                    attrs: { label: "入院日" },
+                    model: {
+                      value: _vm.patient.hospitalization,
+                      callback: function($$v) {
+                        _vm.$set(_vm.patient, "hospitalization", $$v)
+                      },
+                      expression: "patient.hospitalization"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("v-text-field", {
+                    attrs: { label: "手術日" },
+                    model: {
+                      value: _vm.patient.surgery,
+                      callback: function($$v) {
+                        _vm.$set(_vm.patient, "surgery", $$v)
+                      },
+                      expression: "patient.surgery"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("v-text-field", {
+                    attrs: { label: "特記事項" },
+                    model: {
+                      value: _vm.patient.memo,
+                      callback: function($$v) {
+                        _vm.$set(_vm.patient, "memo", $$v)
+                      },
+                      expression: "patient.memo"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      staticClass: "ma-2",
+                      attrs: {
+                        outlined: "",
+                        color: "pink lighten-1",
+                        type: "submit"
+                      },
+                      on: { click: _vm.add }
+                    },
+                    [_vm._v("登録")]
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -40740,32 +40993,31 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "div",
+    "v-card",
     [
-      _c("h1", [_vm._v("【スタッフ】患者選択")]),
-      _vm._v(" "),
       _c(
-        "v-stepper",
-        { attrs: { value: "1" } },
+        "v-list-item",
         [
           _c(
-            "v-stepper-header",
+            "v-list-item-content",
             [
-              _c("v-stepper-step", { attrs: { step: "1" } }, [
-                _vm._v("Select campaign settings")
-              ]),
+              _c("v-list-item-title", [_vm._v("【スタッフ】患者選択")]),
               _vm._v(" "),
-              _c("v-divider"),
-              _vm._v(" "),
-              _c("v-stepper-step", { attrs: { step: "2" } }, [
-                _vm._v("Create an ad group")
-              ]),
-              _vm._v(" "),
-              _c("v-divider"),
-              _vm._v(" "),
-              _c("v-stepper-step", { attrs: { step: "3" } }, [
-                _vm._v("Create an ad")
-              ])
+              _c(
+                "ul",
+                _vm._l(_vm.patients, function(patient) {
+                  return _c("li", { key: patient.id }, [
+                    _vm._v(
+                      " " +
+                        _vm._s(patient.room) +
+                        " " +
+                        _vm._s(patient.name) +
+                        " "
+                    )
+                  ])
+                }),
+                0
+              )
             ],
             1
           )
@@ -101621,7 +101873,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+/* WEBPACK VAR INJECTION */(function(process) {/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
 /* harmony import */ var _components_pages_staff_SelectRole_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/pages/staff/SelectRole.vue */ "./resources/js/components/pages/staff/SelectRole.vue");
@@ -101739,11 +101991,15 @@ var routes = [// スタッフページ：6
   component: _components_pages_admin_EditStaff_vue__WEBPACK_IMPORTED_MODULE_18__["default"],
   name: "EditStaff"
 }]; // ▲ルーティング
-// VueRouterインスタンスを作成してエクスポート
 
-/* harmony default export */ __webpack_exports__["default"] = (new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
+var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
+  mode: "history",
+  base: process.env.baseUrl,
   routes: routes
-}));
+}); // VueRouterインスタンスを作成してエクスポート
+
+/* harmony default export */ __webpack_exports__["default"] = (router);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../node_modules/process/browser.js */ "./node_modules/process/browser.js")))
 
 /***/ }),
 

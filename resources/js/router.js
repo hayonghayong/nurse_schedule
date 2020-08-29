@@ -121,5 +121,11 @@ const routes = [
 ];
 // ▲ルーティング
 
+const router = new VueRouter({
+  mode: "history",
+  base: process.env.baseUrl,
+  routes
+});
+
 // VueRouterインスタンスを作成してエクスポート
-export default new VueRouter({ routes });
+export default router;
