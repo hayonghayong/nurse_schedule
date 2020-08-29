@@ -8,9 +8,9 @@ use Validate;
 use DB;
 use App\Patient;
     
-    //=======================================================================
-    class PatientsController extends Controller
-    {
+//=======================================================================
+  class PatientsController extends Controller
+  {
         /**
          * Display a listing of the resource.
          *
@@ -137,7 +137,33 @@ use App\Patient;
     
             return redirect("patient")->with("flash_message", "patient deleted!");
         }
+    
+    // -----はよん記載-----
+     //患者表示
+    public function Allpatients(){ 
+    // $wardId= Auth::ward_id();
+     // $patients = Patient::where('ward_id','=', $wardId)
+    // ->orderBy('room', 'asc')
+    // ->get();
+    // $patients = Patient::orderBy('created_at', 'asc')->get();
+    $patients = Patient::orderBy('room','asc')->get();
+    return $patients;
+  }
+    // 新規患者追加
+    public function add(Request $request) {
+      $patients = new Patient;
+      // $patients->ward_id = Auth::ward_id();
+      $patients->room = $request->room;
+      $patients->name = $request->name;
+      $patients->sex = $request->sex;
+      $patients->birthday = $request->birthday;
+      $patients->hospitalization = $request->hospitalization;
+      $patients->surgery = $request->surgery;
+      $patients->memo = $request->memo;
+      $patients->save();
+      $patients = Patient::all();
+      return $patients;
     }
-    //=======================================================================
-    
-    
+
+
+}
