@@ -2354,6 +2354,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 // コンポーネントのインポート
 // Vue
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2371,6 +2374,21 @@ __webpack_require__.r(__webpack_exports__);
         console.log('status:', res.status);
         console.log('body:', res.data);
         _this.patients = res.data;
+      })["catch"](function (err) {
+        console.log('err:', err);
+      });
+    },
+    Delete: function Delete(patientId) {
+      var _this2 = this;
+
+      axios["delete"]('/api/del', {
+        data: {
+          id: patientId
+        }
+      }).then(function (res) {
+        console.log('status:', res.status);
+        console.log('body:', res.data);
+        _this2.patient = res.data;
       })["catch"](function (err) {
         console.log('err:', err);
       });
@@ -7362,7 +7380,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* スコープ付きのスタイル */\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* スコープ付きのスタイル */\n", ""]);
 
 // exports
 
@@ -40588,18 +40606,19 @@ var render = function() {
                           _vm._s(patient.name) +
                           " \n          "
                       ),
+                      _vm._v(" "),
                       _c(
                         "v-btn",
                         {
                           staticClass: "ma-2",
-                          attrs: {
-                            outlined: "",
-                            color: "pink lighten-1",
-                            type: "submit"
-                          },
-                          on: { click: _vm.edit }
+                          attrs: { outlined: "", color: "pink lighten-1" },
+                          on: {
+                            click: function($event) {
+                              return _vm.Delete(patient.id)
+                            }
+                          }
                         },
-                        [_vm._v("編集")]
+                        [_vm._v("削除\n            \n          ")]
                       )
                     ],
                     1
