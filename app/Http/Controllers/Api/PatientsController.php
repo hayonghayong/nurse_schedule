@@ -131,12 +131,6 @@ use App\Patient;
          *
          * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
          */
-        public function destroy($id)
-        {
-            Patient::destroy($id);
-    
-            return redirect("patient")->with("flash_message", "patient deleted!");
-        }
     
     // -----はよん記載-----
      //患者表示
@@ -165,6 +159,11 @@ use App\Patient;
       $patients->save();
       return $patients;
     }
+  
+    // 患者削除
+    public function destroy(Request $request) {
+      $patients = Patient::where('id', $request->id)->delete();
+      return $patients;
+    }
 
-
-}
+  }
