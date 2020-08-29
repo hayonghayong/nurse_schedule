@@ -39,22 +39,26 @@ export default {
     }),
 
     methods: {
+
       add: function() {
       axios.post('/api/add', {
-          room: this.room,
-          name: this.name,
-          sex: this.sex,
-          birthday: this.birthday,
-          hospitalization: this.hospitalization,
-          surgery: this.surgery,
-          memo: this.memo,
+          room: this.patient.room,
+          name: this.patient.name,
+          sex: this.patient.sex,
+          birthday: this.patient.birthday,
+          hospitalization: this.patient.hospitalization,
+          surgery:this.patient.surgery,
+          memo: this.patient.memo,
         })
-        .then(res => {
-          console.log(res);
-          this.patient = res.data;
-          this.patient = "";
-        });
-      },
+      .then((res)=>{
+        console.log('status:', res.status);
+        console.log('body:', res.data);
+        this.patients = res.data 
+      })
+      .catch(err =>{
+      console.log('err:', err);
+      })
+    },
     },
 
   created() {

@@ -2436,17 +2436,19 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       axios.post('/api/add', {
-        room: this.room,
-        name: this.name,
-        sex: this.sex,
-        birthday: this.birthday,
-        hospitalization: this.hospitalization,
-        surgery: this.surgery,
-        memo: this.memo
+        room: this.patient.room,
+        name: this.patient.name,
+        sex: this.patient.sex,
+        birthday: this.patient.birthday,
+        hospitalization: this.patient.hospitalization,
+        surgery: this.patient.surgery,
+        memo: this.patient.memo
       }).then(function (res) {
-        console.log(res);
-        _this.patient = res.data;
-        _this.patient = "";
+        console.log('status:', res.status);
+        console.log('body:', res.data);
+        _this.patients = res.data;
+      })["catch"](function (err) {
+        console.log('err:', err);
       });
     }
   },
@@ -7379,7 +7381,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* スコープ付きのスタイル */\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* スコープ付きのスタイル */\n", ""]);
 
 // exports
 
@@ -100998,14 +101000,15 @@ __webpack_require__.r(__webpack_exports__);
 /*!****************************************************************!*\
   !*** ./resources/js/components/pages/leader/RegistPatient.vue ***!
   \****************************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _RegistPatient_vue_vue_type_template_id_8f0e7402_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./RegistPatient.vue?vue&type=template&id=8f0e7402&scoped=true& */ "./resources/js/components/pages/leader/RegistPatient.vue?vue&type=template&id=8f0e7402&scoped=true&");
 /* harmony import */ var _RegistPatient_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./RegistPatient.vue?vue&type=script&lang=js& */ "./resources/js/components/pages/leader/RegistPatient.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _RegistPatient_vue_vue_type_style_index_0_id_8f0e7402_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./RegistPatient.vue?vue&type=style&index=0&id=8f0e7402&scoped=true&lang=css& */ "./resources/js/components/pages/leader/RegistPatient.vue?vue&type=style&index=0&id=8f0e7402&scoped=true&lang=css&");
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _RegistPatient_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _RegistPatient_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var _RegistPatient_vue_vue_type_style_index_0_id_8f0e7402_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./RegistPatient.vue?vue&type=style&index=0&id=8f0e7402&scoped=true&lang=css& */ "./resources/js/components/pages/leader/RegistPatient.vue?vue&type=style&index=0&id=8f0e7402&scoped=true&lang=css&");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -101037,7 +101040,7 @@ component.options.__file = "resources/js/components/pages/leader/RegistPatient.v
 /*!*****************************************************************************************!*\
   !*** ./resources/js/components/pages/leader/RegistPatient.vue?vue&type=script&lang=js& ***!
   \*****************************************************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
