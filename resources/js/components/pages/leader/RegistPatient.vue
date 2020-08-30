@@ -301,8 +301,8 @@ export default {
                 axios
                     .post("api/add", formData, config)
                     .then(res => {
-                        this.patient = res.data.patients;
-                        const selectedGenderRole = res.data.patients.sex;
+                        this.patient = res.data;
+                        const selectedGenderRole = res.data.sex;
                         if (selectedGenderRole == 1) {
                             this.selectedGender = "男性";
                         } else if (selectedGenderRole == 2) {
