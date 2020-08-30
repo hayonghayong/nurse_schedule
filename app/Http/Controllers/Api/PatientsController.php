@@ -158,12 +158,14 @@ use App\Patient;
       $patients->discharge_flg = "0";
       $patients->save();
       return $patients;
+    //   return response()->json(['patients'=>$patients], 200);
+
     }
   
     // 患者削除
     public function destroy(Request $request) {
       $patients = Patient::where('id', $request->id)->delete();
       return $patients;
+    //   return response()->json(['patients'=>$patients], 200);
     }
-
   }
