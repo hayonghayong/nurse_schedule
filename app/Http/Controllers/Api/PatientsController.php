@@ -8,131 +8,8 @@ use Validate;
 use DB;
 use App\Patient;
     
-//=======================================================================
   class PatientsController extends Controller
   {
-        /**
-         * Display a listing of the resource.
-         *
-         * @return \Illuminate\View\View
-         */
-        public function index(Request $request)
-        {
-            $keyword = $request->get("search");
-            $perPage = 25;
-    
-            if (!empty($keyword)) {
-                $patient = Patient::where("id","LIKE","%$keyword%")->orWhere("ward_id", "LIKE", "%$keyword%")->orWhere("name", "LIKE", "%$keyword%")->orWhere("sex", "LIKE", "%$keyword%")->orWhere("room", "LIKE", "%$keyword%")->orWhere("memo", "LIKE", "%$keyword%")->orWhere("discharge_flg", "LIKE", "%$keyword%")->paginate($perPage);
-            } else {
-                    $patient = Patient::paginate($perPage);              
-            }          
-            return view("patient.index", compact("patient"));
-        }
-    
-        /**
-         * Show the form for creating a new resource.
-         *
-         * @return \Illuminate\View\View
-         */
-        public function create()
-        {
-            return view("patient.create");
-        }
-    
-        /**
-         * Store a newly created resource in storage.
-         *
-         * @param \Illuminate\Http\Request $request
-         *
-         * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-         */
-        public function store(Request $request)
-        {
-            $this->validate($request, [
-				"ward_id" => "required|integer", //integer('ward_id')
-				"name" => "required", //string('name')
-				"birthday" => "required|date", //date('birthday')
-				"sex" => "required|max:1", //char('sex',1)
-				"room" => "nullable|integer", //integer('room')->nullable()
-				"hospitalization_date" => "nullable|date", //date('hospitalization_date')->nullable()
-				"surgery_date" => "nullable|date", //date('surgery_date')->nullable()
-				"memo" => "nullable", //text('memo')->nullable()
-				"discharge_flg" => "required|max:1", //char('discharge_flg',1)
-
-            ]);
-            $requestData = $request->all();
-            
-            Patient::create($requestData);
-    
-            return redirect("patient")->with("flash_message", "patient added!");
-        }
-    
-        /**
-         * Display the specified resource.
-         *
-         * @param  int  $id
-         *
-         * @return \Illuminate\View\View
-         */
-        public function show($id)
-        {
-            $patient = Patient::findOrFail($id);
-            return view("patient.show", compact("patient"));
-        }
-    
-        /**
-         * Show the form for editing the specified resource.
-         *
-         * @param  int  $id
-         *
-         * @return \Illuminate\View\View
-         */
-        public function edit($id)
-        {
-            $patient = Patient::findOrFail($id);
-    
-            return view("patient.edit", compact("patient"));
-        }
-    
-        /**
-         * Update the specified resource in storage.
-         *
-         * @param  int  $id
-         * @param \Illuminate\Http\Request $request
-         *
-         * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-         */
-        public function update(Request $request, $id)
-        {
-            $this->validate($request, [
-				"ward_id" => "required|integer", //integer('ward_id')
-				"name" => "required", //string('name')
-				"birthday" => "required|date", //date('birthday')
-				"sex" => "required|max:1", //char('sex',1)
-				"room" => "nullable|integer", //integer('room')->nullable()
-				"hospitalization_date" => "nullable|date", //date('hospitalization_date')->nullable()
-				"surgery_date" => "nullable|date", //date('surgery_date')->nullable()
-				"memo" => "nullable", //text('memo')->nullable()
-				"discharge_flg" => "required|max:1", //char('discharge_flg',1)
-
-            ]);
-            $requestData = $request->all();
-            
-            $patient = Patient::findOrFail($id);
-            $patient->update($requestData);
-    
-            return redirect("patient")->with("flash_message", "patient updated!");
-        }
-    
-        /**
-         * Remove the specified resource from storage.
-         *
-         * @param  int  $id
-         *
-         * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-         */
-    
-    // -----はよん記載-----
      //患者表示
     public function Allpatients(){ 
     // $wardId= Auth::ward_id();
@@ -168,4 +45,29 @@ use App\Patient;
       return $patients;
     //   return response()->json(['patients'=>$patients], 200);
     }
+
+    // 編集する患者取得
+  public function editPatient(Patient $patient){ 
+    return $patient;
+  }
+  
+  // 患者編集
+  public function updatePatient(Request $request,Patient $patient) {
+    $patients = Patient::find($request->id);
+      // $patients->ward_id = Auth::ward_id();
+      // Auth使えるようになるまではward_id指定する
+    $patients->ward_id = "1";
+    $patients->room = $request->patient_room;
+    $patients->name = $request->patient_name;
+    $patients->sex = $request->patient_sex;
+    $patients->birthday = $request->patient_birthday;
+    $patients->hospitalization_date = $request->patient_hospitalization;
+    $patients->surgery_date = $request->patient_surgery;
+    $patients->memo = $request->patient_memo;
+    $patients->discharge_flg = "0";
+    $patients->save();
+    return $patient;
+  }
+
+
   }
