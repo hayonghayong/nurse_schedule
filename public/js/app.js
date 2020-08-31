@@ -1935,6 +1935,160 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/items/BirthDayPicker.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/items/BirthDayPicker.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  value: {
+    type: String,
+    "default": new Date().toISOString().substr(0, 10)
+  },
+  data: function data() {
+    return {
+      menu: false
+    };
+  },
+  watch: {
+    menu: function menu(val) {
+      var _this = this;
+
+      val && setTimeout(function () {
+        return _this.$refs.picker.activePicker = "YEAR";
+      });
+    }
+  },
+  computed: {
+    picker: {
+      get: function get() {
+        return this.value;
+      },
+      set: function set(val) {
+        this.menu = false;
+        this.$emit("input", val);
+      }
+    }
+  },
+  methods: {
+    //月選択ボタンを年度の見た目にするfunction
+    jpvDayFormat: function jpvDayFormat(str) {
+      // realYMD → YYYY-MM-DD
+      if (str === "") return str;
+      var d = parseInt(str.split("-")[2]);
+      return d;
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/items/DatePicker.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/items/DatePicker.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    value: {
+      type: String,
+      "default": new Date().toISOString().substr(0, 10)
+    }
+  },
+  data: function data() {
+    return {
+      menu: false
+    };
+  },
+  computed: {
+    picker: {
+      get: function get() {
+        return this.value;
+      },
+      set: function set(val) {
+        this.menu = false;
+        this.$emit("input", val);
+      }
+    }
+  },
+  methods: {
+    //月選択ボタンを年度の見た目にするfunction
+    jpvDayFormat: function jpvDayFormat(str) {
+      // realYMD → YYYY-MM-DD
+      if (str === "") return str;
+      var d = parseInt(str.split("-")[2]);
+      return d;
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/items/FooterComponent.vue?vue&type=script&lang=js&":
 /*!********************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/items/FooterComponent.vue?vue&type=script&lang=js& ***!
@@ -2357,20 +2511,40 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 // コンポーネントのインポート
 // Vue
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {},
   data: function data() {
     return {
-      patients: []
+      patients: [],
+      editPatient: {
+        room: "",
+        name: "",
+        sex: "",
+        birthday: "",
+        hospitalization_date: "",
+        surgery_date: "",
+        memo: ""
+      }
     };
   },
   methods: {
+    // 患者一覧取得
     fetchPatients: function fetchPatients() {
       var _this = this;
 
-      axios.get('/api/get').then(function (res) {
+      axios.get('/api/allPatient').then(function (res) {
         console.log('status:', res.status);
         console.log('body:', res.data);
         _this.patients = res.data;
@@ -2378,10 +2552,11 @@ __webpack_require__.r(__webpack_exports__);
         console.log('err:', err);
       });
     },
+    // 患者削除
     Delete: function Delete(patientId) {
       var _this2 = this;
 
-      axios["delete"]('/api/del', {
+      axios["delete"]('/api/delPatient', {
         data: {
           id: patientId
         }
@@ -2389,6 +2564,41 @@ __webpack_require__.r(__webpack_exports__);
         console.log('status:', res.status);
         console.log('body:', res.data);
         _this2.patient = res.data;
+      })["catch"](function (err) {
+        console.log('err:', err);
+      });
+    },
+    // 更新する患者情報取得
+    Edit: function Edit(patientId) {
+      var _this3 = this;
+
+      console.log(patientId);
+      axios.get('/api/getPatient/' + patientId, {}).then(function (res) {
+        console.log('status:', res.status);
+        console.log('body:', res.data);
+        _this3.editPatient = res.data;
+      })["catch"](function (err) {
+        console.log('err:', err);
+      });
+    },
+    // 患者情報更新
+    Update: function Update(editPatientId) {
+      var _this4 = this;
+
+      axios.post('/api/updatePatient/' + editPatientId, {
+        id: editPatientId,
+        patient: this.editPatient,
+        patient_room: this.editPatient.room,
+        patient_name: this.editPatient.name,
+        patient_sex: this.editPatient.sex,
+        patient_birthday: this.editPatient.birthday,
+        patient_hospitalization: this.editPatient.hospitalization_date,
+        patient_surgery: this.editPatient.surgery_date,
+        patient_memo: this.editPatient.memo
+      }).then(function (res) {
+        console.log('status:', res.status);
+        console.log('body:', res.data);
+        _this4.patient = res.data;
       })["catch"](function (err) {
         console.log('err:', err);
       });
@@ -2410,6 +2620,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _items_DatePicker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../items/DatePicker */ "./resources/js/components/items/DatePicker.vue");
+/* harmony import */ var _items_BirthDayPicker__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../items/BirthDayPicker */ "./resources/js/components/items/BirthDayPicker.vue");
 //
 //
 //
@@ -2432,47 +2644,336 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-// コンポーネントのインポート
-// Vue
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//使用するコンポーネントの読み込み
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  components: {},
+  components: {
+    DatePicker: _items_DatePicker__WEBPACK_IMPORTED_MODULE_0__["default"],
+    BirthDayPicker: _items_BirthDayPicker__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
   data: function data() {
     return {
+      /**
+       *
+       * @param {Object} validationRules・・・・・・・バリデーションルールの設定
+       * @param {Boolean} valid・・・・・・・バリデーションチェック用の真偽値
+       * @param {Object} readOnly・・・各フォームが読み取り専用かどうかの状態を管理
+       * @param {Object} isDialogOpen・・・Dialogの表示非表示を管理。
+       * @param {Object} patient・・・患者のプロフィールデータを管理
+       * @param {Array} gender・・・性別選択肢を管理
+       * @param {String} gender・・・選択済みの性別（文字列）を管理
+       * @param {Array} axiosErrorMessages・・・DB側のバリデーションエラーを受け取る
+       *
+       **/
+      validationRules: {
+        required: function required(value) {
+          return !!value || "入力必須です。";
+        },
+        roomInt: function roomInt(value) {
+          return !/[^0-9]+/.test(value) || "半角数値で入力してください";
+        },
+        nameCounter: function nameCounter(value) {
+          return (value || "").length <= 20 || "氏名は20字以下で入力してください。";
+        },
+        memoCounter: function memoCounter(value) {
+          return (value || "").length <= 200 || "特記事項は200字以下で入力してください。";
+        }
+      },
+      valid: true,
+      readOnly: {
+        room: false,
+        name: false,
+        sex: false,
+        birthday: true,
+        hospitalization: true,
+        surgery: true,
+        memo: false
+      },
+      isDialogOpen: {
+        successDialog: false,
+        errorDialog: false
+      },
       patient: {
-        room: '',
-        name: '',
-        sex: '',
-        birthday: '',
-        hospitalization: '',
-        surgery: '',
-        memo: ''
-      }
+        room: "",
+        name: "",
+        sex: "",
+        birthday: "",
+        hospitalization: "",
+        surgery: "",
+        memo: ""
+      },
+      gender: ["男性", "女性", "その他", "不明"],
+      selectedGender: "",
+      axiosErrorMessages: []
     };
   },
-  methods: {
-    add: function add() {
+  watch: {
+    menu: function menu(val) {
       var _this = this;
 
-      axios.post('/api/add', {
-        room: this.patient.room,
-        name: this.patient.name,
-        sex: this.patient.sex,
-        birthday: this.patient.birthday,
-        hospitalization: this.patient.hospitalization,
-        surgery: this.patient.surgery,
-        memo: this.patient.memo
-      }).then(function (res) {
-        console.log('status:', res.status);
-        console.log('body:', res.data);
-        _this.patients = res.data;
-      })["catch"](function (err) {
-        console.log('err:', err);
+      val && setTimeout(function () {
+        return _this.$refs.picker.activePicker = "YEAR";
       });
     }
   },
-  created: function created() {
-    this.add();
-  }
+  methods: {
+    //　サーバー側からのエラーを定義
+    setAxiosErrorData: function setAxiosErrorData(err) {
+      var axiosErrorRes = err.response.data;
+      var axiosErrorMessageArray = [];
+
+      if (axiosErrorRes.errors) {
+        var axiosvalidationErrorRes = axiosErrorRes.errors;
+        axiosErrorMessageArray = Object.keys(axiosvalidationErrorRes).map(function (dataField) {
+          return axiosvalidationErrorRes[dataField][0];
+        });
+      } else {
+        axiosErrorMessageArray.push("回答が送信されませんでした。再度送信してください。");
+      }
+
+      this.axiosErrorMessages = axiosErrorMessageArray;
+      console.log(this.axiosErrorMessages);
+      this.isDialogOpen.errorDialog = true;
+    },
+    // formのデータを定義
+    setPatientProfileData: function setPatientProfileData() {
+      var _this2 = this;
+
+      var formData = new FormData(); //　性別を数値に変更
+
+      var sexStr = this.patient.sex;
+      var genderRole = 0;
+      console.log(this.patient.sex);
+
+      if (sexStr == "男性") {
+        genderRole = 1;
+      } else if (sexStr == "女性") {
+        genderRole = 2;
+      } else if (sexStr == "その他") {
+        genderRole = 9;
+      } else if (sexStr == "不明") {
+        genderRole = 0;
+      }
+
+      Object.keys(this.patient).forEach(function (key) {
+        if (_this2.patient[key]) {
+          console.log(key, _this2.patient[key]);
+          formData.append(key, _this2.patient[key]);
+        }
+      });
+      formData.append("sex", genderRole);
+      console.log(genderRole);
+      return formData;
+    },
+    // formのデータの入力値のエラー確認とDB保存
+    savePatientProfileData: function savePatientProfileData() {
+      var _this3 = this;
+
+      //入力値のエラーを確認
+      if (this.$refs.form.validate()) {
+        var formData = this.setPatientProfileData();
+        var config = {
+          headers: {
+            "content-type": "multipart/form-data"
+          }
+        };
+        axios.post("api/add", formData, config).then(function (res) {
+          _this3.patient = res.data.patients;
+          var selectedGenderRole = res.data.patients.sex;
+
+          if (selectedGenderRole == 1) {
+            _this3.selectedGender = "男性";
+          } else if (selectedGenderRole == 2) {
+            _this3.selectedGender = "女性";
+          } else if (selectedGenderRole == 9) {
+            _this3.selectedGender = "その他";
+          } else if (selectedGenderRole == 0) {
+            _this3.selectedGender = "不明";
+          }
+
+          _this3.isDialogOpen.successDialog = true;
+        })["catch"](function (err) {
+          _this3.setAxiosErrorData(err);
+        });
+      } else {
+        console.log("エラーがあるよ！");
+      }
+    },
+    //月選択ボタンを年度の見た目にするfunction
+    jpvDayFormat: function jpvDayFormat(str) {
+      if (str === "") return str;
+      var d = parseInt(str.split("-")[2]);
+      return d;
+    },
+    save: function save(date) {
+      this.$refs.menu.save(date);
+    },
+    //　ダイアログを閉じる
+    closeDialog: function closeDialog(dialogName) {
+      this.isDialogOpen[dialogName] = false;
+
+      if (dialogName == "successDialog") {
+        var transitionDestinationObj = {
+          name: "PatientsList"
+        };
+        this.patient = "";
+        this.$refs.form.resetValidation();
+      }
+    }
+  },
+  created: function created() {}
 });
 
 /***/ }),
@@ -7380,7 +7881,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* スコープ付きのスタイル */\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* スコープ付きのスタイル */\n", ""]);
 
 // exports
 
@@ -7399,7 +7900,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* スコープ付きのスタイル */\n", ""]);
+exports.push([module.i, "\n.submit_btn[data-v-8f0e7402] {\n    margin: auto;\n}\n\n/* Dialog */\n.errorMessage[data-v-8f0e7402] {\n    margin-bottom: 0;\n}\n.successMessage[data-v-8f0e7402] {\n    margin-bottom: 0;\n}\n", ""]);
 
 // exports
 
@@ -39954,6 +40455,191 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/items/BirthDayPicker.vue?vue&type=template&id=aa267936&":
+/*!***********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/items/BirthDayPicker.vue?vue&type=template&id=aa267936& ***!
+  \***********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "v-menu",
+    {
+      ref: "menu",
+      attrs: {
+        "close-on-content-click": false,
+        transition: "scale-transition",
+        "offset-y": "",
+        "min-width": "290px"
+      },
+      scopedSlots: _vm._u([
+        {
+          key: "activator",
+          fn: function(ref) {
+            var on = ref.on
+            var attrs = ref.attrs
+            return [
+              _c(
+                "v-btn",
+                _vm._g(
+                  _vm._b(
+                    {
+                      attrs: {
+                        icon: "",
+                        color: "#62ABF8",
+                        dark: "",
+                        elevation: "0"
+                      }
+                    },
+                    "v-btn",
+                    attrs,
+                    false
+                  ),
+                  on
+                ),
+                [_c("v-icon", [_vm._v("mdi-calendar")])],
+                1
+              )
+            ]
+          }
+        }
+      ]),
+      model: {
+        value: _vm.menu,
+        callback: function($$v) {
+          _vm.menu = $$v
+        },
+        expression: "menu"
+      }
+    },
+    [
+      _vm._v(" "),
+      _c("v-date-picker", {
+        ref: "picker",
+        attrs: {
+          max: new Date().toISOString().substr(0, 10),
+          min: "1900-01-01",
+          locale: "ja-jp",
+          "day-format": _vm.jpvDayFormat,
+          "header-color": "#62ABF8"
+        },
+        model: {
+          value: _vm.picker,
+          callback: function($$v) {
+            _vm.picker = $$v
+          },
+          expression: "picker"
+        }
+      })
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/items/DatePicker.vue?vue&type=template&id=460c2f14&":
+/*!*******************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/items/DatePicker.vue?vue&type=template&id=460c2f14& ***!
+  \*******************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "v-menu",
+    {
+      attrs: {
+        "offset-y": "",
+        "close-on-content-click": false,
+        "min-width": "290px"
+      },
+      scopedSlots: _vm._u([
+        {
+          key: "activator",
+          fn: function(ref) {
+            var on = ref.on
+            return [
+              _c(
+                "v-btn",
+                _vm._g(
+                  {
+                    attrs: {
+                      icon: "",
+                      color: "#62ABF8",
+                      dark: "",
+                      elevation: "0"
+                    }
+                  },
+                  on
+                ),
+                [_c("v-icon", [_vm._v("mdi-calendar")])],
+                1
+              )
+            ]
+          }
+        }
+      ]),
+      model: {
+        value: _vm.menu,
+        callback: function($$v) {
+          _vm.menu = $$v
+        },
+        expression: "menu"
+      }
+    },
+    [
+      _vm._v(" "),
+      _c(
+        "v-date-picker",
+        {
+          attrs: {
+            scrollable: "",
+            "header-color": "#62ABF8",
+            locale: "ja-jp",
+            "day-format": _vm.jpvDayFormat
+          },
+          model: {
+            value: _vm.picker,
+            callback: function($$v) {
+              _vm.picker = $$v
+            },
+            expression: "picker"
+          }
+        },
+        [_c("v-spacer")],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/items/FooterComponent.vue?vue&type=template&id=e32de310&scoped=true&":
 /*!************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/items/FooterComponent.vue?vue&type=template&id=e32de310&scoped=true& ***!
@@ -40606,6 +41292,19 @@ var render = function() {
                           _vm._s(patient.name) +
                           " \n          "
                       ),
+                      _c(
+                        "v-btn",
+                        {
+                          staticClass: "ma-2",
+                          attrs: { outlined: "", color: "pink lighten-1" },
+                          on: {
+                            click: function($event) {
+                              return _vm.Edit(patient.id)
+                            }
+                          }
+                        },
+                        [_vm._v("編集")]
+                      ),
                       _vm._v(" "),
                       _c(
                         "v-btn",
@@ -40618,13 +41317,103 @@ var render = function() {
                             }
                           }
                         },
-                        [_vm._v("削除\n            \n          ")]
+                        [_vm._v("削除\n          ")]
                       )
                     ],
                     1
                   )
                 }),
                 0
+              ),
+              _vm._v(" "),
+              _c(
+                "v-col",
+                [
+                  _c("v-text-field", {
+                    model: {
+                      value: _vm.editPatient.room,
+                      callback: function($$v) {
+                        _vm.$set(_vm.editPatient, "room", $$v)
+                      },
+                      expression: "editPatient.room"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("v-text-field", {
+                    model: {
+                      value: _vm.editPatient.name,
+                      callback: function($$v) {
+                        _vm.$set(_vm.editPatient, "name", $$v)
+                      },
+                      expression: "editPatient.name"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("v-text-field", {
+                    model: {
+                      value: _vm.editPatient.sex,
+                      callback: function($$v) {
+                        _vm.$set(_vm.editPatient, "sex", $$v)
+                      },
+                      expression: "editPatient.sex"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("v-text-field", {
+                    model: {
+                      value: _vm.editPatient.birthday,
+                      callback: function($$v) {
+                        _vm.$set(_vm.editPatient, "birthday", $$v)
+                      },
+                      expression: "editPatient.birthday"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("v-text-field", {
+                    model: {
+                      value: _vm.editPatient.hospitalization_date,
+                      callback: function($$v) {
+                        _vm.$set(_vm.editPatient, "hospitalization_date", $$v)
+                      },
+                      expression: "editPatient.hospitalization_date"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("v-text-field", {
+                    model: {
+                      value: _vm.editPatient.surgery_date,
+                      callback: function($$v) {
+                        _vm.$set(_vm.editPatient, "surgery_date", $$v)
+                      },
+                      expression: "editPatient.surgery_date"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("v-text-field", {
+                    model: {
+                      value: _vm.editPatient.memo,
+                      callback: function($$v) {
+                        _vm.$set(_vm.editPatient, "memo", $$v)
+                      },
+                      expression: "editPatient.memo"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      staticClass: "ma-2",
+                      attrs: { outlined: "", color: "pink lighten-1" },
+                      on: {
+                        click: function($event) {
+                          return _vm.Update(_vm.editPatient.id)
+                        }
+                      }
+                    },
+                    [_vm._v("変更\n          ")]
+                  )
+                ],
+                1
               )
             ],
             1
@@ -40660,107 +41449,436 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "v-container",
-    { staticStyle: { "padding-top": "0" }, attrs: { fluid: "" } },
+    { staticClass: "pt-4", attrs: { fluid: "" } },
     [
       _c(
-        "v-card-text",
-        { staticStyle: { "padding-top": "0" } },
+        "v-dialog",
+        {
+          attrs: { width: "400" },
+          model: {
+            value: _vm.isDialogOpen.successDialog,
+            callback: function($$v) {
+              _vm.$set(_vm.isDialogOpen, "successDialog", $$v)
+            },
+            expression: "isDialogOpen.successDialog"
+          }
+        },
         [
-          _c("h1", [_vm._v("【リーダー】患者登録 ")]),
-          _vm._v(" "),
           _c(
-            "v-row",
+            "v-card",
             [
               _c(
-                "v-col",
+                "v-card-title",
+                {
+                  staticClass: "headline lighten-2 text--secondary",
+                  attrs: { color: "#62ABF8", "primary-title": "" }
+                },
+                [_vm._v("完了")]
+              ),
+              _vm._v(" "),
+              _c("v-card-text", [
+                _vm._v("下記内容で患者登録が完了しました！\n                "),
+                _c("p", { staticClass: "successMessage" }, [
+                  _vm._v("部屋番号：" + _vm._s(_vm.patient.room))
+                ]),
+                _vm._v(" "),
+                _c("p", { staticClass: "successMessage" }, [
+                  _vm._v("患者名：" + _vm._s(_vm.patient.name))
+                ]),
+                _vm._v(" "),
+                _c("p", { staticClass: "successMessage" }, [
+                  _vm._v("性別：" + _vm._s(_vm.selectedGender))
+                ]),
+                _vm._v(" "),
+                _c("p", { staticClass: "successMessage" }, [
+                  _vm._v(
+                    "\n                    生年月日：" +
+                      _vm._s(_vm.patient.birthday) +
+                      "\n                "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("p", { staticClass: "successMessage" }, [
+                  _vm._v(
+                    "\n                    入院日：" +
+                      _vm._s(_vm.patient.hospitalization_date) +
+                      "\n                "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("p", { staticClass: "errorMessage" }, [
+                  _vm._v(
+                    "\n                    手術日：" +
+                      _vm._s(_vm.patient.surgery_date) +
+                      "\n                "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("p", { staticClass: "errorMessage" }, [
+                  _vm._v("特記事項：" + _vm._s(_vm.patient.memo))
+                ])
+              ]),
+              _vm._v(" "),
+              _c(
+                "v-card-actions",
                 [
-                  _c("v-text-field", {
-                    attrs: { label: "部屋番号" },
-                    model: {
-                      value: _vm.patient.room,
-                      callback: function($$v) {
-                        _vm.$set(_vm.patient, "room", $$v)
-                      },
-                      expression: "patient.room"
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("v-text-field", {
-                    attrs: { label: "患者名" },
-                    model: {
-                      value: _vm.patient.name,
-                      callback: function($$v) {
-                        _vm.$set(_vm.patient, "name", $$v)
-                      },
-                      expression: "patient.name"
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("v-text-field", {
-                    attrs: { label: "性別" },
-                    model: {
-                      value: _vm.patient.sex,
-                      callback: function($$v) {
-                        _vm.$set(_vm.patient, "sex", $$v)
-                      },
-                      expression: "patient.sex"
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("v-text-field", {
-                    attrs: { label: "生年月日" },
-                    model: {
-                      value: _vm.patient.birthday,
-                      callback: function($$v) {
-                        _vm.$set(_vm.patient, "birthday", $$v)
-                      },
-                      expression: "patient.birthday"
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("v-text-field", {
-                    attrs: { label: "入院日" },
-                    model: {
-                      value: _vm.patient.hospitalization,
-                      callback: function($$v) {
-                        _vm.$set(_vm.patient, "hospitalization", $$v)
-                      },
-                      expression: "patient.hospitalization"
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("v-text-field", {
-                    attrs: { label: "手術日" },
-                    model: {
-                      value: _vm.patient.surgery,
-                      callback: function($$v) {
-                        _vm.$set(_vm.patient, "surgery", $$v)
-                      },
-                      expression: "patient.surgery"
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("v-text-field", {
-                    attrs: { label: "特記事項" },
-                    model: {
-                      value: _vm.patient.memo,
-                      callback: function($$v) {
-                        _vm.$set(_vm.patient, "memo", $$v)
-                      },
-                      expression: "patient.memo"
-                    }
-                  }),
+                  _c("v-spacer"),
                   _vm._v(" "),
                   _c(
                     "v-btn",
                     {
-                      staticClass: "ma-2",
+                      attrs: { color: "#62ABF8", text: "" },
+                      on: {
+                        click: function($event) {
+                          return _vm.closeDialog("successDialog")
+                        }
+                      }
+                    },
+                    [_vm._v("閉じる")]
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-dialog",
+        {
+          attrs: { width: "400" },
+          model: {
+            value: _vm.isDialogOpen.errorDialog,
+            callback: function($$v) {
+              _vm.$set(_vm.isDialogOpen, "errorDialog", $$v)
+            },
+            expression: "isDialogOpen.errorDialog"
+          }
+        },
+        [
+          _c(
+            "v-card",
+            [
+              _c(
+                "v-card-title",
+                {
+                  staticClass: "headline lighten-2 text--secondary",
+                  attrs: { "primary-title": "" }
+                },
+                [_vm._v("エラー")]
+              ),
+              _vm._v(" "),
+              _c(
+                "v-card-text",
+                _vm._l(_vm.axiosErrorMessages, function(message, index) {
+                  return _c("p", { key: index, staticClass: "errorMessage" }, [
+                    _vm._v(
+                      "\n                    ・" +
+                        _vm._s(_vm.axiosErrorMessages[index]) +
+                        "\n                "
+                    )
+                  ])
+                }),
+                0
+              ),
+              _vm._v(" "),
+              _c(
+                "v-card-actions",
+                [
+                  _c("v-spacer"),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { color: "#62ABF8", text: "" },
+                      on: {
+                        click: function($event) {
+                          return _vm.closeDialog("errorDialog")
+                        }
+                      }
+                    },
+                    [_vm._v("閉じる")]
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-card-text",
+        { staticClass: "text-center" },
+        [
+          _c("h1", { staticClass: "headline" }, [_vm._v("患者登録")]),
+          _vm._v(" "),
+          _c(
+            "v-form",
+            {
+              ref: "form",
+              attrs: { "lazy-validation": "" },
+              model: {
+                value: _vm.valid,
+                callback: function($$v) {
+                  _vm.valid = $$v
+                },
+                expression: "valid"
+              }
+            },
+            [
+              _c(
+                "v-row",
+                [
+                  _c(
+                    "v-col",
+                    { attrs: { cols: "12" } },
+                    [
+                      _c("v-text-field", {
+                        attrs: {
+                          label: "部屋番号",
+                          placeholder: "201",
+                          suffix: "号室",
+                          color: "#62ABF8",
+                          clearable: "",
+                          readonly: _vm.readOnly.room,
+                          rules: [
+                            _vm.validationRules.required,
+                            _vm.validationRules.roomInt
+                          ]
+                        },
+                        model: {
+                          value: _vm.patient.room,
+                          callback: function($$v) {
+                            _vm.$set(_vm.patient, "room", $$v)
+                          },
+                          expression: "patient.room"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-col",
+                    { attrs: { cols: "12" } },
+                    [
+                      _c("v-text-field", {
+                        attrs: {
+                          label: "患者名",
+                          placeholder: "那須花子",
+                          color: "#62ABF8",
+                          clearable: "",
+                          readonly: _vm.readOnly.name,
+                          rules: [
+                            _vm.validationRules.required,
+                            _vm.validationRules.nameCounter
+                          ]
+                        },
+                        model: {
+                          value: _vm.patient.name,
+                          callback: function($$v) {
+                            _vm.$set(_vm.patient, "name", $$v)
+                          },
+                          expression: "patient.name"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-col",
+                    { attrs: { cols: "12" } },
+                    [
+                      _c("v-select", {
+                        attrs: {
+                          items: _vm.gender,
+                          label: "性別",
+                          color: "#62ABF8"
+                        },
+                        model: {
+                          value: _vm.patient.sex,
+                          callback: function($$v) {
+                            _vm.$set(_vm.patient, "sex", $$v)
+                          },
+                          expression: "patient.sex"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-col",
+                    { attrs: { cols: "12" } },
+                    [
+                      _c("v-text-field", {
+                        attrs: {
+                          readonly: _vm.readOnly.birthday,
+                          label: "生年月日",
+                          color: "#62ABF8",
+                          clearable: ""
+                        },
+                        scopedSlots: _vm._u([
+                          {
+                            key: "append-outer",
+                            fn: function() {
+                              return [
+                                _c("BirthDayPicker", {
+                                  model: {
+                                    value: _vm.patient.birthday,
+                                    callback: function($$v) {
+                                      _vm.$set(_vm.patient, "birthday", $$v)
+                                    },
+                                    expression: "patient.birthday"
+                                  }
+                                })
+                              ]
+                            },
+                            proxy: true
+                          }
+                        ]),
+                        model: {
+                          value: _vm.patient.birthday,
+                          callback: function($$v) {
+                            _vm.$set(_vm.patient, "birthday", $$v)
+                          },
+                          expression: "patient.birthday"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-col",
+                    { attrs: { cols: "12" } },
+                    [
+                      _c("v-text-field", {
+                        attrs: {
+                          readonly: _vm.readOnly.hospitalization,
+                          label: "入院日",
+                          color: "#62ABF8",
+                          clearable: ""
+                        },
+                        scopedSlots: _vm._u([
+                          {
+                            key: "append-outer",
+                            fn: function() {
+                              return [
+                                _c("date-picker", {
+                                  model: {
+                                    value: _vm.patient.hospitalization,
+                                    callback: function($$v) {
+                                      _vm.$set(
+                                        _vm.patient,
+                                        "hospitalization",
+                                        $$v
+                                      )
+                                    },
+                                    expression: "patient.hospitalization"
+                                  }
+                                })
+                              ]
+                            },
+                            proxy: true
+                          }
+                        ]),
+                        model: {
+                          value: _vm.patient.hospitalization,
+                          callback: function($$v) {
+                            _vm.$set(_vm.patient, "hospitalization", $$v)
+                          },
+                          expression: "patient.hospitalization"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-col",
+                    { attrs: { cols: "12" } },
+                    [
+                      _c("v-text-field", {
+                        attrs: {
+                          readonly: _vm.readOnly.surgery,
+                          label: "手術日",
+                          color: "#62ABF8",
+                          clearable: ""
+                        },
+                        scopedSlots: _vm._u([
+                          {
+                            key: "append-outer",
+                            fn: function() {
+                              return [
+                                _c("DatePicker", {
+                                  model: {
+                                    value: _vm.patient.surgery,
+                                    callback: function($$v) {
+                                      _vm.$set(_vm.patient, "surgery", $$v)
+                                    },
+                                    expression: "patient.surgery"
+                                  }
+                                })
+                              ]
+                            },
+                            proxy: true
+                          }
+                        ]),
+                        model: {
+                          value: _vm.patient.surgery,
+                          callback: function($$v) {
+                            _vm.$set(_vm.patient, "surgery", $$v)
+                          },
+                          expression: "patient.surgery"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-col",
+                    { attrs: { cols: "12" } },
+                    [
+                      _c("v-textarea", {
+                        attrs: {
+                          label: "特記事項",
+                          rows: "3",
+                          color: "#62ABF8",
+                          placeholder: "金属アレルギー",
+                          clearable: ""
+                        },
+                        model: {
+                          value: _vm.patient.memo,
+                          callback: function($$v) {
+                            _vm.$set(_vm.patient, "memo", $$v)
+                          },
+                          expression: "patient.memo"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      staticClass: "mx-auto my-2 px-12 py-4 submit_btn",
                       attrs: {
-                        outlined: "",
-                        color: "pink lighten-1",
+                        color: "#62ABF8",
+                        rounded: "",
+                        dark: "",
                         type: "submit"
                       },
-                      on: { click: _vm.add }
+                      on: { click: _vm.savePatientProfileData }
                     },
                     [_vm._v("登録")]
                   )
@@ -100232,6 +101350,144 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/items/BirthDayPicker.vue":
+/*!**********************************************************!*\
+  !*** ./resources/js/components/items/BirthDayPicker.vue ***!
+  \**********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _BirthDayPicker_vue_vue_type_template_id_aa267936___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BirthDayPicker.vue?vue&type=template&id=aa267936& */ "./resources/js/components/items/BirthDayPicker.vue?vue&type=template&id=aa267936&");
+/* harmony import */ var _BirthDayPicker_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./BirthDayPicker.vue?vue&type=script&lang=js& */ "./resources/js/components/items/BirthDayPicker.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _BirthDayPicker_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _BirthDayPicker_vue_vue_type_template_id_aa267936___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _BirthDayPicker_vue_vue_type_template_id_aa267936___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/items/BirthDayPicker.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/items/BirthDayPicker.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************!*\
+  !*** ./resources/js/components/items/BirthDayPicker.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_BirthDayPicker_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./BirthDayPicker.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/items/BirthDayPicker.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_BirthDayPicker_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/items/BirthDayPicker.vue?vue&type=template&id=aa267936&":
+/*!*****************************************************************************************!*\
+  !*** ./resources/js/components/items/BirthDayPicker.vue?vue&type=template&id=aa267936& ***!
+  \*****************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_BirthDayPicker_vue_vue_type_template_id_aa267936___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./BirthDayPicker.vue?vue&type=template&id=aa267936& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/items/BirthDayPicker.vue?vue&type=template&id=aa267936&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_BirthDayPicker_vue_vue_type_template_id_aa267936___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_BirthDayPicker_vue_vue_type_template_id_aa267936___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/items/DatePicker.vue":
+/*!******************************************************!*\
+  !*** ./resources/js/components/items/DatePicker.vue ***!
+  \******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _DatePicker_vue_vue_type_template_id_460c2f14___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./DatePicker.vue?vue&type=template&id=460c2f14& */ "./resources/js/components/items/DatePicker.vue?vue&type=template&id=460c2f14&");
+/* harmony import */ var _DatePicker_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./DatePicker.vue?vue&type=script&lang=js& */ "./resources/js/components/items/DatePicker.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _DatePicker_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _DatePicker_vue_vue_type_template_id_460c2f14___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _DatePicker_vue_vue_type_template_id_460c2f14___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/items/DatePicker.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/items/DatePicker.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************!*\
+  !*** ./resources/js/components/items/DatePicker.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DatePicker_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./DatePicker.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/items/DatePicker.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DatePicker_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/items/DatePicker.vue?vue&type=template&id=460c2f14&":
+/*!*************************************************************************************!*\
+  !*** ./resources/js/components/items/DatePicker.vue?vue&type=template&id=460c2f14& ***!
+  \*************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DatePicker_vue_vue_type_template_id_460c2f14___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./DatePicker.vue?vue&type=template&id=460c2f14& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/items/DatePicker.vue?vue&type=template&id=460c2f14&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DatePicker_vue_vue_type_template_id_460c2f14___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DatePicker_vue_vue_type_template_id_460c2f14___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/items/FooterComponent.vue":
 /*!***********************************************************!*\
   !*** ./resources/js/components/items/FooterComponent.vue ***!
@@ -101019,15 +102275,14 @@ __webpack_require__.r(__webpack_exports__);
 /*!****************************************************************!*\
   !*** ./resources/js/components/pages/leader/RegistPatient.vue ***!
   \****************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _RegistPatient_vue_vue_type_template_id_8f0e7402_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./RegistPatient.vue?vue&type=template&id=8f0e7402&scoped=true& */ "./resources/js/components/pages/leader/RegistPatient.vue?vue&type=template&id=8f0e7402&scoped=true&");
 /* harmony import */ var _RegistPatient_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./RegistPatient.vue?vue&type=script&lang=js& */ "./resources/js/components/pages/leader/RegistPatient.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _RegistPatient_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _RegistPatient_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _RegistPatient_vue_vue_type_style_index_0_id_8f0e7402_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./RegistPatient.vue?vue&type=style&index=0&id=8f0e7402&scoped=true&lang=css& */ "./resources/js/components/pages/leader/RegistPatient.vue?vue&type=style&index=0&id=8f0e7402&scoped=true&lang=css&");
+/* empty/unused harmony star reexport *//* harmony import */ var _RegistPatient_vue_vue_type_style_index_0_id_8f0e7402_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./RegistPatient.vue?vue&type=style&index=0&id=8f0e7402&scoped=true&lang=css& */ "./resources/js/components/pages/leader/RegistPatient.vue?vue&type=style&index=0&id=8f0e7402&scoped=true&lang=css&");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -101059,7 +102314,7 @@ component.options.__file = "resources/js/components/pages/leader/RegistPatient.v
 /*!*****************************************************************************************!*\
   !*** ./resources/js/components/pages/leader/RegistPatient.vue?vue&type=script&lang=js& ***!
   \*****************************************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
