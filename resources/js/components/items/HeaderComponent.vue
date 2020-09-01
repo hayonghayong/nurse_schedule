@@ -135,6 +135,27 @@
                             >
                         </v-list-item>
                     </router-link>
+                    <router-link :to="{ name: 'EditTreatment' }">
+                        <v-list-item>
+                            <v-list-item-title
+                                >【リーダー】処置の編集</v-list-item-title
+                            >
+                        </v-list-item>
+                    </router-link>
+                    <router-link :to="{ name: 'TreatmentList' }">
+                        <v-list-item>
+                            <v-list-item-title
+                                >【リーダー】処置一覧</v-list-item-title
+                            >
+                        </v-list-item>
+                    </router-link>
+                    <router-link :to="{ name: 'RegistTreatment' }">
+                        <v-list-item>
+                            <v-list-item-title
+                                >【リーダー】処置の登録</v-list-item-title
+                            >
+                        </v-list-item>
+                    </router-link>
                     管理者ページ
                     <router-link :to="{ name: 'Setting' }">
                         <v-list-item>
