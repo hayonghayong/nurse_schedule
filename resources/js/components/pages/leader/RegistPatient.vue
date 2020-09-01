@@ -299,7 +299,7 @@ export default {
                     }
                 };
                 axios
-                    .post("api/add", formData, config)
+                    .post("api/addPatient", formData, config)
                     .then(res => {
                         this.patient = res.data;
                         const selectedGenderRole = res.data.sex;
