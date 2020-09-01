@@ -2299,6 +2299,27 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {},
   data: function data() {
@@ -2521,6 +2542,38 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 // コンポーネントのインポート
 // Vue
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2544,35 +2597,34 @@ __webpack_require__.r(__webpack_exports__);
     fetchPatients: function fetchPatients() {
       var _this = this;
 
-      axios.get('/api/allPatient').then(function (res) {
-        console.log('status:', res.status);
-        console.log('body:', res.data);
+      axios.get("/api/allPatient").then(function (res) {
+        console.log("status:", res.status);
+        console.log("body:", res.data);
         _this.patients = res.data;
       })["catch"](function (err) {
-        console.log('err:', err);
+        console.log("err:", err);
       });
     },
     // 患者削除
     Delete: function Delete(patientId) {
       var _this2 = this;
 
-      axios["delete"]('/api/delPatient', {
+      if (confirm("削除してよろしいでしょうか?")) axios["delete"]("/api/delPatient", {
         data: {
           id: patientId
         }
       }).then(function (res) {
-        console.log('status:', res.status);
-        console.log('body:', res.data);
-        _this2.patient = res.data;
+        console.log("status:", res.status);
+        console.log("body:", res.data);
+        _this2.patients = res.data;
       })["catch"](function (err) {
-        console.log('err:', err);
+        console.log("err:", err);
       });
     },
     // 更新する患者情報取得
     Edit: function Edit(patientId) {
       var _this3 = this;
 
-      console.log(patientId);
       axios.get('/api/getPatient/' + patientId, {}).then(function (res) {
         console.log('status:', res.status);
         console.log('body:', res.data);
@@ -2929,9 +2981,9 @@ __webpack_require__.r(__webpack_exports__);
             "content-type": "multipart/form-data"
           }
         };
-        axios.post("api/add", formData, config).then(function (res) {
-          _this3.patient = res.data.patients;
-          var selectedGenderRole = res.data.patients.sex;
+        axios.post("api/addPatient", formData, config).then(function (res) {
+          _this3.patient = res.data;
+          var selectedGenderRole = res.data.sex;
 
           if (selectedGenderRole == 1) {
             _this3.selectedGender = "男性";
@@ -2971,6 +3023,71 @@ __webpack_require__.r(__webpack_exports__);
         this.patient = "";
         this.$refs.form.resetValidation();
       }
+    }
+  },
+  created: function created() {}
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/leader/RegistTreatment.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/pages/leader/RegistTreatment.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+// コンポーネントのインポート
+// Vue
+/* harmony default export */ __webpack_exports__["default"] = ({
+  components: {},
+  data: function data() {
+    return {
+      treatment: {
+        name: "",
+        time_required: "",
+        required_flg: ""
+      }
+    };
+  },
+  methods: {
+    add: function add(treatment) {
+      var _this = this;
+
+      axios.post('/api/addTreatment', {
+        name: this.treatment.name,
+        time_required: this.treatment.time_required,
+        required_flg: this.treatment.required_flg
+      }).then(function (res) {
+        console.log('status:', res.status);
+        console.log('body:', res.data);
+        _this.treatment = res.data;
+      })["catch"](function (err) {
+        console.log('err:', err);
+      });
     }
   },
   created: function created() {}
@@ -3059,6 +3176,135 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/leader/TreatmentList.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/pages/leader/TreatmentList.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+// コンポーネントのインポート
+// Vue
+/* harmony default export */ __webpack_exports__["default"] = ({
+  components: {},
+  data: function data() {
+    return {
+      treatments: [],
+      editTreatment: {
+        name: "",
+        time_required: "",
+        required_flg: ""
+      }
+    };
+  },
+  methods: {
+    fetchTreatment: function fetchTreatment() {
+      var _this = this;
+
+      axios.get('/api/allTreatment').then(function (res) {
+        console.log('status:', res.status);
+        console.log('body:', res.data);
+        _this.treatments = res.data;
+      })["catch"](function (err) {
+        console.log('err:', err);
+      });
+    },
+    //処置削除
+    Delete: function Delete(treatmentId) {
+      var _this2 = this;
+
+      if (confirm("削除してよろしいでしょうか?")) axios["delete"]("/api/delTreatment", {
+        data: {
+          id: treatmentId
+        }
+      }).then(function (res) {
+        console.log("status:", res.status);
+        console.log("body:", res.data);
+        _this2.treatments = res.data;
+      })["catch"](function (err) {
+        console.log("err:", err);
+      });
+    },
+    // 更新する処置情報取得
+    Edit: function Edit(treatmentId) {
+      var _this3 = this;
+
+      axios.get('/api/getTreatment/' + treatmentId, {}).then(function (res) {
+        console.log('status:', res.status);
+        console.log('body:', res.data);
+        _this3.editTreatment = res.data;
+      })["catch"](function (err) {
+        console.log('err:', err);
+      });
+    },
+    // 患者情報更新
+    Update: function Update(editTreatmentId) {
+      var _this4 = this;
+
+      axios.post('/api/updateTreatment/' + editTreatmentId, {
+        id: editTreatmentId,
+        treatment: this.editTreatment,
+        treatment_name: this.editTreatment.name,
+        treatment_time: this.editTreatment.time_required,
+        treatment_required: this.editTreatment.required_flg
+      }).then(function (res) {
+        console.log('status:', res.status);
+        console.log('body:', res.data);
+        _this4.treatment = res.data;
+      })["catch"](function (err) {
+        console.log('err:', err);
+      });
+    }
+  },
+  created: function created() {
+    this.fetchTreatment();
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/staff/RegistSchedule.vue?vue&type=script&lang=js&":
 /*!*************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/pages/staff/RegistSchedule.vue?vue&type=script&lang=js& ***!
@@ -3132,15 +3378,56 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 // コンポーネントのインポート
 // Vue
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {},
   data: function data() {
-    return {};
+    return {
+      usersPatients: [],
+      treatments: []
+    };
   },
-  created: function created() {},
-  methods: {}
+  methods: {
+    fetchPatients: function fetchPatients() {// axios.get('/api/get')
+      // .then((res)=>{
+      //   console.log('status:', res.status);
+      //   console.log('body:', res.data);
+      //   this.usersPatients = res.data 
+      // })
+      // .catch(err =>{
+      // console.log('err:', err);
+      // })
+    },
+    fetchTreatment: function fetchTreatment() {
+      var _this = this;
+
+      axios.get('/api/allTreatment').then(function (res) {
+        console.log('status:', res.status);
+        console.log('body:', res.data);
+        _this.treatments = res.data;
+      })["catch"](function (err) {
+        console.log('err:', err);
+      });
+    }
+  },
+  created: function created() {
+    this.fetchPatients();
+    this.fetchTreatment();
+  }
 });
 
 /***/ }),
@@ -3195,25 +3482,53 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 // コンポーネントのインポート
 // Vue
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {},
   data: function data() {
     return {
-      patients: []
+      patients: [],
+      usersPatients: []
     };
   },
   methods: {
     fetchPatients: function fetchPatients() {
       var _this = this;
 
-      axios.get('/api/get').then(function (res) {
+      axios.get('/api/allPatient').then(function (res) {
         console.log('status:', res.status);
         console.log('body:', res.data);
         _this.patients = res.data;
       })["catch"](function (err) {
         console.log('err:', err);
+      });
+    },
+    select: function select(patientsId) {
+      var _this2 = this;
+
+      console.log(patientsId);
+      axios.post("/api/add/" + patientsId, {
+        id: patientsId
+      }).then(function (res) {
+        console.log('status:', res.status);
+        console.log('body:', res.data);
+        _this2.usersPatients = res.data;
+      })["catch"](function (err) {
+        'err:', err;
       });
     }
   },
@@ -7748,7 +8063,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* スコープ付きのスタイル */\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* スコープ付きのスタイル */\n", ""]);
 
 // exports
 
@@ -7881,7 +8196,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* スコープ付きのスタイル */\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* スコープ付きのスタイル */\n", ""]);
 
 // exports
 
@@ -7901,6 +8216,25 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 // module
 exports.push([module.i, "\n.submit_btn[data-v-8f0e7402] {\n    margin: auto;\n}\n\n/* Dialog */\n.errorMessage[data-v-8f0e7402] {\n    margin-bottom: 0;\n}\n.successMessage[data-v-8f0e7402] {\n    margin-bottom: 0;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/leader/RegistTreatment.vue?vue&type=style&index=0&id=0bb99d1c&scoped=true&lang=css&":
+/*!**********************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/pages/leader/RegistTreatment.vue?vue&type=style&index=0&id=0bb99d1c&scoped=true&lang=css& ***!
+  \**********************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* スコープ付きのスタイル */\n", ""]);
 
 // exports
 
@@ -7964,6 +8298,25 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* スコープ付�
 
 /***/ }),
 
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/leader/TreatmentList.vue?vue&type=style&index=0&id=7a53a106&scoped=true&lang=css&":
+/*!********************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/pages/leader/TreatmentList.vue?vue&type=style&index=0&id=7a53a106&scoped=true&lang=css& ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* スコープ付きのスタイル */\n", ""]);
+
+// exports
+
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/staff/RegistSchedule.vue?vue&type=style&index=0&id=f1e0085c&scoped=true&lang=css&":
 /*!********************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/pages/staff/RegistSchedule.vue?vue&type=style&index=0&id=f1e0085c&scoped=true&lang=css& ***!
@@ -7995,7 +8348,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* スコープ付きのスタイル */\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* スコープ付きのスタイル */\n", ""]);
 
 // exports
 
@@ -8033,7 +8386,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* スコープ付きのスタイル */\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* スコープ付きのスタイル */\n", ""]);
 
 // exports
 
@@ -39567,6 +39920,36 @@ if(false) {}
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/leader/RegistTreatment.vue?vue&type=style&index=0&id=0bb99d1c&scoped=true&lang=css&":
+/*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/pages/leader/RegistTreatment.vue?vue&type=style&index=0&id=0bb99d1c&scoped=true&lang=css& ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../../node_modules/css-loader??ref--6-1!../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../node_modules/postcss-loader/src??ref--6-2!../../../../../node_modules/vue-loader/lib??vue-loader-options!./RegistTreatment.vue?vue&type=style&index=0&id=0bb99d1c&scoped=true&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/leader/RegistTreatment.vue?vue&type=style&index=0&id=0bb99d1c&scoped=true&lang=css&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/leader/ScheduleList.vue?vue&type=style&index=0&id=421894b5&scoped=true&lang=css&":
 /*!***********************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/pages/leader/ScheduleList.vue?vue&type=style&index=0&id=421894b5&scoped=true&lang=css& ***!
@@ -39636,6 +40019,36 @@ if(false) {}
 
 
 var content = __webpack_require__(/*! !../../../../../node_modules/css-loader??ref--6-1!../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../node_modules/postcss-loader/src??ref--6-2!../../../../../node_modules/vue-loader/lib??vue-loader-options!./StaffScheduleDetail.vue?vue&type=style&index=0&id=0c6824d0&scoped=true&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/leader/StaffScheduleDetail.vue?vue&type=style&index=0&id=0c6824d0&scoped=true&lang=css&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/leader/TreatmentList.vue?vue&type=style&index=0&id=7a53a106&scoped=true&lang=css&":
+/*!************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/pages/leader/TreatmentList.vue?vue&type=style&index=0&id=7a53a106&scoped=true&lang=css& ***!
+  \************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../../node_modules/css-loader??ref--6-1!../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../node_modules/postcss-loader/src??ref--6-2!../../../../../node_modules/vue-loader/lib??vue-loader-options!./TreatmentList.vue?vue&type=style&index=0&id=7a53a106&scoped=true&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/leader/TreatmentList.vue?vue&type=style&index=0&id=7a53a106&scoped=true&lang=css&");
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -41024,6 +41437,57 @@ var render = function() {
                     ],
                     1
                   ),
+                  _vm._v(" "),
+                  _c(
+                    "router-link",
+                    { attrs: { to: { name: "EditTreatment" } } },
+                    [
+                      _c(
+                        "v-list-item",
+                        [
+                          _c("v-list-item-title", [
+                            _vm._v("【リーダー】処置の編集")
+                          ])
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "router-link",
+                    { attrs: { to: { name: "TreatmentList" } } },
+                    [
+                      _c(
+                        "v-list-item",
+                        [
+                          _c("v-list-item-title", [
+                            _vm._v("【リーダー】処置一覧")
+                          ])
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "router-link",
+                    { attrs: { to: { name: "RegistTreatment" } } },
+                    [
+                      _c(
+                        "v-list-item",
+                        [
+                          _c("v-list-item-title", [
+                            _vm._v("【リーダー】処置の登録")
+                          ])
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  ),
                   _vm._v("\n                管理者ページ\n                "),
                   _c(
                     "router-link",
@@ -41268,155 +41732,189 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "v-card",
+    "div",
+    { staticClass: "patientsLists" },
     [
       _c(
-        "v-list-item",
+        "v-list",
+        { attrs: { subheader: "" } },
         [
-          _c(
-            "v-list-item-content",
-            [
-              _c("v-list-item-title", [_vm._v("【リーダー】患者一覧")]),
-              _vm._v(" "),
+          _c("v-subheader", [_vm._v("患者一覧")]),
+          _vm._v(" "),
+          _vm._l(_vm.patients, function(patient, index) {
+            return [
               _c(
-                "ul",
-                _vm._l(_vm.patients, function(patient) {
-                  return _c(
-                    "li",
-                    { key: patient.id },
+                "v-list-item",
+                { key: patient.id, staticClass: "px-8" },
+                [
+                  _c(
+                    "v-list-item-avatar",
                     [
-                      _vm._v(
-                        " " +
-                          _vm._s(patient.room) +
-                          " " +
-                          _vm._s(patient.name) +
-                          " \n          "
-                      ),
                       _c(
-                        "v-btn",
+                        "v-icon",
+                        {
+                          staticClass: "ma-2 mdi-36px",
+                          attrs: { color: "#62ABF8" }
+                        },
+                        [_vm._v("mdi-account")]
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-list-item-content",
+                    [
+                      _c("v-list-item-subtitle", { staticClass: "mb-1" }, [
+                        _vm._v(
+                          "\n                            " +
+                            _vm._s(patient.room) +
+                            "号室"
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("v-list-item-title", [
+                        _vm._v(
+                          "\n                            " +
+                            _vm._s(patient.name) +
+                            "さん"
+                        )
+                      ])
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-list-item-icon",
+                    [
+                      _c(
+                        "v-icon",
                         {
                           staticClass: "ma-2",
-                          attrs: { outlined: "", color: "pink lighten-1" },
+                          attrs: { outlined: "", color: "#6c6c6c" },
                           on: {
                             click: function($event) {
                               return _vm.Edit(patient.id)
                             }
                           }
                         },
-                        [_vm._v("編集")]
+                        [_vm._v("mdi-pencil")]
                       ),
                       _vm._v(" "),
                       _c(
-                        "v-btn",
+                        "v-icon",
                         {
                           staticClass: "ma-2",
-                          attrs: { outlined: "", color: "pink lighten-1" },
+                          attrs: { outlined: "", color: "#6c6c6c" },
                           on: {
                             click: function($event) {
                               return _vm.Delete(patient.id)
                             }
                           }
                         },
-                        [_vm._v("削除\n          ")]
+                        [_vm._v("mdi-delete")]
                       )
                     ],
                     1
                   )
-                }),
-                0
-              ),
-              _vm._v(" "),
-              _c(
-                "v-col",
-                [
-                  _c("v-text-field", {
-                    model: {
-                      value: _vm.editPatient.room,
-                      callback: function($$v) {
-                        _vm.$set(_vm.editPatient, "room", $$v)
-                      },
-                      expression: "editPatient.room"
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("v-text-field", {
-                    model: {
-                      value: _vm.editPatient.name,
-                      callback: function($$v) {
-                        _vm.$set(_vm.editPatient, "name", $$v)
-                      },
-                      expression: "editPatient.name"
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("v-text-field", {
-                    model: {
-                      value: _vm.editPatient.sex,
-                      callback: function($$v) {
-                        _vm.$set(_vm.editPatient, "sex", $$v)
-                      },
-                      expression: "editPatient.sex"
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("v-text-field", {
-                    model: {
-                      value: _vm.editPatient.birthday,
-                      callback: function($$v) {
-                        _vm.$set(_vm.editPatient, "birthday", $$v)
-                      },
-                      expression: "editPatient.birthday"
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("v-text-field", {
-                    model: {
-                      value: _vm.editPatient.hospitalization_date,
-                      callback: function($$v) {
-                        _vm.$set(_vm.editPatient, "hospitalization_date", $$v)
-                      },
-                      expression: "editPatient.hospitalization_date"
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("v-text-field", {
-                    model: {
-                      value: _vm.editPatient.surgery_date,
-                      callback: function($$v) {
-                        _vm.$set(_vm.editPatient, "surgery_date", $$v)
-                      },
-                      expression: "editPatient.surgery_date"
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("v-text-field", {
-                    model: {
-                      value: _vm.editPatient.memo,
-                      callback: function($$v) {
-                        _vm.$set(_vm.editPatient, "memo", $$v)
-                      },
-                      expression: "editPatient.memo"
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c(
-                    "v-btn",
-                    {
-                      staticClass: "ma-2",
-                      attrs: { outlined: "", color: "pink lighten-1" },
-                      on: {
-                        click: function($event) {
-                          return _vm.Update(_vm.editPatient.id)
-                        }
-                      }
-                    },
-                    [_vm._v("変更\n          ")]
-                  )
                 ],
                 1
-              )
-            ],
-            1
+              ),
+              _vm._v(" "),
+              index + 1 < _vm.patients.length
+                ? _c("v-divider", { key: index })
+                : _vm._e()
+            ]
+          })
+        ],
+        2
+      ),
+      _vm._v(" "),
+      _c(
+        "v-list",
+        [
+          _c("v-text-field", {
+            model: {
+              value: _vm.editPatient.room,
+              callback: function($$v) {
+                _vm.$set(_vm.editPatient, "room", $$v)
+              },
+              expression: "editPatient.room"
+            }
+          }),
+          _vm._v(" "),
+          _c("v-text-field", {
+            model: {
+              value: _vm.editPatient.name,
+              callback: function($$v) {
+                _vm.$set(_vm.editPatient, "name", $$v)
+              },
+              expression: "editPatient.name"
+            }
+          }),
+          _vm._v(" "),
+          _c("v-text-field", {
+            model: {
+              value: _vm.editPatient.sex,
+              callback: function($$v) {
+                _vm.$set(_vm.editPatient, "sex", $$v)
+              },
+              expression: "editPatient.sex"
+            }
+          }),
+          _vm._v(" "),
+          _c("v-text-field", {
+            model: {
+              value: _vm.editPatient.birthday,
+              callback: function($$v) {
+                _vm.$set(_vm.editPatient, "birthday", $$v)
+              },
+              expression: "editPatient.birthday"
+            }
+          }),
+          _vm._v(" "),
+          _c("v-text-field", {
+            model: {
+              value: _vm.editPatient.hospitalization_date,
+              callback: function($$v) {
+                _vm.$set(_vm.editPatient, "hospitalization_date", $$v)
+              },
+              expression: "editPatient.hospitalization_date"
+            }
+          }),
+          _vm._v(" "),
+          _c("v-text-field", {
+            model: {
+              value: _vm.editPatient.surgery_date,
+              callback: function($$v) {
+                _vm.$set(_vm.editPatient, "surgery_date", $$v)
+              },
+              expression: "editPatient.surgery_date"
+            }
+          }),
+          _vm._v(" "),
+          _c("v-text-field", {
+            model: {
+              value: _vm.editPatient.memo,
+              callback: function($$v) {
+                _vm.$set(_vm.editPatient, "memo", $$v)
+              },
+              expression: "editPatient.memo"
+            }
+          }),
+          _vm._v(" "),
+          _c(
+            "v-btn",
+            {
+              staticClass: "ma-2",
+              attrs: { outlined: "", color: "pink lighten-1" },
+              on: {
+                click: function($event) {
+                  return _vm.Update(_vm.editPatient.id)
+                }
+              }
+            },
+            [_vm._v("\n                変更\n          ")]
           )
         ],
         1
@@ -41902,6 +42400,100 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/leader/RegistTreatment.vue?vue&type=template&id=0bb99d1c&scoped=true&":
+/*!*******************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/pages/leader/RegistTreatment.vue?vue&type=template&id=0bb99d1c&scoped=true& ***!
+  \*******************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "v-card",
+    [
+      _c(
+        "v-list-item",
+        [
+          _c(
+            "v-list-item-content",
+            [
+              _c("v-list-item-title", [_vm._v("【リーダー】処置登録")]),
+              _vm._v(" "),
+              _c("ul"),
+              _vm._v(" "),
+              _c(
+                "v-list",
+                [
+                  _c("v-text-field", {
+                    model: {
+                      value: _vm.treatment.name,
+                      callback: function($$v) {
+                        _vm.$set(_vm.treatment, "name", $$v)
+                      },
+                      expression: "treatment.name"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("v-text-field", {
+                    model: {
+                      value: _vm.treatment.time_required,
+                      callback: function($$v) {
+                        _vm.$set(_vm.treatment, "time_required", $$v)
+                      },
+                      expression: "treatment.time_required"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("v-text-field", {
+                    model: {
+                      value: _vm.treatment.required_flg,
+                      callback: function($$v) {
+                        _vm.$set(_vm.treatment, "required_flg", $$v)
+                      },
+                      expression: "treatment.required_flg"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      staticClass: "ma-2",
+                      attrs: {
+                        outlined: "",
+                        color: "pink lighten-1",
+                        type: "submit"
+                      },
+                      on: { click: _vm.add }
+                    },
+                    [_vm._v("\n            変更\n      ")]
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/leader/ScheduleList.vue?vue&type=template&id=421894b5&scoped=true&":
 /*!****************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/pages/leader/ScheduleList.vue?vue&type=template&id=421894b5&scoped=true& ***!
@@ -41966,6 +42558,150 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("h1", [_vm._v("【リーダー】スタッフ処置スケジュール詳細 ")])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/leader/TreatmentList.vue?vue&type=template&id=7a53a106&scoped=true&":
+/*!*****************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/pages/leader/TreatmentList.vue?vue&type=template&id=7a53a106&scoped=true& ***!
+  \*****************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "v-card",
+    [
+      _c(
+        "v-list-item",
+        [
+          _c(
+            "v-list-item-content",
+            [
+              _c("v-list-item-title", [_vm._v("【リーダー】処置一覧")]),
+              _vm._v(" "),
+              _c(
+                "ul",
+                _vm._l(_vm.treatments, function(treatment) {
+                  return _c(
+                    "li",
+                    { key: treatment.id },
+                    [
+                      _vm._v(
+                        " \n          " +
+                          _vm._s(treatment.name) +
+                          " \n          "
+                      ),
+                      _c(
+                        "v-list-item-icon",
+                        [
+                          _c(
+                            "v-icon",
+                            {
+                              staticClass: "ma-2",
+                              attrs: { outlined: "", color: "#6c6c6c" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.Edit(treatment.id)
+                                }
+                              }
+                            },
+                            [_vm._v("mdi-pencil")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-icon",
+                            {
+                              staticClass: "ma-2",
+                              attrs: { outlined: "", color: "#6c6c6c" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.Delete(treatment.id)
+                                }
+                              }
+                            },
+                            [_vm._v("mdi-delete")]
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                }),
+                0
+              ),
+              _vm._v(" "),
+              _c(
+                "v-list",
+                [
+                  _c("v-text-field", {
+                    model: {
+                      value: _vm.editTreatment.name,
+                      callback: function($$v) {
+                        _vm.$set(_vm.editTreatment, "name", $$v)
+                      },
+                      expression: "editTreatment.name"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("v-text-field", {
+                    model: {
+                      value: _vm.editTreatment.time_required,
+                      callback: function($$v) {
+                        _vm.$set(_vm.editTreatment, "time_required", $$v)
+                      },
+                      expression: "editTreatment.time_required"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("v-text-field", {
+                    model: {
+                      value: _vm.editTreatment.required_flg,
+                      callback: function($$v) {
+                        _vm.$set(_vm.editTreatment, "required_flg", $$v)
+                      },
+                      expression: "editTreatment.required_flg"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      staticClass: "ma-2",
+                      attrs: { outlined: "", color: "pink lighten-1" },
+                      on: {
+                        click: function($event) {
+                          return _vm.Update(_vm.editTreatment.id)
+                        }
+                      }
+                    },
+                    [_vm._v("\n            変更\n      ")]
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -42077,9 +42813,33 @@ var render = function() {
               ])
             ],
             1
-          )
+          ),
+          _vm._v(" "),
+          _vm._l(_vm.usersPatients, function(usersPatient) {
+            return _c("li", { key: usersPatient.id }, [
+              _vm._v(
+                " \n          " +
+                  _vm._s(usersPatient.patient_id) +
+                  " \n          " +
+                  _vm._s(usersPatient.name) +
+                  " \n          "
+              ),
+              _vm._v(
+                "\n          " + _vm._s(usersPatient.sex) + "\n          "
+              ),
+              _vm._v(
+                "\n          " + _vm._s(usersPatient.birthday) + "\n        "
+              )
+            ])
+          }),
+          _vm._v(" "),
+          _vm._l(_vm.treatments, function(treatment) {
+            return _c("li", { key: treatment.id }, [
+              _vm._v(" \n          " + _vm._s(treatment.name) + " \n    ")
+            ])
+          })
         ],
-        1
+        2
       )
     ],
     1
@@ -42147,15 +42907,43 @@ var render = function() {
                 _vm._l(_vm.patients, function(patient) {
                   return _c("li", { key: patient.id }, [
                     _vm._v(
-                      " " +
+                      " \n          " +
                         _vm._s(patient.room) +
-                        " " +
+                        " \n          " +
                         _vm._s(patient.name) +
-                        " "
+                        " \n          "
+                    ),
+                    _vm._v(
+                      "\n          " + _vm._s(patient.sex) + "\n          "
+                    ),
+                    _vm._v(
+                      "\n          " +
+                        _vm._s(patient.birthday) +
+                        "\n          " +
+                        _vm._s(patient.hospitalization_date) +
+                        "\n          " +
+                        _vm._s(patient.surgery_date) +
+                        "\n          " +
+                        _vm._s(patient.memo) +
+                        "\n        "
                     )
                   ])
                 }),
                 0
+              ),
+              _vm._v(" "),
+              _c(
+                "v-btn",
+                {
+                  staticClass: "ma-2",
+                  attrs: { outlined: "", color: "pink lighten-1" },
+                  on: {
+                    click: function($event) {
+                      return _vm.select(_vm.patients.id)
+                    }
+                  }
+                },
+                [_vm._v("\n            決定\n      ")]
               )
             ],
             1
@@ -102184,6 +102972,38 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/pages/leader/EditTreatment.vue":
+/*!****************************************************************!*\
+  !*** ./resources/js/components/pages/leader/EditTreatment.vue ***!
+  \****************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+var render, staticRenderFns
+var script = {}
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_0__["default"])(
+  script,
+  render,
+  staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+component.options.__file = "resources/js/components/pages/leader/EditTreatment.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/pages/leader/PatientsList.vue":
 /*!***************************************************************!*\
   !*** ./resources/js/components/pages/leader/PatientsList.vue ***!
@@ -102353,6 +103173,93 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RegistPatient_vue_vue_type_template_id_8f0e7402_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RegistPatient_vue_vue_type_template_id_8f0e7402_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/pages/leader/RegistTreatment.vue":
+/*!******************************************************************!*\
+  !*** ./resources/js/components/pages/leader/RegistTreatment.vue ***!
+  \******************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _RegistTreatment_vue_vue_type_template_id_0bb99d1c_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./RegistTreatment.vue?vue&type=template&id=0bb99d1c&scoped=true& */ "./resources/js/components/pages/leader/RegistTreatment.vue?vue&type=template&id=0bb99d1c&scoped=true&");
+/* harmony import */ var _RegistTreatment_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./RegistTreatment.vue?vue&type=script&lang=js& */ "./resources/js/components/pages/leader/RegistTreatment.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _RegistTreatment_vue_vue_type_style_index_0_id_0bb99d1c_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./RegistTreatment.vue?vue&type=style&index=0&id=0bb99d1c&scoped=true&lang=css& */ "./resources/js/components/pages/leader/RegistTreatment.vue?vue&type=style&index=0&id=0bb99d1c&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _RegistTreatment_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _RegistTreatment_vue_vue_type_template_id_0bb99d1c_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _RegistTreatment_vue_vue_type_template_id_0bb99d1c_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "0bb99d1c",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/pages/leader/RegistTreatment.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/pages/leader/RegistTreatment.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************!*\
+  !*** ./resources/js/components/pages/leader/RegistTreatment.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_RegistTreatment_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./RegistTreatment.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/leader/RegistTreatment.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_RegistTreatment_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/pages/leader/RegistTreatment.vue?vue&type=style&index=0&id=0bb99d1c&scoped=true&lang=css&":
+/*!***************************************************************************************************************************!*\
+  !*** ./resources/js/components/pages/leader/RegistTreatment.vue?vue&type=style&index=0&id=0bb99d1c&scoped=true&lang=css& ***!
+  \***************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_RegistTreatment_vue_vue_type_style_index_0_id_0bb99d1c_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/style-loader!../../../../../node_modules/css-loader??ref--6-1!../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../node_modules/postcss-loader/src??ref--6-2!../../../../../node_modules/vue-loader/lib??vue-loader-options!./RegistTreatment.vue?vue&type=style&index=0&id=0bb99d1c&scoped=true&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/leader/RegistTreatment.vue?vue&type=style&index=0&id=0bb99d1c&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_RegistTreatment_vue_vue_type_style_index_0_id_0bb99d1c_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_RegistTreatment_vue_vue_type_style_index_0_id_0bb99d1c_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_RegistTreatment_vue_vue_type_style_index_0_id_0bb99d1c_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_RegistTreatment_vue_vue_type_style_index_0_id_0bb99d1c_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_RegistTreatment_vue_vue_type_style_index_0_id_0bb99d1c_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "./resources/js/components/pages/leader/RegistTreatment.vue?vue&type=template&id=0bb99d1c&scoped=true&":
+/*!*************************************************************************************************************!*\
+  !*** ./resources/js/components/pages/leader/RegistTreatment.vue?vue&type=template&id=0bb99d1c&scoped=true& ***!
+  \*************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RegistTreatment_vue_vue_type_template_id_0bb99d1c_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./RegistTreatment.vue?vue&type=template&id=0bb99d1c&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/leader/RegistTreatment.vue?vue&type=template&id=0bb99d1c&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RegistTreatment_vue_vue_type_template_id_0bb99d1c_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RegistTreatment_vue_vue_type_template_id_0bb99d1c_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -102614,6 +103521,93 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_StaffScheduleDetail_vue_vue_type_template_id_0c6824d0_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_StaffScheduleDetail_vue_vue_type_template_id_0c6824d0_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/pages/leader/TreatmentList.vue":
+/*!****************************************************************!*\
+  !*** ./resources/js/components/pages/leader/TreatmentList.vue ***!
+  \****************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _TreatmentList_vue_vue_type_template_id_7a53a106_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./TreatmentList.vue?vue&type=template&id=7a53a106&scoped=true& */ "./resources/js/components/pages/leader/TreatmentList.vue?vue&type=template&id=7a53a106&scoped=true&");
+/* harmony import */ var _TreatmentList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TreatmentList.vue?vue&type=script&lang=js& */ "./resources/js/components/pages/leader/TreatmentList.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _TreatmentList_vue_vue_type_style_index_0_id_7a53a106_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./TreatmentList.vue?vue&type=style&index=0&id=7a53a106&scoped=true&lang=css& */ "./resources/js/components/pages/leader/TreatmentList.vue?vue&type=style&index=0&id=7a53a106&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _TreatmentList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _TreatmentList_vue_vue_type_template_id_7a53a106_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _TreatmentList_vue_vue_type_template_id_7a53a106_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "7a53a106",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/pages/leader/TreatmentList.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/pages/leader/TreatmentList.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************!*\
+  !*** ./resources/js/components/pages/leader/TreatmentList.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_TreatmentList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./TreatmentList.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/leader/TreatmentList.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_TreatmentList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/pages/leader/TreatmentList.vue?vue&type=style&index=0&id=7a53a106&scoped=true&lang=css&":
+/*!*************************************************************************************************************************!*\
+  !*** ./resources/js/components/pages/leader/TreatmentList.vue?vue&type=style&index=0&id=7a53a106&scoped=true&lang=css& ***!
+  \*************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_TreatmentList_vue_vue_type_style_index_0_id_7a53a106_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/style-loader!../../../../../node_modules/css-loader??ref--6-1!../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../node_modules/postcss-loader/src??ref--6-2!../../../../../node_modules/vue-loader/lib??vue-loader-options!./TreatmentList.vue?vue&type=style&index=0&id=7a53a106&scoped=true&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/leader/TreatmentList.vue?vue&type=style&index=0&id=7a53a106&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_TreatmentList_vue_vue_type_style_index_0_id_7a53a106_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_TreatmentList_vue_vue_type_style_index_0_id_7a53a106_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_TreatmentList_vue_vue_type_style_index_0_id_7a53a106_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_TreatmentList_vue_vue_type_style_index_0_id_7a53a106_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_TreatmentList_vue_vue_type_style_index_0_id_7a53a106_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "./resources/js/components/pages/leader/TreatmentList.vue?vue&type=template&id=7a53a106&scoped=true&":
+/*!***********************************************************************************************************!*\
+  !*** ./resources/js/components/pages/leader/TreatmentList.vue?vue&type=template&id=7a53a106&scoped=true& ***!
+  \***********************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TreatmentList_vue_vue_type_template_id_7a53a106_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./TreatmentList.vue?vue&type=template&id=7a53a106&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/leader/TreatmentList.vue?vue&type=template&id=7a53a106&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TreatmentList_vue_vue_type_template_id_7a53a106_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TreatmentList_vue_vue_type_template_id_7a53a106_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -103166,10 +104160,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_pages_leader_PatientsList_vue__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/pages/leader/PatientsList.vue */ "./resources/js/components/pages/leader/PatientsList.vue");
 /* harmony import */ var _components_pages_leader_EditPatient_vue__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./components/pages/leader/EditPatient.vue */ "./resources/js/components/pages/leader/EditPatient.vue");
 /* harmony import */ var _components_pages_leader_RegistPatient_vue__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./components/pages/leader/RegistPatient.vue */ "./resources/js/components/pages/leader/RegistPatient.vue");
-/* harmony import */ var _components_pages_admin_Setting_vue__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./components/pages/admin/Setting.vue */ "./resources/js/components/pages/admin/Setting.vue");
-/* harmony import */ var _components_pages_admin_StaffList_vue__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./components/pages/admin/StaffList.vue */ "./resources/js/components/pages/admin/StaffList.vue");
-/* harmony import */ var _components_pages_admin_RegistStaff_vue__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./components/pages/admin/RegistStaff.vue */ "./resources/js/components/pages/admin/RegistStaff.vue");
-/* harmony import */ var _components_pages_admin_EditStaff_vue__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./components/pages/admin/EditStaff.vue */ "./resources/js/components/pages/admin/EditStaff.vue");
+/* harmony import */ var _components_pages_leader_RegistTreatment_vue__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./components/pages/leader/RegistTreatment.vue */ "./resources/js/components/pages/leader/RegistTreatment.vue");
+/* harmony import */ var _components_pages_leader_TreatmentList_vue__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./components/pages/leader/TreatmentList.vue */ "./resources/js/components/pages/leader/TreatmentList.vue");
+/* harmony import */ var _components_pages_leader_EditTreatment_vue__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./components/pages/leader/EditTreatment.vue */ "./resources/js/components/pages/leader/EditTreatment.vue");
+/* harmony import */ var _components_pages_admin_Setting_vue__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./components/pages/admin/Setting.vue */ "./resources/js/components/pages/admin/Setting.vue");
+/* harmony import */ var _components_pages_admin_StaffList_vue__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./components/pages/admin/StaffList.vue */ "./resources/js/components/pages/admin/StaffList.vue");
+/* harmony import */ var _components_pages_admin_RegistStaff_vue__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./components/pages/admin/RegistStaff.vue */ "./resources/js/components/pages/admin/RegistStaff.vue");
+/* harmony import */ var _components_pages_admin_EditStaff_vue__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./components/pages/admin/EditStaff.vue */ "./resources/js/components/pages/admin/EditStaff.vue");
 
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]); // ▼ページコンポーネントのインポート
@@ -103181,6 +104178,9 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
 
 
  // リーダーページ
+
+
+
 
 
 
@@ -103221,7 +104221,7 @@ var routes = [// スタッフページ：6
   path: "/staff/staff-schedule",
   component: _components_pages_staff_StaffSchedule_vue__WEBPACK_IMPORTED_MODULE_7__["default"],
   name: "StaffSchedule"
-}, // リーダーページ：7
+}, // リーダーページ：10
 {
   path: "/leader/select-staff",
   component: _components_pages_leader_SelectStaff_vue__WEBPACK_IMPORTED_MODULE_8__["default"],
@@ -103250,22 +104250,34 @@ var routes = [// スタッフページ：6
   path: "/leader/edit-patient",
   component: _components_pages_leader_EditPatient_vue__WEBPACK_IMPORTED_MODULE_13__["default"],
   name: "EditPatient"
+}, {
+  path: "/leader/edit-treatment",
+  component: _components_pages_leader_EditTreatment_vue__WEBPACK_IMPORTED_MODULE_20__["default"],
+  name: "EditTreatment"
+}, {
+  path: "/leader/regist-treatment",
+  component: _components_pages_leader_RegistTreatment_vue__WEBPACK_IMPORTED_MODULE_21__["default"],
+  name: "RegistTreatment"
+}, {
+  path: "/leader/treatment-list",
+  component: _components_pages_leader_TreatmentList_vue__WEBPACK_IMPORTED_MODULE_22__["default"],
+  name: "TreatmentList"
 }, // 管理者ページ：4
 {
   path: "/admin/setting",
-  component: _components_pages_admin_Setting_vue__WEBPACK_IMPORTED_MODULE_15__["default"],
+  component: _components_pages_admin_Setting_vue__WEBPACK_IMPORTED_MODULE_16__["default"],
   name: "Setting"
 }, {
   path: "/admin/staff-list",
-  component: _components_pages_admin_StaffList_vue__WEBPACK_IMPORTED_MODULE_16__["default"],
+  component: _components_pages_admin_StaffList_vue__WEBPACK_IMPORTED_MODULE_17__["default"],
   name: "StaffList"
 }, {
   path: "/admin/regist-staff",
-  component: _components_pages_admin_RegistStaff_vue__WEBPACK_IMPORTED_MODULE_17__["default"],
+  component: _components_pages_admin_RegistStaff_vue__WEBPACK_IMPORTED_MODULE_18__["default"],
   name: "RegistStaff"
 }, {
   path: "/admin/edit-staff",
-  component: _components_pages_admin_EditStaff_vue__WEBPACK_IMPORTED_MODULE_18__["default"],
+  component: _components_pages_admin_EditStaff_vue__WEBPACK_IMPORTED_MODULE_19__["default"],
   name: "EditStaff"
 }]; // ▲ルーティング
 

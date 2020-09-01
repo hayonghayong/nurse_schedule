@@ -12,8 +12,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 // 患者一覧表示
 Route::get('/allPatient','PatientsController@Allpatients');
 
-// 患者追加
-Route::post('/add','PatientsController@add'); 
+// 患者登録
+Route::post('/addPatient','PatientsController@add'); 
 
 // 患者削除
 Route::delete('/delPatient', 'PatientsController@destroy');
@@ -33,7 +33,10 @@ Route::get('/get','UsersPatientsController@get');
 
 // -----treatment_tabel API -----
 // 処置一覧表示
-Route::get('/allTreatment','TreatmentsController@Alltreatments');
+Route::get('/allTreatment','TreatmentsController@alltreatments');
+
+// 処置登録
+Route::post('/addTreatment','TreatmentsController@addTreatment'); 
 
 // 患者削除
 Route::delete('/delTreatment', 'TreatmentsController@destroy');

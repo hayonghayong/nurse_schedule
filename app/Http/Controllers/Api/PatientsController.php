@@ -20,7 +20,7 @@ use App\Patient;
     return $patients;
   }
     // 新規患者追加
-    public function add(Request $request) {
+    public function addPatient(Request $request) {
     $patients = new Patient;
       // $patients->ward_id = Auth::ward_id();
       // Auth使えるようになるまではward_id指定する

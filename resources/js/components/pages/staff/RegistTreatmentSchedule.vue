@@ -22,6 +22,10 @@
               <!-- dbには誕生日登録してるけど表示は年齢にしたい -->
               {{usersPatient.birthday}}
             </li>
+          
+          <li v-for="treatment in treatments" v-bind:key="treatment.id"> 
+              {{treatment.name}} 
+        </li>
     </v-stepper>
     
     </div>
@@ -35,14 +39,26 @@ export default {
     components: {},
     data: () => ({
     usersPatients:[],
+    treatments:[],
   }),
   methods: {
     fetchPatients: function(){
-      axios.get('/api/get')
+      // axios.get('/api/get')
+      // .then((res)=>{
+      //   console.log('status:', res.status);
+      //   console.log('body:', res.data);
+      //   this.usersPatients = res.data 
+      // })
+      // .catch(err =>{
+      // console.log('err:', err);
+      // })
+    },
+    fetchTreatment: function(){
+      axios.get('/api/allTreatment')
       .then((res)=>{
         console.log('status:', res.status);
         console.log('body:', res.data);
-        this.usersPatients = res.data 
+        this.treatments = res.data 
       })
       .catch(err =>{
       console.log('err:', err);
@@ -51,6 +67,7 @@ export default {
   },
     created() {
     this.fetchPatients()
+    this.fetchTreatment()
   },
 };
 </script>

@@ -11,7 +11,7 @@ use App\Treatment;
     class TreatmentsController extends Controller
     {
     //処置表示
-    public function Alltreatments(){ 
+    public function alltreatments(){ 
     // $wardId= Auth::ward_id();
      // $patients = Patient::where('ward_id','=', $wardId)
     // ->orderBy('room', 'asc')
@@ -19,6 +19,19 @@ use App\Treatment;
     $treatments = Treatment::orderBy('id','asc')->get();
     return $treatments;
   }
+
+  // 新規処置登録
+    public function addTreatment(Request $request) {
+    $treatments = new Treatment;
+      // $patients->ward_id = Auth::ward_id();
+      // Auth使えるようになるまではward_id指定する
+      $treatments->ward_id = "1";
+      $treatments->name = $request->name;
+      $treatments->time_required = $request->time_required;
+      $treatments->required_flg = $request->required_flg;
+      $treatments->save();
+      return $treatments;
+    }
 
   // 処置削除
     public function destroy(Request $request) {
