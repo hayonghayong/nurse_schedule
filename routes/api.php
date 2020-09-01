@@ -23,3 +23,9 @@ Route::get('/getPatient/{patient}','PatientsController@editPatient');
 
 // 患者更新
 Route::post('/updatePatient/{editPatient}','PatientsController@updatePatient');
+
+// 担当患者登録
+Route::post('/add/{userPatients}','UsersPatientsController@add'); 
+
+// 担当患者取得
+Route::get('/get','UsersPatientsController@get'); 
