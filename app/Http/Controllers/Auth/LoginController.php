@@ -26,6 +26,7 @@ class LoginController extends Controller
      *
      * @var string
      */
+    
     protected $redirectTo = RouteServiceProvider::HOME;
 
     /**
@@ -37,4 +38,9 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+
+    // loginに必要な項目を追記
+    public function username(){
+      return 'login_id';
+  }
 }
