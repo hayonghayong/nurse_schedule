@@ -1,6 +1,17 @@
 <template> 
     <!-- 仮オブジェクト -->
-    <h1>【リーダー】スタッフ選択</h1>
+    <v-card>
+      <v-list-item>
+        <v-list-item-content>
+          <v-list-item-title>【リーダー】スタッフ一覧</v-list-item-title>
+          <ul >
+            <li v-for="staff in staffs" v-bind:key="staff.id"> 
+              {{staff.name}} 
+            </li>
+          </ul>
+        </v-list-item-content>
+      </v-list-item>
+    </v-card>
     <!-- ここまで -->
 </template>
 <script>
@@ -9,9 +20,26 @@
 // Vue
 export default {
     components: {},
-    data: () => ({}),
-    created() {},
-    methods: {}
+    data: () => ({
+      staffs:[],
+    }),
+    methods: {
+      fetchStaff: function(){
+      axios.get('/api/allStaffs')
+      .then((res)=>{
+        console.log('status:', res.status);
+        console.log('body:', res.data);
+        this.staffs = res.data 
+      })
+      .catch(err =>{
+      console.log('err:', err);
+      })
+    },
+
+    },
+    created() {
+      this.fetchStaff()
+    }
 };
 </script>
 
