@@ -16,7 +16,7 @@
 						$table->increments('id');
 						$table->integer('ward_id');
 						$table->integer('user_id');
-						$table->json('patient_id');
+						$table->integer('patient_id');
 						$table->integer('end_flg');
 						$table->timestamps();
 						$table->softDeletes();
