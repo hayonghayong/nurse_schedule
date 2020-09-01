@@ -17,7 +17,7 @@ class CreateUsersTable extends Migration
             $table->bigIncrements('id');
 			$table->integer('ward_id');
             $table->string('name');
-            $table->string('login_id');
+            $table->string('login_id')->unique();
             // $table->string('email')->unique();
             // $table->timestamp('email_verified_at')->nullable();
             $table->char('admin_flg',1);

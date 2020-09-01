@@ -1,6 +1,5 @@
 <?php
 
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,12 +11,12 @@
 |
 */
 
-// Route::get('/login', function () {
-//     return view('auth/login');
-// });
 
+// ▼Authのルーティング:一番上に書く
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+// ▼ログイン後はフロント側(VueRouter)で全てのルーティングを管理する：一番下に書く
 Route::get('/{any?}', fn() => view('index'))->where('any', '.+')->middleware('auth');
+

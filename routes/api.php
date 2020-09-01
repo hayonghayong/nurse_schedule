@@ -7,6 +7,15 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
   return $request->user();
 });
 
+// ログイン認証後に使用できるAPI <最終的には全てこのgroupの中に記載します
+Route::group(['middleware' => 'auth'], function () {
+  // -----users_tabel crud -----
+  // ログイン中のユーザー情報取得
+  Route::get('user/fetch', 'Api\UsersController@show');
+
+});
+
+
 // -----はよん追記-----
 // -----patients_tabel crud -----
 // 患者一覧表示
