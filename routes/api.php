@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
-use App\Patient;
+use App\User;
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
   return $request->user();
@@ -46,3 +46,18 @@ Route::get('/getTreatment/{treatment}','TreatmentsController@editTreatment');
 
 // 患者更新
 Route::post('/updateTreatment/{editTreatment}','TreatmentsController@updateTreatment');
+
+// -----user_tabel API -----
+// 看護師一覧表示
+// Route::get('/allStaffs','UsersController@allstaffs');
+Route::get('/allStaffs',function()
+{
+    // $wardId= Auth::ward_id();
+     // $patients = Patient::where('ward_id','=', $wardId)
+    // ->orderBy('room', 'asc')
+    // ->get();
+    $staffs = User::orderBy('id','asc')->get();
+    return $staffs;
+}
+
+);
