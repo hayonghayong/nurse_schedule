@@ -19,6 +19,9 @@ import EditStaffSchedule from "./components/pages/leader/EditStaffSchedule.vue";
 import PatientsList from "./components/pages/leader/PatientsList.vue";
 import EditPatient from "./components/pages/leader/EditPatient.vue";
 import RegistPatient from "./components/pages/leader/RegistPatient.vue";
+import RegistTreatment from "./components/pages/leader/RegistTreatment.vue";
+import TreatmentList from "./components/pages/leader/TreatmentList.vue";
+import EditTreatment from "./components/pages/leader/EditTreatment.vue";
 // 管理者ページ
 import Setting from "./components/pages/admin/Setting.vue";
 import StaffList from "./components/pages/admin/StaffList.vue";
@@ -60,7 +63,7 @@ const routes = [
         component: StaffSchedule,
         name: "StaffSchedule"
     },
-    // リーダーページ：7
+    // リーダーページ：10
     {
         path: "/leader/select-staff",
         component: SelectStaff,
@@ -97,6 +100,22 @@ const routes = [
         component: EditPatient,
         name: "EditPatient"
     },
+    {
+      path: "/leader/edit-treatment",
+      component: EditTreatment,
+      name: "EditTreatment"
+    },
+    {
+      path: "/leader/regist-treatment",
+      component: RegistTreatment,
+      name: "RegistTreatment"
+    },
+    {
+      path: "/leader/treatment-list",
+      component: TreatmentList,
+      name: "TreatmentList"
+    },
+    
     // 管理者ページ：4
     {
         path: "/admin/setting",

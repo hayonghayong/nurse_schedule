@@ -38,4 +38,10 @@ class User extends Authenticatable
     ];
 
 
+    public function patient()
+    {
+      return $this->belongsToMany('App\Patient');
+    }
+
+
 }
