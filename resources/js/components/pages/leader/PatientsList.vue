@@ -2,8 +2,8 @@
     <div class="patientsLists">
         <v-list subheader>
             <v-subheader>患者一覧</v-subheader>
-            <template v-for="(patient, index) in patients">
-                <v-list-item :key="patient.id" class="px-8">
+            <div v-for="(patient, index) in patients" :key="patient.id">
+                <v-list-item class="px-8">
                     <v-list-item-avatar>
                         <v-icon class="ma-2 mdi-36px" color="#62ABF8"
                             >mdi-account</v-icon
@@ -40,21 +40,28 @@
                     v-if="index + 1 < patients.length"
                     :key="index"
                 ></v-divider>
-            </template>
+            </div>
         </v-list>
-        
-<!-- はよん追記 -->
+
+        <!-- はよん追記 -->
         <v-list>
-          <v-text-field v-model="editPatient.room"></v-text-field>
-          <v-text-field v-model="editPatient.name"></v-text-field>
-          <v-text-field v-model="editPatient.sex"></v-text-field>
-          <v-text-field v-model="editPatient.birthday"></v-text-field>
-          <v-text-field v-model="editPatient.hospitalization_date"></v-text-field>
-          <v-text-field v-model="editPatient.surgery_date"></v-text-field>
-          <v-text-field v-model="editPatient.memo"></v-text-field>
-          <v-btn class="ma-2" outlined color="pink lighten-1" @click="Update(editPatient.id)">
+            <v-text-field v-model="editPatient.room"></v-text-field>
+            <v-text-field v-model="editPatient.name"></v-text-field>
+            <v-text-field v-model="editPatient.sex"></v-text-field>
+            <v-text-field v-model="editPatient.birthday"></v-text-field>
+            <v-text-field
+                v-model="editPatient.hospitalization_date"
+            ></v-text-field>
+            <v-text-field v-model="editPatient.surgery_date"></v-text-field>
+            <v-text-field v-model="editPatient.memo"></v-text-field>
+            <v-btn
+                class="ma-2"
+                outlined
+                color="pink lighten-1"
+                @click="Update(editPatient.id)"
+            >
                 変更
-          </v-btn>
+            </v-btn>
         </v-list>
     </div>
 </template>
@@ -67,21 +74,21 @@ export default {
     components: {},
     data: () => ({
         patients: [],
-        editPatient:{
-          room: "",
-          name: "",
-          sex: "",
-          birthday: "",
-          hospitalization_date: "",
-          surgery_date: "",
-          memo: ""
-        },
+        editPatient: {
+            room: "",
+            name: "",
+            sex: "",
+            birthday: "",
+            hospitalization_date: "",
+            surgery_date: "",
+            memo: ""
+        }
     }),
     methods: {
-      // 患者一覧取得
+        // 患者一覧取得
         fetchPatients: function() {
             axios
-                .get("/api/allPatient")
+                .get("/api/patients/get/all")
                 .then(res => {
                     console.log("status:", res.status);
                     console.log("body:", res.data);
@@ -96,7 +103,7 @@ export default {
         Delete: function(patientId) {
             if (confirm("削除してよろしいでしょうか?"))
                 axios
-                    .delete("/api/delPatient", {
+                    .delete("/api/patients/delete", {
                         data: { id: patientId }
                     })
                     .then(res => {
@@ -110,52 +117,49 @@ export default {
         },
 
         // 更新する患者情報取得
-        Edit: function(patientId){
+        Edit: function(patientId) {
             axios
-                .get('/api/getPatient/'+patientId,{
+                .get("/api/patients/get/" + patientId, {})
+                .then(res => {
+                    console.log("status:", res.status);
+                    console.log("body:", res.data);
+                    this.editPatient = res.data;
                 })
-                .then((res)=>{
-                    console.log('status:', res.status);
-                    console.log('body:', res.data);
-                    this.editPatient = res.data
-                })
-                .catch(err =>{
-                    console.log('err:', err);
+                .catch(err => {
+                    console.log("err:", err);
                 });
         },
 
         // 患者情報更新
-        Update: function(editPatientId){
+        Update: function(editPatientId) {
             axios
-                .post('/api/updatePatient/'+editPatientId
-                ,{
-                  id:editPatientId,
-                  patient:this.editPatient,
-                  patient_room:this.editPatient.room,
-                  patient_name:this.editPatient.name,
-                  patient_sex:this.editPatient.sex,
-                  patient_birthday:this.editPatient.birthday,
-                  patient_hospitalization:this.editPatient.hospitalization_date,
-                  patient_surgery:this.editPatient.surgery_date,
-                  patient_memo:this.editPatient.memo
+                .post("/api/patients/update/" + editPatientId, {
+                    id: editPatientId,
+                    patient: this.editPatient,
+                    patient_room: this.editPatient.room,
+                    patient_name: this.editPatient.name,
+                    patient_sex: this.editPatient.sex,
+                    patient_birthday: this.editPatient.birthday,
+                    patient_hospitalization: this.editPatient
+                        .hospitalization_date,
+                    patient_surgery: this.editPatient.surgery_date,
+                    patient_memo: this.editPatient.memo
                 })
-                .then((res)=>{
-                    console.log('status:', res.status);
-                    console.log('body:', res.data);
-                    this.patient = res.data
+                .then(res => {
+                    console.log("status:", res.status);
+                    console.log("body:", res.data);
+                    this.patient = res.data;
                 })
-                .catch(err =>{
-                    console.log('err:', err);
+                .catch(err => {
+                    console.log("err:", err);
                 });
-        },
+        }
     },
 
-
-  created() {
-    this.fetchPatients()
-  },
-  };
-
+    created() {
+        this.fetchPatients();
+    }
+};
 </script>
 
 <style scoped>

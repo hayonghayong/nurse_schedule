@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
-use App\User;
+
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
   return $request->user();
@@ -11,62 +11,50 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::group(['middleware' => 'auth'], function () {
   // -----users_tabel crud -----
   // ログイン中のユーザー情報取得
-  Route::get('user/fetch', 'Api\UsersController@show');
+  Route::get('/users/login-user', 'Api\UsersController@getLoginUser');
+  // 病棟内の全ユーザー取得
+  Route::get('/users/get/all','Api\UsersController@allstaffs');
+
+
+  // -----はよん追記-----
+  // -----patients_tabel API -----
+  // 患者一覧表示
+  Route::get('/patients/get/all','Api\PatientsController@getAllPatients');
+
+  // 患者登録
+  Route::post('/patients/post','Api\PatientsController@addPatients'); 
+
+  // 患者削除
+  Route::delete('/patients/delete/', 'Api\PatientsController@destroy');
+
+  // 更新する患者取得 
+  Route::get('/patients/get/{patient_id}','Api\PatientsController@editPatient');
+
+  // 患者更新
+  Route::post('/patients/update/{patient_id}','Api\PatientsController@updatePatient');
+
+  // -----usersPatients_tabel API -----
+  // 佐藤<ここは命名いじってません
+  // 担当患者登録
+  Route::post('/add/{userPatients}','Api\UsersPatientsController@add'); 
+
+  // 担当患者取得
+  Route::get('/get','Api\UsersPatientsController@get'); 
+
+  // -----treatment_tabel API -----
+  // 処置一覧表示
+  Route::get('/treatments/get/all','Api\TreatmentsController@alltreatments');
+
+  // 処置登録
+  Route::post('/treatments/post','Api\TreatmentsController@addTreatment'); 
+
+  // 処置削除
+  Route::delete('/treatments/delete', 'Api\TreatmentsController@destroy');
+
+  // 更新する処置取得
+  Route::get('/treatments/get/{treatment}','Api\TreatmentsController@editTreatment');
+
+  // 処置更新
+  Route::post('/treatments/update/{editTreatment}','Api\TreatmentsController@updateTreatment');
 
 });
-
-
-// -----はよん追記-----
-// -----patients_tabel API -----
-// 患者一覧表示
-Route::get('/allPatient','PatientsController@Allpatients');
-
-// 患者登録
-Route::post('/addPatient','PatientsController@add'); 
-
-// 患者削除
-Route::delete('/delPatient', 'PatientsController@destroy');
-
-// 更新する患者取得
-Route::get('/getPatient/{patient}','PatientsController@editPatient');
-
-// 患者更新
-Route::post('/updatePatient/{editPatient}','PatientsController@updatePatient');
-
-// -----usersPatients_tabel API -----
-// 担当患者登録
-Route::post('/add/{userPatients}','UsersPatientsController@add'); 
-
-// 担当患者取得
-Route::get('/get','UsersPatientsController@get'); 
-
-// -----treatment_tabel API -----
-// 処置一覧表示
-Route::get('/allTreatment','TreatmentsController@alltreatments');
-
-// 処置登録
-Route::post('/addTreatment','TreatmentsController@addTreatment'); 
-
-// 患者削除
-Route::delete('/delTreatment', 'TreatmentsController@destroy');
-
-// 更新する患者取得
-Route::get('/getTreatment/{treatment}','TreatmentsController@editTreatment');
-
-// 患者更新
-Route::post('/updateTreatment/{editTreatment}','TreatmentsController@updateTreatment');
-
-// -----user_tabel API -----
-// 看護師一覧表示
-// Route::get('/allStaffs','UsersController@allstaffs');
-Route::get('/allStaffs',function()
-{
-    // $wardId= Auth::ward_id();
-     // $patients = Patient::where('ward_id','=', $wardId)
-    // ->orderBy('room', 'asc')
-    // ->get();
-    $staffs = User::orderBy('id','asc')->get();
-    return $staffs;
-}
-
-);

@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Http\Controllers;
-
+namespace App\Http\Controllers\Api;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Auth;
 use Validate;
 use DB;
 use App\Patient;
-    
+
   class PatientsController extends Controller
   {
      //患者表示
-    public function Allpatients(){ 
+    public function getAllPatients(){ 
     // $wardId= Auth::ward_id();
      // $patients = Patient::where('ward_id','=', $wardId)
     // ->orderBy('room', 'asc')
