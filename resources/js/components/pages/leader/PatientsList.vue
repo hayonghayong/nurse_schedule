@@ -118,6 +118,7 @@ export default {
 
         // 更新する患者情報取得
         Edit: function(patientId) {
+          console.log(patientId)
             axios
                 .get("/api/patients/get/" + patientId, {})
                 .then(res => {

@@ -34,7 +34,7 @@ export default {
   }),
   methods: {
     add: function(treatment){
-      axios.post('/api/addTreatment',{
+      axios.post('/api/treatments/post',{
         name:this.treatment.name,
         time_required:this.treatment.time_required,
         required_flg:this.treatment.required_flg

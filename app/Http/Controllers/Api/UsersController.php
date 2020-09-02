@@ -20,12 +20,14 @@ use App\User;
         }
 
         //看護師表示
-        public function allstaffs(){ 
-        // $patients = Patient::where('ward_id','=', $wardId)
-        // ->orderBy('room', 'asc')
-        // ->get();
-            $staffs = User::orderBy('id','asc')->get();
-            return $staffs;
+        public function allstaffs()
+        { 
+          $user = Auth::user();
+          $user_ward_id = $user->ward_id;
+          $staffs = User::where('ward_id','=', $user_ward_id)
+          ->orderBy('id', 'asc')
+          ->get();
+          return $staffs;
         }
     }
     

@@ -28,10 +28,10 @@ Route::group(['middleware' => 'auth'], function () {
   Route::delete('/patients/delete/', 'Api\PatientsController@destroy');
 
   // 更新する患者取得 
-  Route::get('/patients/get/{patient_id}','Api\PatientsController@editPatient');
+  Route::get('/patients/get/{patient}','Api\PatientsController@editPatient');
 
   // 患者更新
-  Route::post('/patients/update/{patient_id}','Api\PatientsController@updatePatient');
+  Route::post('/patients/update/{patient}','Api\PatientsController@updatePatient');
 
   // -----usersPatients_tabel API -----
   // 佐藤<ここは命名いじってません
