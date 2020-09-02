@@ -27,7 +27,24 @@ class LoginController extends Controller
      * @var string
      */
     
-    protected $redirectTo = RouteServiceProvider::HOME;
+    // protected $redirectTo = RouteServiceProvider::HOME;
+
+    // ▼admin_flgでログイン後のページ遷移を振り分ける
+    protected  function redirectTo()
+    {
+        $admin_flg = $this->guard()->user()->admin_flg;
+        if($admin_flg == 1){
+            return '/admin/setting/';
+        }else if($admin_flg == 0){
+            return '/staff/select-role/';
+        }
+    }
+
+    // ▼ログアウト後の遷移先
+    protected function loggedOut(\Illuminate\Http\Request $request)
+    {
+        return redirect('/login');
+    }
 
     /**
      * Create a new controller instance.
@@ -39,8 +56,8 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    // loginに必要な項目を追記
+    // ▼loginに必要な項目を追記
     public function username(){
       return 'login_id';
-  }
+    }
 }

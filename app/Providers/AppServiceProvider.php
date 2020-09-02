@@ -23,6 +23,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        // // adminのみ許可
+        // \Gate::define('admin', function ($user) {
+        //     return ($user->admin_flg == 1);
+        // });
     }
 }
