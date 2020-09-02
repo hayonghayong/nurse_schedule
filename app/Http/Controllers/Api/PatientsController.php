@@ -11,20 +11,23 @@ use App\Patient;
   class PatientsController extends Controller
   {
      //患者表示
-    public function getAllPatients(){ 
-    // $wardId= Auth::ward_id();
-     // $patients = Patient::where('ward_id','=', $wardId)
-    // ->orderBy('room', 'asc')
-    // ->get();
-    $patients = Patient::orderBy('room','asc')->get();
-    return $patients;
-  }
+    public function getAllPatients()
+    { 
+      $user = Auth::user();
+      $user_ward_id = $user->ward_id;
+      $patients = Patient::where('ward_id','=', $user_ward_id)
+      ->orderBy('room', 'asc')
+      ->get();
+      return $patients;
+    }
+
     // 新規患者追加
-    public function addPatient(Request $request) {
-    $patients = new Patient;
-      // $patients->ward_id = Auth::ward_id();
-      // Auth使えるようになるまではward_id指定する
-      $patients->ward_id = "1";
+    public function addPatient(Request $request) 
+    {
+      $patients = new Patient;
+      $user = Auth::user();
+      $user_ward_id = $user->ward_id;
+      $patients->ward_id = $user_ward_id;
       $patients->room = $request->room;
       $patients->name = $request->name;
       $patients->sex = $request->sex;
@@ -38,24 +41,30 @@ use App\Patient;
     }
   
     // 患者削除
-    public function destroy(Request $request) {
+    public function destroy(Request $request)
+    {
       $patients = Patient::where('id', $request->id)->delete();
-      //　ログインができたら記述を変更（ward_idでselectが必要）
-      $upDatePatientsData = Patient::orderBy('room','asc')->get();
+      $user = Auth::user();
+      $user_ward_id = $user->ward_id;
+      $upDatePatientsData = Patient::where('ward_id','=', $user_ward_id)
+      ->orderBy('room','asc')
+      ->get();
       return $upDatePatientsData;
     }
 
     // 編集する患者取得
-  public function editPatient(Patient $patient){ 
-    return $patient;
-  }
+    public function editPatient(Patient $patient)
+    { 
+      return $patient;
+    }
   
-  // 患者編集
-  public function updatePatient(Request $request,Patient $patient) {
+    // 患者編集
+    public function updatePatient(Request $request,Patient $patient) 
+    {
     $patients = Patient::find($request->id);
-      // $patients->ward_id = Auth::ward_id();
-      // Auth使えるようになるまではward_id指定する
-    $patients->ward_id = "1";
+    $user = Auth::user();
+    $user_ward_id = $user->ward_id;
+    $patients->ward_id = $user_ward_id;
     $patients->room = $request->patient_room;
     $patients->name = $request->patient_name;
     $patients->sex = $request->patient_sex;

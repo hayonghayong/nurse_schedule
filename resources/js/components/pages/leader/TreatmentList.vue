@@ -107,7 +107,7 @@ export default {
                     console.log("err:", err);
                 });
         },
-        // 患者情報更新
+        // 処置情報更新
         Update: function(editTreatmentId) {
             axios
                 .post("/api/treatments/update/" + editTreatmentId, {
