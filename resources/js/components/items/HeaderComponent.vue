@@ -17,6 +17,7 @@
             <v-btn icon>
                 <v-icon>mdi-magnify</v-icon>
             </v-btn>
+            <span @click="logout" style="cursor: pointer;">ログアウト</span>
 
             <v-menu left bottom>
                 <template v-slot:activator="{ on, attrs }">
@@ -207,7 +208,17 @@ export default {
     },
     created() {},
     computed: {},
-    methods: {}
+    methods: {
+        //ログアウト
+        logout: function() {
+            axios
+                .post("/logout")
+                .then(res => {
+                    location.href = "/";
+                })
+                .catch(err => console.log(err));
+        }
+    }
 };
 </script>
 
