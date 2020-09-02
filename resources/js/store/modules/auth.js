@@ -13,7 +13,7 @@ const mutations = {
 const actions = {
     async getLoginUserData({ commit }) {
         await axios
-            .get("/api/user/fetch")
+            .get("/api/users/login-user")
             .then(res => {
                 commit("setLoginUser", res.data);
             })

@@ -11,21 +11,21 @@ use App\User;
     class UsersController extends Controller
     {
         // ログイン中のユーザー情報を取得
-        public function show()
+        public function getLoginUser()
         {   
             if(Auth::user()){
                 $userData = Auth::user(); 
                 return response()->json($userData);
             }
-          }
-          
-     //看護師表示
-    public function allstaffs(){ 
-     // $patients = Patient::where('ward_id','=', $wardId)
-    // ->orderBy('room', 'asc')
-    // ->get();
-    $staffs = User::orderBy('id','asc')->get();
-    return $staffs;
+        }
+
+        //看護師表示
+        public function allstaffs(){ 
+        // $patients = Patient::where('ward_id','=', $wardId)
+        // ->orderBy('room', 'asc')
+        // ->get();
+            $staffs = User::orderBy('id','asc')->get();
+            return $staffs;
         }
     }
     
