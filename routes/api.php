@@ -12,12 +12,18 @@ Route::group(['middleware' => 'auth'], function () {
   // -----users_tabel crud -----
   // ログイン中のユーザー情報取得
   Route::get('/users/login-user', 'Api\UsersController@getLoginUser');
-  // 病棟内の全ユーザー取得
+  // 病棟内の全現役ユーザー取得
   Route::get('/users/get/all','Api\UsersController@allstaffs');
+  // 病棟内の全退職済みユーザー取得
+  Route::get('/users/get/retired','Api\UsersController@getRetiredUser');
   // 選択したユーザー取得
   Route::get('/users/get/{user_id}','Api\UsersController@getSelectUser');
   // ユーザー情報を更新
   Route::post('/users/update','Api\UsersController@updateUser');
+  // ユーザー情報をソフトデリート
+  Route::post('/users/delete','Api\UsersController@deleteUser');
+  // ソフトデリートを解除
+  Route::post('/users/restore','Api\UsersController@restoreUser');
 
 
   // -----teams_tabel crud -----
