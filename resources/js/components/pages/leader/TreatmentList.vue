@@ -113,9 +113,9 @@ export default {
                 .post("/api/treatments/update/" + editTreatmentId, {
                     id: editTreatmentId,
                     treatment: this.editTreatment,
-                    treatment_name: this.editTreatment.name,
-                    treatment_time: this.editTreatment.time_required,
-                    treatment_required: this.editTreatment.required_flg
+                    name: this.editTreatment.name,
+                    time_required: this.editTreatment.time_required,
+                    required_flg: this.editTreatment.required_flg
                 })
                 .then(res => {
                     console.log("status:", res.status);

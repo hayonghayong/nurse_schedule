@@ -3,8 +3,9 @@
 namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Requests\PatientPageApiRequest;
 use Auth;
-use Validate;
+use Validator;
 use DB;
 use App\Patient;
 
@@ -22,7 +23,7 @@ use App\Patient;
     }
 
     // 新規患者追加
-    public function addPatient(Request $request) 
+    public function addPatient(PatientPageApiRequest $request) 
     {
       $patients = new Patient;
       $user = Auth::user();
@@ -59,22 +60,22 @@ use App\Patient;
     }
   
     // 患者編集
-    public function updatePatient(Request $request,Patient $patient) 
+    public function updatePatient(PatientPageApiRequest $request,Patient $patient) 
     {
     $patients = Patient::find($request->id);
     $user = Auth::user();
     $user_ward_id = $user->ward_id;
     $patients->ward_id = $user_ward_id;
-    $patients->room = $request->patient_room;
-    $patients->name = $request->patient_name;
-    $patients->sex = $request->patient_sex;
-    $patients->birthday = $request->patient_birthday;
-    $patients->hospitalization_date = $request->patient_hospitalization;
-    $patients->surgery_date = $request->patient_surgery;
-    $patients->memo = $request->patient_memo;
+    $patients->room = $request->room;
+    $patients->name = $request->name;
+    $patients->sex = $request->sex;
+    $patients->birthday = $request->birthday;
+    $patients->hospitalization_date = $request->hospitalization_date;
+    $patients->surgery_date = $request->surgery_date;
+    $patients->memo = $request->memo;
     $patients->discharge_flg = "0";
     $patients->save();
-    return $patient;
+    return $patients;
   }
 
 

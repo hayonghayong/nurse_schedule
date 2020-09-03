@@ -137,14 +137,13 @@ export default {
                 .post("/api/patients/update/" + editPatientId, {
                     id: editPatientId,
                     patient: this.editPatient,
-                    patient_room: this.editPatient.room,
-                    patient_name: this.editPatient.name,
-                    patient_sex: this.editPatient.sex,
-                    patient_birthday: this.editPatient.birthday,
-                    patient_hospitalization: this.editPatient
-                        .hospitalization_date,
-                    patient_surgery: this.editPatient.surgery_date,
-                    patient_memo: this.editPatient.memo
+                    room: this.editPatient.room,
+                    name: this.editPatient.name,
+                    sex: this.editPatient.sex,
+                    birthday: this.editPatient.birthday,
+                    hospitalization_date: this.editPatient.hospitalization_date,
+                    surgery_date: this.editPatient.surgery_date,
+                    memo: this.editPatient.memo
                 })
                 .then(res => {
                     console.log("status:", res.status);
