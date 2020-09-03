@@ -25,9 +25,35 @@ use App\User;
           $user = Auth::user();
           $user_ward_id = $user->ward_id;
           $staffs = User::where('ward_id','=', $user_ward_id)
-          ->orderBy('id', 'asc')
-          ->get();
+            ->where('admin_flg','=',0) //管理者を除く
+            ->orderBy('id', 'asc')
+            ->get();
           return $staffs;
+        }
+
+        // 選択したユーザー情報を取得
+        public function getSelectUser($user_id)
+        {   
+            // 病棟の情報を格納
+            $ward_id = Auth::user()->ward_id; 
+            // ユーザー情報を取得
+            $userData = User::where('ward_id','=', $ward_id)
+                        ->where('id','=',$user_id)
+                        ->first();
+            return response()->json($userData);
+        }
+
+        // ユーザーを更新 <今は名前だけ
+        public function updateUser(Request $request)
+        {   
+            // インスタンス生成
+            $userData = User::find($request->id);
+    
+            // 病棟の情報を取得
+            $ward_id = Auth::user()->ward_id;
+            // 更新するデータを格納
+            $userData->name = $request->name;
+            $userData->save();
         }
     }
     
