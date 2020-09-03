@@ -1,10 +1,13 @@
 <?php
 
 namespace App\Http\Controllers\Api;
+
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Requests\TreatmentPageApiRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 use Auth;
-use Validate;
+use Validator;
 use DB;
 use App\Treatment;
     
@@ -22,7 +25,7 @@ use App\Treatment;
     }
 
     // 新規処置登録
-    public function addTreatment(Request $request) 
+    public function addTreatment(TreatmentPageApiRequest $request) 
     {
       $treatments = new Treatment;
       $user = Auth::user();
@@ -54,15 +57,15 @@ use App\Treatment;
     }
 
     // 処置編集
-    public function updateTreatment(Request $request,Treatment $treatment) 
+    public function updateTreatment(TreatmentPageApiRequest $request,Treatment $treatment) 
     {
       $treatments = Treatment::find($request->id);
       $user = Auth::user();
       $user_ward_id = $user->ward_id;
       $treatments->ward_id = $user_ward_id;
-      $treatments->name = $request->treatment_name;
-      $treatments->time_required = $request->treatment_time;
-      $treatments->required_flg = $request->treatment_required;
+      $treatments->name = $request->name;
+      $treatments->time_required = $request->time_required;
+      $treatments->required_flg = $request->required_flg;
       $treatments->save();
       return $treatment;
     }
