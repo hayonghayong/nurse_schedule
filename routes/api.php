@@ -15,6 +15,9 @@ Route::group(['middleware' => 'auth'], function () {
   // 病棟内の全ユーザー取得
   Route::get('/users/get/all','Api\UsersController@allstaffs');
 
+  // -----teams_tabel crud -----
+  // チーム生成
+  Route::post('/teams/post','Api\TeamsController@post'); 
 
   // -----はよん追記-----
   // -----patients_tabel API -----
