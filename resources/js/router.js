@@ -133,7 +133,7 @@ const routes = [
         name: "RegistStaff"
     },
     {
-        path: "/admin/edit-staff",
+        path: "/admin/edit-staff/:user_id",
         component: EditStaff,
         name: "EditStaff"
     }
