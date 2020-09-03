@@ -33,27 +33,32 @@ const routes = [
     {
         path: "/staff/select-role",
         component: SelectRole,
-        name: "SelectRole"
+        name: "SelectRole",
+        meta: { title: '役割選択'}
     },
     {
         path: "/staff/select-patients",
         component: SelectPatients,
-        name: "SelectPatients"
+        name: "SelectPatients",
+        meta: { title: '患者選択'}
     },
     {
         path: "/staff/regist-treatment-schedule",
         component: RegistTreatmentSchedule,
-        name: "RegistTreatmentSchedule"
+        name: "RegistTreatmentSchedule",
+        meta: { title: '処置設定'}
     },
     {
         path: "/staff/regist-schedule",
         component: RegistSchedule,
-        name: "RegistSchedule"
+        name: "RegistSchedule",
+        meta: { title: 'スケジュール登録'}
     },
     {
         path: "/staff/schedule-detail",
         component: ScheduleDetail,
-        name: "ScheduleDetail"
+        name: "ScheduleDetail",
+        meta: { title: '患者選択'}
     },
     {
         path: "/staff/staff-schedule",
@@ -64,59 +69,70 @@ const routes = [
     {
         path: "/leader/select-staff",
         component: SelectStaff,
-        name: "SelectStaff"
+        name: "SelectStaff",
+        meta: { title: 'チームスタッフ選択'}
     },
     {
         path: "/leader/schedule-list",
         component: ScheduleList,
-        name: "ScheduleList"
+        name: "ScheduleList",
+        meta: { title: '○月○日 日勤'}
     },
 
     {
         path: "/leader/staff-schedule-detail",
         component: StaffScheduleDetail,
-        name: "StaffScheduleDetail"
+        name: "StaffScheduleDetail",
+        meta: { title: '○月○日 日勤'}
     },
     {
         path: "/leader/edit-staff-schedule",
         component: EditStaffSchedule,
-        name: "EditStaffSchedule"
+        name: "EditStaffSchedule",
+        meta: { title: '○月○日 日勤'}
     },
     {
         path: "/leader/patients-list",
         component: PatientsList,
-        name: "PatientsList"
+        name: "PatientsList",
+        meta: { title: '患者一覧'}
     },
     {
         path: "/leader/regist-patient",
         component: RegistPatient,
-        name: "RegistPatient"
+        name: "RegistPatient",
+        meta: { title: '患者登録'}
     },
     {
         path: "/leader/edit-patient",
         component: EditPatient,
-        name: "EditPatient"
+        name: "EditPatient",
+        meta: { title: '患者編集'}
     },
     // 管理者ページ：4
     {
         path: "/admin/setting",
         component: Setting,
-        name: "Setting"
+        name: "Setting",
+        meta: { title: '不要'}
     },
     {
         path: "/admin/staff-list",
         component: StaffList,
-        name: "StaffList"
+        name: "StaffList",
+        meta: { title: 'スタッフ一覧'}
     },
     {
         path: "/admin/regist-staff",
         component: RegistStaff,
-        name: "RegistStaff"
+        name: "RegistStaff",
+        meta: { title: 'スタッフ登録'}
     },
     {
         path: "/admin/edit-staff",
         component: EditStaff,
-        name: "EditStaff"
+        name: "EditStaff",
+        meta: { title: 'スタッフ編集'}
     }
 ];
 // ▲ルーティング

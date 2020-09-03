@@ -1,24 +1,20 @@
 <template>
     <!-- 仮ヘッダー -->
     <div>
-        <v-app-bar color="indigo darken-24" dense dark>
-            <v-app-bar-nav-icon
-                @click.stop="drawer = !drawer"
-            ></v-app-bar-nav-icon>
+        <v-app-bar color="blue" dark>
+            <div>
+                <router-link to="home" class="link">＜戻る</router-link>
+            </div>
 
-            <v-toolbar-title>へっだー</v-toolbar-title>
-
+            <v-spacer></v-spacer>
+            <v-toolbar-title class="white--text title">タイトルが入る（仮）</v-toolbar-title>
             <v-spacer></v-spacer>
 
             <v-btn icon>
-                <v-icon>mdi-heart</v-icon>
+                <v-icon>mdi-account-cog</v-icon>
             </v-btn>
 
-            <v-btn icon>
-                <v-icon>mdi-magnify</v-icon>
-            </v-btn>
-
-            <v-menu left bottom>
+           <!--  <v-menu left bottom>
                 <template v-slot:activator="{ on, attrs }">
                     <v-btn icon v-bind="attrs" v-on="on">
                         <v-icon>mdi-dots-vertical</v-icon>
@@ -30,7 +26,14 @@
                         <v-list-item-title>Option {{ n }}</v-list-item-title>
                     </v-list-item>
                 </v-list>
+                
             </v-menu>
+            ー -->
+            <v-app-bar-nav-icon
+                @click.stop="drawer = !drawer"
+            ></v-app-bar-nav-icon>
+
+
         </v-app-bar>
 
         <!-- ▼仮ルーティングナビゲーション-->
@@ -192,4 +195,15 @@ export default {
 
 <style scoped>
 /* スコープ付きのスタイル */
+.link{
+    color:white;
+    text-decoration:none;
+}
+.link:hover{
+    opacity: 0.6;
+}
+.title{
+    font-weight:bold;
+}
+
 </style>
