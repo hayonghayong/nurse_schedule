@@ -31,6 +31,19 @@ use App\User;
           return $staffs;
         }
 
+        // 退職済みユーザーを取得
+        public function getRetiredUser()
+        { 
+          $user = Auth::user();
+          $user_ward_id = $user->ward_id;
+          $staffs = User::where('ward_id','=', $user_ward_id)
+            ->where('admin_flg','=',0) //管理者を除く
+            ->orderBy('id', 'asc')
+            ->onlyTrashed()
+            ->get();
+          return $staffs;
+        }
+
         // 選択したユーザー情報を取得
         public function getSelectUser($user_id)
         {   
@@ -39,6 +52,7 @@ use App\User;
             // ユーザー情報を取得
             $userData = User::where('ward_id','=', $ward_id)
                         ->where('id','=',$user_id)
+                        ->withTrashed()
                         ->first();
             return response()->json($userData);
         }
@@ -47,13 +61,31 @@ use App\User;
         public function updateUser(Request $request)
         {   
             // インスタンス生成
-            $userData = User::find($request->id);
+            $userData = User::withTrashed()
+                        ->find($request->id);
     
             // 病棟の情報を取得
             $ward_id = Auth::user()->ward_id;
             // 更新するデータを格納
             $userData->name = $request->name;
             $userData->save();
+        }
+
+        // ユーザーをソフトデリート 
+        public function deleteUser(Request $request)
+        {   
+            // インスタンス生成&削除実行
+            $userData = User::withTrashed()
+                        ->find($request->id)->delete();
+        }
+
+        // ソフトデリートを解除
+        public function restoreUser(Request $request)
+        {   
+            // インスタンス生成&削除実行
+            $userData = User::withTrashed()
+                        ->find($request->id)
+                        ->restore();
         }
     }
     

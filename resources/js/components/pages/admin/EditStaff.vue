@@ -20,6 +20,12 @@
                             >{{ userData.name }}</v-text-field
                         >
                     </v-col>
+                    <v-col cols="12">
+                        <v-switch
+                            v-model="switchToggle"
+                            :label="`${switchToggle.toString()}`"
+                        ></v-switch>
+                    </v-col>
 
                     <v-btn
                         class="mx-auto my-2 px-12 py-4 submit_btn"
@@ -45,9 +51,11 @@ export default {
         /**
          *
          * @param {Object} userData・・・選択したユーザーのデータを管理
+         * @param {Boolean} switchToggle・・・退職フラグのオンオフを管理
          *
          **/
-        userData: ""
+        userData: "",
+        switchToggle: ""
     }),
     created() {
         this.getSelectUser(this.$route.params.user_id);
@@ -58,9 +66,11 @@ export default {
             axios
                 .get("/api/users/get/" + user_id)
                 .then(res => {
-                    console.log("status:", res.status);
-                    console.log("body:", res.data);
+                    // 変数に格納
                     this.userData = res.data;
+                    // 退職フラグをスイッチに反映
+                    if (!res.data.deleted_at) this.switchToggle = false;
+                    else this.switchToggle = true;
                 })
                 .catch(err => {
                     console.log(err.response.data);
@@ -68,12 +78,35 @@ export default {
         },
         // ユーザー情報を更新 <今は名前のみ
         updateUser: function() {
+            // 退職フラグがtrueであれば削除する関数呼び出し
+            if (this.switchToggle === true) this.deleteUser();
+            else this.restoreUser();
+
             axios
                 .post("/api/users/update/", this.userData)
                 .then(res => {
                     console.log("status:", res.status);
                     console.log("body:", res.data);
                 })
+                .catch(err => {
+                    console.log(err.response.data);
+                });
+        },
+        // ユーザーを退職処理
+        deleteUser: function() {
+            axios
+                .post("/api/users/delete/", this.userData)
+                .then(res => {})
+                .catch(err => {
+                    console.log(err.response.data);
+                });
+        },
+        // 退職処理を解除
+        // ユーザーを退職処理
+        restoreUser: function() {
+            axios
+                .post("/api/users/restore/", this.userData)
+                .then(res => {})
                 .catch(err => {
                     console.log(err.response.data);
                 });
