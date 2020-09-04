@@ -17,6 +17,7 @@
                         {{ patient.memo }}
                     </li>
                 </ul>
+                <v-text-field v-model="patients.id"></v-text-field>
                 <v-btn
                     class="ma-2"
                     outlined
@@ -57,8 +58,9 @@ export default {
         select: function(patientsId) {
             console.log(patientsId);
             axios
-                .post("/api/add/" + patientsId, {
+                .post("/api/users_patients/add/" + patientsId, {
                     id: patientsId
+                    
                 })
                 .then(res => {
                     console.log("status:", res.status);

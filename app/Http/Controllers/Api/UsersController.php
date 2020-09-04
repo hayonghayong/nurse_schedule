@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Validate;
 use DB;
 use App\User;
+use App\Patient;
 
     class UsersController extends Controller
     {
@@ -19,7 +20,7 @@ use App\User;
             }
         }
 
-        //看護師表示
+        //登録ユーザー表示
         public function allstaffs()
         { 
           $user = Auth::user();
@@ -87,6 +88,25 @@ use App\User;
                         ->find($request->id)
                         ->restore();
         }
+
+        // 担当患者表示
+        public function getUsersPatients()
+        { 
+          $user_id = Auth::user()->id;
+          $usersPatients = User::find($user_id)
+          ->patients;
+          return $usersPatients;
+        }
+
+        // 担当患者登録
+        public function addUsersPatients(Request $request) 
+        {
+          $usersPatients = Auth::user();
+          // $usersPatients->patients()->attach([$request->id]); 
+          $usersPatients->patients()->attach($request->id); 
+          return $usersPatients;
+        }
+
     }
     
     

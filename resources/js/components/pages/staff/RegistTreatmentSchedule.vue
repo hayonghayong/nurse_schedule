@@ -43,18 +43,18 @@ export default {
   }),
   methods: {
     fetchPatients: function(){
-      // axios.get('/api/get')
-      // .then((res)=>{
-      //   console.log('status:', res.status);
-      //   console.log('body:', res.data);
-      //   this.usersPatients = res.data 
-      // })
-      // .catch(err =>{
-      // console.log('err:', err);
-      // })
+      axios.get('/api/users_patients/get/all')
+      .then((res)=>{
+        console.log('status:', res.status);
+        console.log('body:', res.data);
+        this.usersPatients = res.data 
+      })
+      .catch(err =>{
+      console.log('err:', err);
+      })
     },
     fetchTreatment: function(){
-      axios.get('/api/allTreatment')
+      axios.get('/api/treatments/get/all')
       .then((res)=>{
         console.log('status:', res.status);
         console.log('body:', res.data);

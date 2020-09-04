@@ -40,7 +40,7 @@ class User extends Authenticatable
     ];
 
 
-    public function patient()
+    public function patients()
     {
       return $this->belongsToMany('App\Patient');
     }

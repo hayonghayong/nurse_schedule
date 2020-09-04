@@ -30,7 +30,6 @@ Route::group(['middleware' => 'auth'], function () {
   // チーム生成
   Route::post('/teams/post','Api\TeamsController@post'); 
 
-  // -----はよん追記-----
   // -----patients_tabel API -----
   // 患者一覧表示
   Route::get('/patients/get/all','Api\PatientsController@getAllPatients');
@@ -48,12 +47,11 @@ Route::group(['middleware' => 'auth'], function () {
   Route::post('/patients/update/{patient}','Api\PatientsController@updatePatient');
 
   // -----usersPatients_tabel API -----
-  // 佐藤<ここは命名いじってません
   // 担当患者登録
-  Route::post('/add/{userPatients}','Api\UsersPatientsController@add'); 
+  Route::post('/users_patients/add/{userPatients}','Api\UsersController@addUsersPatients'); 
 
   // 担当患者取得
-  Route::get('/get','Api\UsersPatientsController@get'); 
+  Route::get('/users_patients/get/all','Api\UsersController@getUsersPatients'); 
 
   // -----treatment_tabel API -----
   // 処置一覧表示
