@@ -12,7 +12,7 @@ class Patient extends Model
   protected $dates = ['deleted_at'];
   protected $fillable = ['body'];
 
-  public function user()
+  public function users()
     {
       return $this->belongsToMany('App\User');
     }
