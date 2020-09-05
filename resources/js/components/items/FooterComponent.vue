@@ -4,6 +4,7 @@
     :value="activeBtn"
     grow
     color="teal"
+    fixed
   >
     <v-btn>
       <span>スケジュール</span>

@@ -1,13 +1,14 @@
 <template>
     <v-app>
         <!-- ヘッダーコンポーネント読み込み -->
-        <header-component />
+        <header-component v-if="$route.name !== 'SelectRole'"></header-component>
         <main>
             <!-- VueRouter読み込み -->
             <router-view></router-view>
         </main>
         <!-- フッターコンポーネント読み込み -->
-        <footer-component />
+        <footer-component v-if="$route.name !== 'SelectRole'"></footer-component>
+
     </v-app>
 </template>
 

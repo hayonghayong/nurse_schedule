@@ -1,32 +1,38 @@
 <template>
     <!-- 仮オブジェクト -->
-    <div>
-        <h1>【スタッフ】役割選択</h1>
-        <p>{{ loginUser.name }}さん</p>
-        <p>今日の役割を選択してください</p>
-        <!-- ▼リーダーボタン -->
-        <div class="my-2">
-            <router-link
-                :to="{ name: 'SelectStaff' }"
-                style="text-decoration: none;"
-            >
-                <v-btn color="primary" @click="postTeam()">リーダー</v-btn>
-            </router-link>
-        </div>
-        <!-- ▲リーダーボタンここまで -->
+        <div>
+            <v-app-bar
+            flat color="white" fixed light>
+                <span @click="logout" style="cursor: pointer;">＜ 戻る</span>
+            </v-app-bar>
 
-        <!-- ▼スタッフボタン -->
-        <div class="my-2">
-            <router-link
-                :to="{ name: 'SelectPatients' }"
-                style="text-decoration: none;"
-            >
-                <v-btn color="warning">スタッフ</v-btn>
-            </router-link>
-        </div>
-        <!-- ▲スタッフボタンここまで -->
-    </div>
+            <div class="message">
+                <h1>役割選択</h1>
+                <p>{{ loginUser.name }}さん</p>
+                <p>今日の役割を選択してください</p>
+            </div>
+            <!-- ▼リーダーボタン -->
+            <div class="button_wrap my-3">
+                <router-link
+                    :to="{ name: 'SelectStaff' }"
+                    style="text-decoration: none;"
+                >
+                    <v-btn depressed dark x-large height="110" width="260" class="button" color="#2196F3" @click="postTeam()">リーダー</v-btn>
+                </router-link>
+            </div>
+            <!-- ▲リーダーボタンここまで -->
 
+            <!-- ▼スタッフボタン -->
+            <div class="button_wrap my-6">
+                <router-link
+                    :to="{ name: 'SelectPatients' }"
+                    style="text-decoration: none;"
+                >
+                    <v-btn depressed dark x-large height="110" width="260" class="button" color="#ff8000">スタッフ</v-btn>
+                </router-link>
+            </div>
+            <!-- ▲スタッフボタンここまで -->
+        </div>
     <!-- ここまで -->
 </template>
 
@@ -47,6 +53,7 @@ export default {
         ...mapState("auth", ["loginUser"])
     },
     methods: {
+        
         //ログインしているユーザーの情報を取得：Actionsを参照
         ...mapActions("auth", ["getLoginUserData"]),
         // チーム生成
@@ -61,10 +68,35 @@ export default {
                     console.log(err.response.data);
                 });
         }
+        
     }
 };
 </script>
 
 <style scoped>
 /* スコープ付きのスタイル */
+h1{
+    font-size:22px;
+    margin-bottom:1.4rem;
+}
+
+.message{
+    text-align:center;
+    margin-bottom:40px;
+    margin-top:100px;
+}
+
+.v-application p{
+    margin-bottom: 6px;
+}
+
+.button_wrap{
+    width:260px;
+    margin:50px auto;
+}
+
+button{
+    font-weight:bold;
+    color:#fff;
+}
 </style>
