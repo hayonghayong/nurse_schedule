@@ -3,7 +3,14 @@
         <div>
             <v-app-bar
             flat color="white" fixed light>
-                <span @click="logout" style="cursor: pointer;">＜ 戻る</span>
+            <!--ここにログアウト付けたかった -->
+                <router-link
+                    :to="{ name: 'SelectStaff' }"
+                    style="text-decoration: none;"
+                >
+                ＜ 戻る
+                </router-link>
+
             </v-app-bar>
 
             <div class="message">
