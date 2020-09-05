@@ -16,6 +16,11 @@ class Patient extends Model
     {
       return $this->belongsToMany('App\User');
     }
+  
+  public function schedules()
+  {
+    return $this->belongsToMany('App\schedule');
+  }
 
 }
 

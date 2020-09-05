@@ -105,7 +105,7 @@ use Illuminate\Database\Seeder;
             ]);
 
             DB::table('treatments')->insert([
-                "ward_id" => 4,
+                "ward_id" => 1,
                 "name" => '内服',
                 "time_required" => 20,
                 "required_flg" => 1,
@@ -114,7 +114,7 @@ use Illuminate\Database\Seeder;
             ]);
 
             DB::table('treatments')->insert([
-                "ward_id" => 4,
+                "ward_id" => 1,
                 "name" => '食事補助',
                 "time_required" => 5,
                 "required_flg" => 0,
