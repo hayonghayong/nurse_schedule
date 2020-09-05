@@ -46,7 +46,7 @@ Route::group(['middleware' => 'auth'], function () {
   // 患者更新
   Route::post('/patients/update/{patient}','Api\PatientsController@updatePatient');
 
-  // -----usersPatients_tabel API -----
+  // -----patient_user_tabel API -----
   // 担当患者登録
   Route::post('/users_patients/add/{userPatients}','Api\UsersController@addUsersPatients'); 
 
@@ -68,5 +68,12 @@ Route::group(['middleware' => 'auth'], function () {
 
   // 処置更新
   Route::post('/treatments/update/{editTreatment}','Api\TreatmentsController@updateTreatment');
+
+  // -----team_users_table API-----
+
+  // チームメンバー登録
+  Route::post('/team_users/add/{staffs}','Api\TeamUsersController@addTeamUser'); 
+  Route::get('/team_users/get/all','Api\TeamUsersController@getTeamUsers'); 
+
 
 });

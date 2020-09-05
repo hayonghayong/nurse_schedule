@@ -9,6 +9,16 @@
                         {{ staff.name }}
                     </li>
                 </ul>
+
+                <v-text-field v-model="staffs.id"></v-text-field>
+                <v-btn
+                    class="ma-2"
+                    outlined
+                    color="pink lighten-1"
+                    @click="select(staffs.id)"
+                >
+                    決定
+                </v-btn>
             </v-list-item-content>
         </v-list-item>
     </v-card>
@@ -34,6 +44,22 @@ export default {
                 })
                 .catch(err => {
                     console.log("err:", err);
+                });
+        },
+        select: function(staffsId) {
+            console.log(staffsId);
+            axios
+                .post("/api/team_users/add/" + staffsId, {
+                    id: staffsId
+                    
+                })
+                .then(res => {
+                    console.log("status:", res.status);
+                    console.log("body:", res.data);
+                    this.staffs = res.data;
+                })
+                .catch(err => {
+                    "err:", err;
                 });
         }
     },

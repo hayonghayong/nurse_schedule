@@ -13,6 +13,13 @@ use Illuminate\Database\Seeder;
             //Cmd: php artisan db:seed --class="TeamUsersTableSeeder"
             
             $faker = Faker\Factory::create("ja_JP");
+
+            DB::table('team_users')->insert([
+                "user_id" => 2,
+                "team_id" => 1,
+                "created_at" => $faker->dateTime("now"),
+                "updated_at" => $faker->dateTime("now")
+            ]);
             
         }
     }
