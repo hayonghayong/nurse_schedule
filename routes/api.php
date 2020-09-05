@@ -70,10 +70,18 @@ Route::group(['middleware' => 'auth'], function () {
   Route::post('/treatments/update/{editTreatment}','Api\TreatmentsController@updateTreatment');
 
   // -----team_users_table API-----
-
   // チームメンバー登録
   Route::post('/team_users/add/{staffs}','Api\TeamUsersController@addTeamUser'); 
+  // チームメンバー表示
   Route::get('/team_users/get/all','Api\TeamUsersController@getTeamUsers'); 
+
+  // -----schedule_table_API-----
+  // 看護師によるスケジュールデータの登録
+  Route::post('/schedules/post','Api\SchedulesController@addSchedules'); 
+  
+  // 登録スケジュール表示
+  Route::get('/schedules/get/all','Api\SchedulesController@getSchecules');
+
 
 
 });

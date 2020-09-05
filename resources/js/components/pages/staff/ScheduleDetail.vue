@@ -1,6 +1,17 @@
 <template> 
     <!-- 仮オブジェクト -->
-    <h1>【スタッフ】処置スケジュール詳細</h1>
+    <v-card>
+        <v-list-item>
+            <v-list-item-content>
+                <v-list-item-title>【スタッフ】処置スケジュール詳細</v-list-item-title>
+                <ul>
+                    <li v-for="schedule in schedules" v-bind:key="schedule.id">
+                        {{ schedule.name }}
+                    </li>
+                </ul>
+            </v-list-item-content>
+        </v-list-item>
+    </v-card>
     <!-- ここまで -->
 </template>
 <script>
@@ -9,12 +20,30 @@
 // Vue
 export default {
     components: {},
-    data: () => ({}),
-    created() {},
-    methods: {}
+    data: () => ({
+      schedules:[],
+    }),
+    methods: {
+      fetchSchedule: function() {
+            axios
+                .get("/api/schedules/get/all")
+                .then(res => {
+                    console.log("status:", res.status);
+                    console.log("body:", res.data);
+                    this.staffs = res.data;
+                })
+                .catch(err => {
+                    console.log("err:", err);
+                });
+        },
+    },
+    created() {
+      this.fetchSchedule();
+    },
 };
 </script>
 
 <style scoped>
 /* スコープ付きのスタイル */
 </style>
+
