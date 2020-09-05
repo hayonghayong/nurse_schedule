@@ -23,22 +23,22 @@ use App\Patient;
     }
 
     // 新規患者追加
-    public function addPatient(PatientPageApiRequest $request) 
-    {
-      $patients = new Patient;
-      $user = Auth::user();
-      $user_ward_id = $user->ward_id;
-      $patients->ward_id = $user_ward_id;
-      $patients->room = $request->room;
-      $patients->name = $request->name;
-      $patients->sex = $request->sex;
-      $patients->birthday = $request->birthday;
-      $patients->hospitalization_date = $request->hospitalization;
-      $patients->surgery_date = $request->surgery;
-      $patients->memo = $request->memo;
-      $patients->discharge_flg = "0";
-      $patients->save();
-      return $patients;
+    public function addPatients(PatientPageApiRequest $request) 
+    { 
+        $patients = new Patient;
+        $user = Auth::user();
+        $user_ward_id = $user->ward_id;
+        $patients->ward_id = $user_ward_id;
+        $patients->room = $request->room;
+        $patients->name = $request->name;
+        $patients->sex = $request->sex;
+        $patients->birthday = $request->birthday;
+        $patients->hospitalization_date = $request->hospitalization;
+        $patients->surgery_date = $request->surgery;
+        $patients->memo = $request->memo;
+        $patients->discharge_flg = "0";
+        $patients->save();
+        return $patients;
     }
   
     // 患者削除

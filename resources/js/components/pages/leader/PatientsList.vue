@@ -3,7 +3,13 @@
         <v-list subheader>
             <v-subheader>患者一覧</v-subheader>
             <div v-for="(patient, index) in patients" :key="patient.id">
-                <v-list-item class="px-8">
+                <v-list-item
+                    class="px-8"
+                    :to="{
+                        name: 'EditPatient',
+                        params: { patientId: patient.id }
+                    }"
+                >
                     <v-list-item-avatar>
                         <v-icon class="ma-2 mdi-36px" color="#62ABF8"
                             >mdi-account</v-icon
@@ -11,22 +17,22 @@
                     </v-list-item-avatar>
 
                     <v-list-item-content>
-                        <v-list-item-subtitle class="mb-1">
-                            {{ patient.room }}号室</v-list-item-subtitle
+                        <v-list-item-subtitle class="mb-1"
+                            >{{ patient.room }}号室</v-list-item-subtitle
                         >
-                        <v-list-item-title>
-                            {{ patient.name }}さん</v-list-item-title
+                        <v-list-item-title
+                            >{{ patient.name }}さん</v-list-item-title
                         >
                     </v-list-item-content>
 
                     <v-list-item-icon>
-                        <v-icon
+                        <!-- <v-icon
                             class="ma-2"
                             outlined
                             color="#6c6c6c"
                             @click="Edit(patient.id)"
                             >mdi-pencil</v-icon
-                        >
+                        > -->
                         <v-icon
                             class="ma-2"
                             outlined
@@ -41,27 +47,6 @@
                     :key="index"
                 ></v-divider>
             </div>
-        </v-list>
-
-        <!-- はよん追記 -->
-        <v-list>
-            <v-text-field v-model="editPatient.room"></v-text-field>
-            <v-text-field v-model="editPatient.name"></v-text-field>
-            <v-text-field v-model="editPatient.sex"></v-text-field>
-            <v-text-field v-model="editPatient.birthday"></v-text-field>
-            <v-text-field
-                v-model="editPatient.hospitalization_date"
-            ></v-text-field>
-            <v-text-field v-model="editPatient.surgery_date"></v-text-field>
-            <v-text-field v-model="editPatient.memo"></v-text-field>
-            <v-btn
-                class="ma-2"
-                outlined
-                color="pink lighten-1"
-                @click="Update(editPatient.id)"
-            >
-                変更
-            </v-btn>
         </v-list>
     </div>
 </template>
@@ -114,21 +99,6 @@ export default {
                     .catch(err => {
                         console.log("err:", err);
                     });
-        },
-
-        // 更新する患者情報取得
-        Edit: function(patientId) {
-          console.log(patientId)
-            axios
-                .get("/api/patients/get/" + patientId, {})
-                .then(res => {
-                    console.log("status:", res.status);
-                    console.log("body:", res.data);
-                    this.editPatient = res.data;
-                })
-                .catch(err => {
-                    console.log("err:", err);
-                });
         },
 
         // 患者情報更新

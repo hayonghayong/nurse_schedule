@@ -301,6 +301,7 @@ export default {
                 axios
                     .post("api/patients/post", formData, config)
                     .then(res => {
+                        console.log("body:", res.data);
                         this.patient = res.data;
                         const selectedGenderRole = res.data.sex;
                         if (selectedGenderRole == 1) {
@@ -315,6 +316,7 @@ export default {
                         this.isDialogOpen.successDialog = true;
                     })
                     .catch(err => {
+                        console.log(err);
                         this.setAxiosErrorData(err);
                     });
             } else {
