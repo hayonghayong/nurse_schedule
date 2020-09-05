@@ -20,6 +20,13 @@ use Illuminate\Database\Seeder;
                 "created_at" => $faker->dateTime("now"),
                 "updated_at" => $faker->dateTime("now")
             ]);
+
+            DB::table('team_users')->insert([
+                "user_id" => 3,
+                "team_id" => 1,
+                "created_at" => $faker->dateTime("now"),
+                "updated_at" => $faker->dateTime("now")
+            ]);
             
         }
     }

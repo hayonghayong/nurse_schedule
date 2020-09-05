@@ -18,17 +18,23 @@ use App\Team;
           $staffs->team_id =Team::find(Auth::user()->id)->id;
           $staffs->user_id =$request->id; 
           $staffs->save();
+          $staffs->users()->attach($request->id); 
           return $staffs;
         }
 
-      // チームメンバー取得
+      // チームメンバー表示
       public function getTeamUsers()
         { 
-          // $user_id = Auth::user()->id;
-          $staffs = TeamUser::where('team_id','=','1')
-          // ->user
-          // ->name;
-          ->get();
+          $user_id = Auth::user()->id;
+          $team = Team::where('user_id',$user_id)
+          ->value('id');  //ログインユーザーが所属してるチームid取得
+          $staffs = TeamUser::where('team_id',$team)
+          ->pluck('id');  //チームに所属しているuser_id取得
+          // foreach ($team_users as $team_user){
+          //   $staffs = TeamUser::find($team_user)   //チームメンバーidをuser_tableから探す
+          // ->users;
+          // }
+          return $staffs;
         }
     }
    
