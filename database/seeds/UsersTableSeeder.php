@@ -91,5 +91,25 @@ use Illuminate\Database\Seeder;
                 "updated_at" => $faker->dateTime("now")
             ]);
 
+            DB::table('users')->insert([
+                "ward_id" => 1,
+                "name" => 'みっしー',
+                "login_id" => 'nurse7',
+                "password" => bcrypt('nurse7'),
+                "admin_flg" => 0,
+                "created_at" => $faker->dateTime("now"),
+                "updated_at" => $faker->dateTime("now")
+            ]);
+
+            DB::table('users')->insert([
+                "ward_id" => 1,
+                "name" => 'いまっぱ',
+                "login_id" => 'nurse8',
+                "password" => bcrypt('nurse8'),
+                "admin_flg" => 0,
+                "created_at" => $faker->dateTime("now"),
+                "updated_at" => $faker->dateTime("now")
+            ]);
+
         }
     }
