@@ -29,7 +29,6 @@ import RegistStaff from "./components/pages/admin/RegistStaff.vue";
 import EditStaff from "./components/pages/admin/EditStaff.vue";
 // ▲ページコンポーネントのインポート
 
-
 // ▼ルーティング１１
 const routes = [
     // スタッフページ：6
@@ -37,25 +36,25 @@ const routes = [
         path: "/staff/select-role",
         component: SelectRole,
         name: "SelectRole",
-        meta: { title: '役割選択'}
+        meta: { title: "役割選択" }
     },
     {
         path: "/staff/select-patients",
         component: SelectPatients,
         name: "SelectPatients",
-        meta: { title: '患者選択'}
+        meta: { title: "患者選択" }
     },
     {
         path: "/staff/regist-treatment-schedule",
         component: RegistTreatmentSchedule,
         name: "RegistTreatmentSchedule",
-        meta: { title: '処置設定'}
+        meta: { title: "処置設定" }
     },
     {
         path: "/staff/regist-schedule",
         component: RegistSchedule,
         name: "RegistSchedule",
-        meta: { title: 'スケジュール登録'}
+        meta: { title: "スケジュール登録" }
     },
     {
         path: "/staff/schedule-detail",
@@ -100,26 +99,26 @@ const routes = [
         name: "RegistPatient"
     },
     {
-        path: "/leader/edit-patient",
+        path: "/leader/edit-patient/:patientId",
         component: EditPatient,
         name: "EditPatient"
     },
     {
-      path: "/leader/edit-treatment",
-      component: EditTreatment,
-      name: "EditTreatment"
+        path: "/leader/edit-treatment",
+        component: EditTreatment,
+        name: "EditTreatment"
     },
     {
-      path: "/leader/regist-treatment",
-      component: RegistTreatment,
-      name: "RegistTreatment"
+        path: "/leader/regist-treatment",
+        component: RegistTreatment,
+        name: "RegistTreatment"
     },
     {
-      path: "/leader/treatment-list",
-      component: TreatmentList,
-      name: "TreatmentList"
+        path: "/leader/treatment-list",
+        component: TreatmentList,
+        name: "TreatmentList"
     },
-    
+
     // 管理者ページ：4
     {
         path: "/admin/setting",
@@ -145,9 +144,9 @@ const routes = [
 // ▲ルーティング
 
 const router = new VueRouter({
-  mode: "history",
-  base: process.env.baseUrl,
-  routes
+    mode: "hash",
+    base: process.env.baseUrl,
+    routes
 });
 
 // VueRouterインスタンスを作成してエクスポート
