@@ -1,5 +1,5 @@
 <template>
-    <div class="patientsLists">
+    <v-container class="patientsLists">
         <v-list subheader>
             <v-subheader>患者一覧</v-subheader>
             <div v-for="(patient, index) in patients" :key="patient.id">
@@ -37,7 +37,7 @@
                             class="ma-2"
                             outlined
                             color="#6c6c6c"
-                            @click="Delete(patient.id)"
+                            @click.prevent="Delete(patient.id)"
                             >mdi-delete</v-icon
                         >
                     </v-list-item-icon>
@@ -48,7 +48,7 @@
                 ></v-divider>
             </div>
         </v-list>
-    </div>
+    </v-container>
 </template>
 
 <script>
