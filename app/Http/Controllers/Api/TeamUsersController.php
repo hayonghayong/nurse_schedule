@@ -25,15 +25,25 @@ use App\Team;
       // チームメンバー表示
       public function getTeamUsers()
         { 
-          $user_id = Auth::user()->id;
-          $team = Team::where('user_id',$user_id)
-          ->value('id');  //ログインユーザーが所属してるチームid取得
-          $staffs = TeamUser::where('team_id',$team)
-          ->pluck('id');  //チームに所属しているuser_id取得
-          // foreach ($team_users as $team_user){
-          //   $staffs = TeamUser::find($team_user)   //チームメンバーidをuser_tableから探す
-          // ->users;
-          // }
+          $user_id = Auth::id();
+          // ログインユーザーのチームとteam_usersを取得
+          $teams = Team::with(['team_users'])
+          ->where('user_id', $user_id)
+          ->get();
+
+          // そのチームに所属するuser_idを取得
+          $team_users = $teams->map(function($team)
+          {
+            return $team
+            ->team_users
+            ->pluck('user_id');
+          });
+
+          // そのuser_idのuser情報を取得
+          foreach ($team_users as $val)
+          { 
+            $staffs = TeamUser::with(['users'])->where('user_id',$val)->get();
+          }
           return $staffs;
         }
     }
