@@ -8,6 +8,7 @@ use Validate;
 use DB;
 use App\TeamUser;
 use App\Team;
+use App\User;
     
     class TeamUsersController extends Controller
     {
@@ -35,18 +36,21 @@ use App\Team;
           $team_users = $teams->map(function($team)
           {
             return $team
-            ->team_users
-            ->pluck('user_id');
+            ->team_users;
           });
+          foreach($team_users as $val)
+          {
+            $staffs = $val
+            ->pluck('user_id');
+          }
 
           // そのuser_idのuser情報を取得
-          foreach ($team_users as $val)
-          { 
-            $staffs = TeamUser::with(['users'])->where('user_id',$val)->get();
-          }
+          // foreach ($team_usersId as $userId)
+          // { 
+          //   $staffs = TeamUser::with(['users'])->where('user_id',$userId)->get();
+          // }
           return $staffs;
         }
     }
-   
     
     
