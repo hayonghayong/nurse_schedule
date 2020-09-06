@@ -59,11 +59,13 @@
                 >
                 <v-card-text
                     >下記内容で処置登録が完了しました！
-                    <p class="successMessage">処置名：{{ treatment.name }}</p>
-                    <p class="successMessage">
+                    <p class="successMessage mb-0">
+                        処置名：{{ treatment.name }}
+                    </p>
+                    <p class="successMessage mb-0">
                         患者名：{{ treatment.time_required }}分
                     </p>
-                    <p class="successMessage">
+                    <p class="successMessage mb-0">
                         必須：{{ selectedrequiredFlg }}
                     </p>
                 </v-card-text>
@@ -144,7 +146,7 @@ export default {
             time_required: "",
             required_flg: ""
         },
-        timeRequired: [15, 30, 45, 60, 90, 120, 150, 180, 210, 240, 270],
+        timeRequired: [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60],
         selectedrequiredFlg: "",
         axiosErrorMessages: []
     }),
@@ -184,7 +186,7 @@ export default {
             formData.append("required_flg", this.treatment.required_flg);
             return formData;
         },
-        //　サーバー側からのエラーを定義
+        //　処置登録
         addTreatment: function() {
             //入力値のエラーを確認
             if (this.$refs.form.validate()) {

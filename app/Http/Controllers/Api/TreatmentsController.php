@@ -51,15 +51,18 @@ use App\Treatment;
     }
 
     // 編集する患者取得
-    public function editTreatment(Treatment $treatment)
+    public function editTreatment($treatment)
     { 
-    return $treatment;
+        $editTreatment = Treatment::where('id', $treatment)->first();
+
+        return $editTreatment;
     }
 
     // 処置編集
-    public function updateTreatment(TreatmentPageApiRequest $request,Treatment $treatment) 
-    {
-      $treatments = Treatment::find($request->id);
+    public function updateTreatment(TreatmentPageApiRequest $request , $editTreatment) 
+    {   
+      // $editTreatmentにはtreatmentIDが入っていますので変数名に違和感があれば変えてください！
+      $treatments = Treatment::find($editTreatment);
       $user = Auth::user();
       $user_ward_id = $user->ward_id;
       $treatments->ward_id = $user_ward_id;
@@ -67,7 +70,7 @@ use App\Treatment;
       $treatments->time_required = $request->time_required;
       $treatments->required_flg = $request->required_flg;
       $treatments->save();
-      return $treatment;
+      return $treatments;
     }
   }
 
