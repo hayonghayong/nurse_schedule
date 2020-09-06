@@ -68,7 +68,7 @@
             <h1 class="headline">患者登録</h1>
             <v-form ref="form" v-model="valid" lazy-validation>
                 <v-row>
-                    <v-col cols="12">
+                    <v-col cols="12" class="py-0">
                         <v-text-field
                             label="部屋番号"
                             v-model="patient.room"
@@ -83,7 +83,7 @@
                             ]"
                         ></v-text-field>
                     </v-col>
-                    <v-col cols="12">
+                    <v-col cols="12" class="py-0">
                         <v-text-field
                             label="患者名"
                             v-model="patient.name"
@@ -97,7 +97,7 @@
                             ]"
                         ></v-text-field>
                     </v-col>
-                    <v-col cols="12">
+                    <v-col cols="12" class="py-0">
                         <v-select
                             v-model="patient.sex"
                             :items="gender"
@@ -105,7 +105,7 @@
                             color="#62ABF8"
                         ></v-select>
                     </v-col>
-                    <v-col cols="12">
+                    <v-col cols="12" class="py-0">
                         <v-text-field
                             v-model="patient.birthday"
                             :readonly="readOnly.birthday"
@@ -118,7 +118,7 @@
                             </template>
                         </v-text-field>
                     </v-col>
-                    <v-col cols="12">
+                    <v-col cols="12" class="py-0">
                         <v-text-field
                             v-model="patient.hospitalization"
                             :readonly="readOnly.hospitalization"
@@ -133,7 +133,7 @@
                             </template>
                         </v-text-field>
                     </v-col>
-                    <v-col cols="12">
+                    <v-col cols="12" class="py-0">
                         <v-text-field
                             v-model="patient.surgery"
                             :readonly="readOnly.surgery"
@@ -146,7 +146,7 @@
                             </template>
                         </v-text-field>
                     </v-col>
-                    <v-col cols="12">
+                    <v-col cols="12" class="py-0">
                         <v-textarea
                             label="特記事項"
                             v-model="patient.memo"
