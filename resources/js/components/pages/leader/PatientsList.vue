@@ -69,6 +69,9 @@ export default {
             memo: ""
         }
     }),
+    created() {
+        this.fetchPatients();
+    },
     methods: {
         // 患者一覧取得
         fetchPatients: function() {
@@ -83,7 +86,6 @@ export default {
                     console.log("err:", err);
                 });
         },
-
         // 患者削除
         Delete: function(patientId) {
             if (confirm("削除してよろしいでしょうか?"))
@@ -99,35 +101,7 @@ export default {
                     .catch(err => {
                         console.log("err:", err);
                     });
-        },
-
-        // 患者情報更新
-        Update: function(editPatientId) {
-            axios
-                .post("/api/patients/update/" + editPatientId, {
-                    id: editPatientId,
-                    patient: this.editPatient,
-                    room: this.editPatient.room,
-                    name: this.editPatient.name,
-                    sex: this.editPatient.sex,
-                    birthday: this.editPatient.birthday,
-                    hospitalization_date: this.editPatient.hospitalization_date,
-                    surgery_date: this.editPatient.surgery_date,
-                    memo: this.editPatient.memo
-                })
-                .then(res => {
-                    console.log("status:", res.status);
-                    console.log("body:", res.data);
-                    this.patient = res.data;
-                })
-                .catch(err => {
-                    console.log("err:", err);
-                });
         }
-    },
-
-    created() {
-        this.fetchPatients();
     }
 };
 </script>
