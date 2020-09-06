@@ -104,7 +104,7 @@ const routes = [
         name: "EditPatient"
     },
     {
-        path: "/leader/edit-treatment",
+        path: "/leader/edit-treatment/:treatmentId",
         component: EditTreatment,
         name: "EditTreatment"
     },

@@ -1,58 +1,53 @@
 <template>
-    <!-- 仮オブジェクト -->
-    <v-card>
-        <v-list-item>
-            <v-list-item-content>
-                <v-list-item-title>【リーダー】処置一覧</v-list-item-title>
-                <ul>
-                    <li
-                        v-for="treatment in treatments"
-                        v-bind:key="treatment.id"
-                    >
-                        {{ treatment.name }}
-                        <v-list-item-icon>
-                            <v-icon
-                                class="ma-2"
-                                outlined
-                                color="#6c6c6c"
-                                @click="Edit(treatment.id)"
-                                >mdi-pencil</v-icon
-                            >
-                            <v-icon
-                                class="ma-2"
-                                outlined
-                                color="#6c6c6c"
-                                @click="Delete(treatment.id)"
-                                >mdi-delete</v-icon
-                            >
-                        </v-list-item-icon>
-                    </li>
-                </ul>
-                <v-list>
-                    <v-text-field v-model="editTreatment.name"></v-text-field>
-                    <v-text-field
-                        v-model="editTreatment.time_required"
-                    ></v-text-field>
-                    <v-text-field
-                        v-model="editTreatment.required_flg"
-                    ></v-text-field>
-                    <v-btn
-                        class="ma-2"
-                        outlined
-                        color="pink lighten-1"
-                        @click="Update(editTreatment.id)"
-                    >
-                        変更
-                    </v-btn>
-                </v-list>
-            </v-list-item-content>
-        </v-list-item>
-    </v-card>
-    <!-- ここまで -->
+    <v-container class="treatmentsLists">
+        <v-list subheader>
+            <v-subheader>処置一覧</v-subheader>
+            <div v-for="(treatment, index) in treatments" :key="treatment.id">
+                <v-list-item
+                    class="px-8"
+                    :to="{
+                        name: 'EditTreatment',
+                        params: { treatmentId: treatment.id }
+                    }"
+                >
+                    <v-list-item-avatar>
+                        <v-icon class="ma-2 mdi-36px" color="#62ABF8"
+                            >mdi-hospital-box-outline</v-icon
+                        >
+                    </v-list-item-avatar>
+
+                    <v-list-item-content>
+                        <v-list-item-title>{{
+                            treatment.name
+                        }}</v-list-item-title>
+                    </v-list-item-content>
+
+                    <v-list-item-icon>
+                        <v-icon
+                            class="ma-2"
+                            outlined
+                            color="#6c6c6c"
+                            @click="Edit(treatment.id)"
+                            >mdi-pencil</v-icon
+                        >
+                        <v-icon
+                            class="ma-2"
+                            outlined
+                            color="#6c6c6c"
+                            @click.prevent="Delete(treatment.id)"
+                            >mdi-delete</v-icon
+                        >
+                    </v-list-item-icon>
+                </v-list-item>
+                <v-divider
+                    v-if="index + 1 < treatments.length"
+                    :key="index"
+                ></v-divider>
+            </div>
+        </v-list>
+    </v-container>
 </template>
 <script>
-// コンポーネントのインポート
-
 // Vue
 export default {
     components: {},
@@ -64,6 +59,9 @@ export default {
             required_flg: ""
         }
     }),
+    created() {
+        this.fetchTreatment();
+    },
     methods: {
         fetchTreatment: function() {
             axios
@@ -92,43 +90,7 @@ export default {
                     .catch(err => {
                         console.log("err:", err);
                     });
-        },
-
-        // 更新する処置情報取得
-        Edit: function(treatmentId) {
-            axios
-                .get("/api/treatments/get/" + treatmentId, {})
-                .then(res => {
-                    console.log("status:", res.status);
-                    console.log("body:", res.data);
-                    this.editTreatment = res.data;
-                })
-                .catch(err => {
-                    console.log("err:", err);
-                });
-        },
-        // 処置情報更新
-        Update: function(editTreatmentId) {
-            axios
-                .post("/api/treatments/update/" + editTreatmentId, {
-                    id: editTreatmentId,
-                    treatment: this.editTreatment,
-                    name: this.editTreatment.name,
-                    time_required: this.editTreatment.time_required,
-                    required_flg: this.editTreatment.required_flg
-                })
-                .then(res => {
-                    console.log("status:", res.status);
-                    console.log("body:", res.data);
-                    this.treatment = res.data;
-                })
-                .catch(err => {
-                    console.log("err:", err);
-                });
         }
-    },
-    created() {
-        this.fetchTreatment();
     }
 };
 </script>
