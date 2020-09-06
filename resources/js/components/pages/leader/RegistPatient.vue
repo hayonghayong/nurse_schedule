@@ -190,7 +190,7 @@ export default {
          * @param {Object} isDialogOpen・・・Dialogの表示非表示を管理。
          * @param {Object} patient・・・患者のプロフィールデータを管理
          * @param {Array} gender・・・性別選択肢を管理
-         * @param {String} gender・・・選択済みの性別（文字列）を管理
+         * @param {String} selectedGender・・・選択済みの性別（文字列）を管理
          * @param {Array} axiosErrorMessages・・・DB側のバリデーションエラーを受け取る
          *
          **/
