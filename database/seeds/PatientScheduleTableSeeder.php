@@ -27,6 +27,27 @@ class PatientScheduleTableSeeder extends Seeder
                 "updated_at" => $faker->dateTime("now")
             ]);
 
+            DB::table('patient_schedule')->insert([
+                "patient_id" => 1,
+                "schedule_id" => 3,
+                "created_at" => $faker->dateTime("now"),
+                "updated_at" => $faker->dateTime("now")
+            ]);
+
+            DB::table('patient_schedule')->insert([
+                "patient_id" => 2,
+                "schedule_id" => 4,
+                "created_at" => $faker->dateTime("now"),
+                "updated_at" => $faker->dateTime("now")
+            ]);
+
+            DB::table('patient_schedule')->insert([
+                "patient_id" => 1,
+                "schedule_id" => 5,
+                "created_at" => $faker->dateTime("now"),
+                "updated_at" => $faker->dateTime("now")
+            ]);
+
             
 
     }

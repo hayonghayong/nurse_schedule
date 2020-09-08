@@ -37,10 +37,24 @@ export default {
                     console.log("err:", err);
                 });
         },
+      
+      fetchSchedule: function() {
+            axios
+                .get("/api/schedules/get/team")
+                .then(res => {
+                    console.log("status:", res.status);
+                    console.log("body:", res.data);
+                    this.schedules = res.data;
+                })
+                .catch(err => {
+                    console.log("err:", err);
+                });
+        },
     },
 
     created() {
       this.fetchStaff();
+      this.fetchSchedule();
     },
 };
 </script>
