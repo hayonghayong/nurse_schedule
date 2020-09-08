@@ -6,7 +6,7 @@
                 <v-list-item-title>【スタッフ】処置スケジュール一覧</v-list-item-title>
                 <ul>
                     <li v-for="schedule in schedules" v-bind:key="schedule.id">
-                        {{ schedule.name }}
+                        {{ schedule }}
                     </li>
                 </ul>
             </v-list-item-content>

@@ -82,6 +82,9 @@ Route::group(['middleware' => 'auth'], function () {
   // 登録スケジュール表示
   Route::get('/schedules/get/all','Api\SchedulesController@getSchecules');
 
+  // チームのスケジュール表示
+  Route::get('/schedules/get/team','Api\SchedulesController@getTeamSchecules');
+
 
 
 });

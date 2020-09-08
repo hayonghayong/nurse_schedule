@@ -7,6 +7,9 @@ use Auth;
 use Validate;
 use DB;
 use App\Schedule;
+use App\Team;
+use App\User;
+use Illuminate\Support\Arr;
     
     class SchedulesController extends Controller
     {
@@ -26,13 +29,61 @@ use App\Schedule;
       return $schedules;
     }
 
+    // 自分のスケジュール取得
     public function getSchecules()
       { 
+        // スケジュールと同時に処置と患者情報も全て取得
         $user_id = Auth::user()->id;
-        $schedules = Schedule::with('treatments','patients')
+        $all = Schedule::with('treatments','patients')
         ->where('user_id',$user_id)
         ->get();
-        return $schedules;
-        }
+
+        // // スケジュールと関連する患者情報のみ取得
+        $allPatients = $all->pluck('patients');
+        $patient = Arr::flatten($allPatients);
+
+        // // スケジュールと関連する処置情報のみ取得
+        $allTreatments = $all->pluck('treatments');
+        $treatment = Arr::flatten($allTreatments);
+
+        return [$patient,$treatment];
+      }
+
+      // チームのスケジュール取得
+      public function getTeamSchecules()
+      { 
+        $user_id = Auth::id();
+          // ログインユーザーのチームとteam_usersを取得
+          $teams = Team::with(['team_users'])
+          ->where('user_id', $user_id)
+          ->get();
+
+          // そのチームに所属するuser情報を取得
+          $allUsers = $teams->pluck('team_users');
+          $users = Arr::flatten($allUsers);
+
+          // user情報からuser_id取得
+          foreach($users as $val)
+          {
+            $usersId = $val
+            ->pluck('user_id');
+          }
+
+          // user_idに紐づいてるtreatmentとpatient情報を取得
+          $all = Schedule::with('treatments','patients')
+          ->whereIn('user_id',$usersId)
+          ->get();
+
+          // // スケジュールと関連する患者情報のみ取得
+          $allPatients = $all->pluck('patients');
+          $patient = Arr::flatten($allPatients);
+          
+          // // スケジュールと関連する処置情報のみ取得
+          $allTreatments = $all->pluck('treatments');
+          $treatment = Arr::flatten($allTreatments);
+          
+          return [$patient,$treatment];
+      }
+
     }
     

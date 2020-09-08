@@ -26,5 +26,26 @@ class ScheduleTreatmentTableSeeder extends Seeder
                 "created_at" => $faker->dateTime("now"),
                 "updated_at" => $faker->dateTime("now")
             ]);
+
+            DB::table('schedule_treatment')->insert([
+                "schedule_id" => 3,
+                "treatment_id" => 1,
+                "created_at" => $faker->dateTime("now"),
+                "updated_at" => $faker->dateTime("now")
+            ]);
+
+            DB::table('schedule_treatment')->insert([
+                "schedule_id" => 4,
+                "treatment_id" => 12,
+                "created_at" => $faker->dateTime("now"),
+                "updated_at" => $faker->dateTime("now")
+            ]);
+
+            DB::table('schedule_treatment')->insert([
+                "schedule_id" => 5,
+                "treatment_id" => 11,
+                "created_at" => $faker->dateTime("now"),
+                "updated_at" => $faker->dateTime("now")
+            ]);
     }
 }

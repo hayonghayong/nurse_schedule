@@ -9,6 +9,7 @@ use DB;
 use App\TeamUser;
 use App\Team;
 use App\User;
+use Illuminate\Support\Arr;
     
     class TeamUsersController extends Controller
     {
@@ -32,23 +33,19 @@ use App\User;
           ->where('user_id', $user_id)
           ->get();
 
-          // そのチームに所属するuser_idを取得
-          $team_users = $teams->map(function($team)
+          // そのチームに所属するuser情報を取得
+          $allUsers = $teams->pluck('team_users');
+          $users = Arr::flatten($allUsers);
+
+          // user情報からuser_id取得
+          foreach($users as $val)
           {
-            return $team
-            ->team_users;
-          });
-          foreach($team_users as $val)
-          {
-            $staffs = $val
+            $user = $val
             ->pluck('user_id');
           }
 
-          // そのuser_idのuser情報を取得
-          // foreach ($team_usersId as $userId)
-          // { 
-          //   $staffs = TeamUser::with(['users'])->where('user_id',$userId)->get();
-          // }
+            $staffs = User::find($user);
+
           return $staffs;
         }
     }
