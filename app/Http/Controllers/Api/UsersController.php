@@ -89,7 +89,7 @@ use App\Patient;
                         ->restore();
         }
 
-        // 担当患者表示
+        // 担当患者取得
         public function getUsersPatients()
         { 
           $user_id = Auth::user()->id;
@@ -106,6 +106,16 @@ use App\Patient;
           $usersPatients->patients()->attach($request->id); 
           return $usersPatients;
         }
+
+        // 特定のuserの担当患者取得
+        public function selectUsersPatients($user)
+        { 
+          $usersPatients = User::find($user)
+          ->patients;
+          return $usersPatients;
+        }
+
+        
 
     }
     

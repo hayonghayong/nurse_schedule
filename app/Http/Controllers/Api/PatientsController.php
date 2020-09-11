@@ -78,5 +78,24 @@ use App\Patient;
     return $patients;
   }
 
+  // 患者と担当看護師取得
+    public function patientUser(Patient $patient)
+    { 
+      $patient = Patient::with('users')
+      ->find($patient);
+      return $patient;
+    }
+
+  // 担当看護師変更
+   public function  updateUsersPatients(Request $request) 
+        {
+          $newUsersPatients = $request->id;
+          $newUsersPatients->users()->detach();
+          $newUsersPatients->userss()->attach($request->id); 
+          return $newUsersPatients;
+        }
+  
+  
+
 
   }

@@ -11,6 +11,7 @@ import RegistSchedule from "./components/pages/staff/RegistSchedule.vue";
 import RegistTreatmentSchedule from "./components/pages/staff/RegistTreatmentSchedule.vue";
 import ScheduleDetail from "./components/pages/staff/ScheduleDetail.vue";
 import StaffSchedule from "./components/pages/staff/StaffSchedule.vue";
+import UpdateSchedules from "./components/pages/staff/UpdateSchedules.vue";
 // リーダーページ
 import SelectStaff from "./components/pages/leader/SelectStaff.vue";
 import ScheduleList from "./components/pages/leader/ScheduleList.vue";
@@ -22,6 +23,7 @@ import RegistPatient from "./components/pages/leader/RegistPatient.vue";
 import RegistTreatment from "./components/pages/leader/RegistTreatment.vue";
 import TreatmentList from "./components/pages/leader/TreatmentList.vue";
 import EditTreatment from "./components/pages/leader/EditTreatment.vue";
+import UpdateUsersPatients from "./components/pages/leader/UpdateUsersPatients.vue";
 // 管理者ページ
 import Setting from "./components/pages/admin/Setting.vue";
 import StaffList from "./components/pages/admin/StaffList.vue";
@@ -66,6 +68,12 @@ const routes = [
         component: StaffSchedule,
         name: "StaffSchedule"
     },
+  {
+    path: "/staff/update-users-schedules",
+    component: UpdateSchedules,
+    name: " UpdateSchedules",
+  },
+    
     // リーダーページ：10
     {
         path: "/leader/select-staff",
@@ -117,7 +125,12 @@ const routes = [
         path: "/leader/treatment-list",
         component: TreatmentList,
         name: "TreatmentList"
-    },
+  },
+  {
+    path: "/staff/update-users-patients",
+    component: UpdateUsersPatients,
+    name: "UpdateUsersPatients",
+  },
 
     // 管理者ページ：4
     {
