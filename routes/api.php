@@ -31,7 +31,7 @@ Route::group(['middleware' => 'auth'], function () {
   Route::post('/teams/post','Api\TeamsController@post'); 
 
   // -----patients_tabel API -----
-  // 患者一覧表示
+  // 病棟内患者一覧取得
   Route::get('/patients/get/all','Api\PatientsController@getAllPatients');
 
   // 患者登録
@@ -46,12 +46,24 @@ Route::group(['middleware' => 'auth'], function () {
   // 患者更新
   Route::post('/patients/update/{patient}','Api\PatientsController@updatePatient');
 
+  // 患者とその担当看護師取得 
+  Route::get('/patients_users/get/{patient}','Api\PatientsController@patientUser');
+
+
   // -----patient_user_tabel API -----
   // 担当患者登録
   Route::post('/users_patients/add/{userPatients}','Api\UsersController@addUsersPatients'); 
 
   // 担当患者取得
   Route::get('/users_patients/get/all','Api\UsersController@getUsersPatients'); 
+
+  // 特定のuserの担当患者取得
+  Route::get('/users_patients/get/{user}','Api\UsersController@selectUsersPatients');
+  
+  // 担当患者更新
+  Route::post('/api/users_patients/update/{userPatients}','Api\PatientsController@updateUsersPatients'); 
+
+  
 
   // -----treatment_tabel API -----
   // 処置一覧表示
@@ -72,18 +84,26 @@ Route::group(['middleware' => 'auth'], function () {
   // -----team_users_table API-----
   // チームメンバー登録
   Route::post('/team_users/add/{staffs}','Api\TeamUsersController@addTeamUser'); 
-  // チームメンバー表示
+
+  // チームメンバー取得
   Route::get('/team_users/get/all','Api\TeamUsersController@getTeamUsers'); 
 
   // -----schedule_table_API-----
   // 看護師によるスケジュールデータの登録
   Route::post('/schedules/post','Api\SchedulesController@addSchedules'); 
   
-  // 登録スケジュール表示
+  // 登録スケジュール取得
   Route::get('/schedules/get/all','Api\SchedulesController@getSchecules');
 
   // チームのスケジュール表示
   Route::get('/schedules/get/team','Api\SchedulesController@getTeamSchecules');
+
+  // 患者のスケジュール取得
+  Route::get('/schedules/get/patients','Api\SchedulesController@getPatientsSchecules');
+
+  // 更新するスケジュール取得 
+  Route::get('/schedules/get/{schedule}','Api\SchedulesController@editSchedule');
+
 
 
 

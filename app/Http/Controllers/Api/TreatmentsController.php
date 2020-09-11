@@ -50,7 +50,7 @@ use App\Treatment;
       return $upDateTreatmentsData;
     }
 
-    // 編集する患者取得
+    // 編集する処置取得
     public function editTreatment($treatment)
     { 
         $editTreatment = Treatment::where('id', $treatment)->first();
@@ -61,7 +61,6 @@ use App\Treatment;
     // 処置編集
     public function updateTreatment(TreatmentPageApiRequest $request , $editTreatment) 
     {   
-      // $editTreatmentにはtreatmentIDが入っていますので変数名に違和感があれば変えてください！
       $treatments = Treatment::find($editTreatment);
       $user = Auth::user();
       $user_ward_id = $user->ward_id;

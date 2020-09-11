@@ -91,6 +91,13 @@
                             >
                         </v-list-item>
                     </router-link>
+                    <router-link :to="{ name: 'UpdateSchedule' }">
+                        <v-list-item>
+                            <v-list-item-title
+                                >【スタッフ】担当患者のスケジュール更新</v-list-item-title
+                            >
+                        </v-list-item>
+                    </router-link>
                     リーダーページ
                     <router-link :to="{ name: 'SelectStaff' }">
                         <v-list-item>
@@ -159,6 +166,13 @@
                         <v-list-item>
                             <v-list-item-title
                                 >【リーダー】処置の登録</v-list-item-title
+                            >
+                        </v-list-item>
+                    </router-link>
+                    <router-link :to="{ name: 'UpdateUsersPatients' }">
+                        <v-list-item>
+                            <v-list-item-title
+                                >【リーダー】担当患者更新</v-list-item-title
                             >
                         </v-list-item>
                     </router-link>

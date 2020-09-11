@@ -85,5 +85,49 @@ use Illuminate\Support\Arr;
           return [$patient,$treatment];
       }
 
+      // 自分の担当患者のスケジュール取得
+      public function getPatientsSchecules()
+      { 
+        // 担当患者取得
+        $user_id = Auth::id();
+        $usersPatients = User::find($user_id)
+        ->patients;
+        $usersPatientsId = $usersPatients->pluck('id');
+
+        // スケジュールテーブルから自分の担当患者と担当患者の処置情報を取得
+        $usersPatientsSchedules = Schedule::with('treatments','patients')
+        ->whereIn('patient_id',$usersPatientsId)
+        ->where('user_id',$user_id)
+        ->get();
+
+        return $usersPatientsSchedules;
+      }
+
+      // 編集するスケジュール取得
+    public function editSchedule(Schedule $schedule)
+    { 
+      return $schedule;
+    }
+  
+    // 患者編集
+    public function updatePatient(PatientPageApiRequest $request,Patient $patient) 
+    {
+    $patients = Patient::find($request->id);
+    $user = Auth::user();
+    $user_ward_id = $user->ward_id;
+    $patients->ward_id = $user_ward_id;
+    $patients->room = $request->room;
+    $patients->name = $request->name;
+    $patients->sex = $request->sex;
+    $patients->birthday = $request->birthday;
+    $patients->hospitalization_date = $request->hospitalization_date;
+    $patients->surgery_date = $request->surgery_date;
+    $patients->memo = $request->memo;
+    $patients->discharge_flg = "0";
+    $patients->save();
+    return $patients;
+  }
+
+
     }
     
