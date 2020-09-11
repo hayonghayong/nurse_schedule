@@ -83,7 +83,7 @@ Route::group(['middleware' => 'auth'], function () {
 
   // -----team_users_table API-----
   // チームメンバー登録
-  Route::post('/team_users/add/{staffs}','Api\TeamUsersController@addTeamUser'); 
+  Route::post('/team_users/add','Api\TeamUsersController@addTeamUser'); 
 
   // チームメンバー取得
   Route::get('/team_users/get/all','Api\TeamUsersController@getTeamUsers'); 
