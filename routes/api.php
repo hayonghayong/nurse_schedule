@@ -104,6 +104,9 @@ Route::group(['middleware' => 'auth'], function () {
   // 更新するスケジュール取得 
   Route::get('/schedules/get/{schedule}','Api\SchedulesController@editSchedule');
 
+   // スケジュール更新
+  Route::post('/schedules/update/{schedule}','Api\TreatmentsController@updateSchedule');
+
 
 
 

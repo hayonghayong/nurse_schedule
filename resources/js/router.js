@@ -11,7 +11,7 @@ import RegistSchedule from "./components/pages/staff/RegistSchedule.vue";
 import RegistTreatmentSchedule from "./components/pages/staff/RegistTreatmentSchedule.vue";
 import ScheduleDetail from "./components/pages/staff/ScheduleDetail.vue";
 import StaffSchedule from "./components/pages/staff/StaffSchedule.vue";
-import UpdateSchedules from "./components/pages/staff/UpdateSchedules.vue";
+import UpdateSchedule from "./components/pages/staff/UpdateSchedule.vue";
 // リーダーページ
 import SelectStaff from "./components/pages/leader/SelectStaff.vue";
 import ScheduleList from "./components/pages/leader/ScheduleList.vue";
@@ -69,9 +69,9 @@ const routes = [
         name: "StaffSchedule"
     },
   {
-    path: "/staff/update-users-schedules",
-    component: UpdateSchedules,
-    name: " UpdateSchedules",
+    path: "/staff/update-schedule",
+    component: UpdateSchedule,
+    name: "UpdateSchedule",
   },
     
     // リーダーページ：10
