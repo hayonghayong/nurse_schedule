@@ -16,11 +16,22 @@ use Illuminate\Support\Arr;
       // チームメンバー登録
       public function addTeamUser(Request $request) 
         {
+          // 配列処理
+          foreach($request->id as $val)
+          {
           $staffs = new TeamUser;
           $staffs->team_id =Team::find(Auth::user()->id)->id;
-          $staffs->user_id =$request->id; 
+          $staffs->user_id =$val; 
           $staffs->save();
-          $staffs->users()->attach($request->id); 
+          $staffs->users()->attach($val); 
+          }
+          // 全てのuserをリターン
+          $user = Auth::user();
+          $user_ward_id = $user->ward_id;
+          $staffs = User::where('ward_id', $user_ward_id)
+            ->where('admin_flg','=',0) //管理者を除く
+            ->orderBy('id', 'asc')
+            ->get();
           return $staffs;
         }
 
