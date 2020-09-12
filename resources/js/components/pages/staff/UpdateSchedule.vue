@@ -3,35 +3,27 @@
     <v-card>
         <v-list-item>
             <v-list-item-content>
-                <v-list-item-title>【スタッフ】担当患者更新</v-list-item-title>
+                <v-list-item-title>【スタッフ】スケジュール更新</v-list-item-title>
                 <ul>
                     <li v-for="usersPatientsSchedule in usersPatientsSchedules" v-bind:key="usersPatientsSchedule.id">
                         {{ usersPatientsSchedule.patients }}
                         {{ usersPatientsSchedule.treatments }}
                     </li>
                 </ul>
-                <v-text-field v-model="usersPatientsSchedules.id"></v-text-field>
+                <v-text-field placeholder="変更したいスケジュールidを入力" v-model="usersPatientsSchedules.id"></v-text-field>
                 <v-btn
                     class="ma-2"
                     outlined
                     color="pink lighten-1"
-                    @click="select(usersPatientsSchedules.id)"
+                    @click="selectSchedule(usersPatientsSchedules.id)"
                 >
                     選択
                 </v-btn>
             </v-list-item-content>
         </v-list-item>
-        <v-list-item>
-        <v-list-item-content>
-          <v-list>
-          <v-text-field  v-model="editSchedules.id"></v-text-field>
-          <v-text-field  v-model="editSchedules.treatment"></v-text-field>
-          <v-btn class="ma-2" outlined color="pink lighten-1"  type="submit" @click="add">
+          <v-btn class="ma-2" outlined color="pink lighten-1"  type="submit" @click="updateSchedule(schedule.id)">
                 変更
           </v-btn>
-        </v-list>
-        </v-list-item-content>
-      </v-list-item>
     </v-card>
       
     <!-- ここまで -->
@@ -58,9 +50,9 @@ export default {
                 });
         },
 
-        select: function() {
+        selectSchedule: function(scheduleId) {
             axios
-                .get("/api/schedules/get/" + this.$route.params.scheduleId)
+                .get("/api/schedules/get/" + scheduleId)
                 .then(res => {
                     console.log("status:", res.status);
                     console.log("body:", res.data);
@@ -71,11 +63,11 @@ export default {
               })
             },
 
-        add: function(schedule){
-      axios.post('/api/schedules/post',{
-        treatment_id:this.schedule.treatment_id,
+        updateSchedule: function(schedule){
+      axios.post('/api/schedules/update',{
+        schedule_id:this.schedule.treatment_id,
         patient_id:this.schedule.patient_id,
-        start_date:this.schedule.start_date
+        treatment_id:this.schedule.start_date
       })
       .then((res)=>{
         console.log('status:', res.status);

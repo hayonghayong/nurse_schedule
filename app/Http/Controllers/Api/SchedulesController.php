@@ -106,27 +106,29 @@ use Illuminate\Support\Arr;
       // 編集するスケジュール取得
     public function editSchedule(Schedule $schedule)
     { 
-      return $schedule;
+      $editSchedules = Schedule::with('treatments','patients')
+      ->find($schedule);
+      return $editSchedules;
     }
   
-    // 患者編集
-    public function updatePatient(PatientPageApiRequest $request,Patient $patient) 
-    {
-    $patients = Patient::find($request->id);
-    $user = Auth::user();
-    $user_ward_id = $user->ward_id;
-    $patients->ward_id = $user_ward_id;
-    $patients->room = $request->room;
-    $patients->name = $request->name;
-    $patients->sex = $request->sex;
-    $patients->birthday = $request->birthday;
-    $patients->hospitalization_date = $request->hospitalization_date;
-    $patients->surgery_date = $request->surgery_date;
-    $patients->memo = $request->memo;
-    $patients->discharge_flg = "0";
-    $patients->save();
-    return $patients;
-  }
+    // スケジュール編集
+    public function updateSchedule(Request $request ,$schedule) 
+    {   
+      $schedules = Schedule::find($schedule);
+      $user = Auth::user();
+      $user_ward_id = $user->ward_id;
+      $user_id = Auth::id();
+      $schedules->ward_id = $user_ward_id;
+      $schedules->user_id = $user_id;
+      $schedules->patient_id = $request->patient_id;
+      $schedules->treatment_id = $request->treatment_id;
+      $schedules->save();
+      $schedules->treatments()->detach(); 
+      $schedules->treatments()->attach($request->treatment_id); 
+      $schedules->patients()->detach(); 
+      $schedules->patients()->attach($request->patient_id); 
+      return $treatments;
+    }
 
 
     }
