@@ -28,4 +28,13 @@ export default {
 
 <style>
 /* 全てのファイルにかけるCSS */
+@media only screen and (max-width: 959px){
+.v-stepper:not(.v-stepper--vertical) .v-stepper__label {
+    display: flex;
+}
+}
+.v-stepper__label{
+    font-size:8px;
+}
+
 </style>

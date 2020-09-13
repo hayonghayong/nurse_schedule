@@ -37,6 +37,22 @@
 
       <v-item-group multiple v-model="saveSelectedPatient">
         <v-container>
+            <v-stepper v-model="e1"
+            :vertical="vertical"
+            alt-labels>
+                <v-stepper-header>
+                    <v-stepper-step step="1">患者選択</v-stepper-step>
+
+                    <v-divider></v-divider>
+
+                    <v-stepper-step step="2">処置設定</v-stepper-step>
+
+                    <v-divider></v-divider>
+
+                    <v-stepper-step step="3">スケジュール設定</v-stepper-step>
+                </v-stepper-header>
+            </v-stepper>
+
         <v-list-item-title class="center">本日の担当の患者さんを全て選択してください</v-list-item-title>
         <v-row>
             <v-col v-for="patient in patients" :key="patient.id" cols="6">
@@ -168,5 +184,22 @@ export default {
   opacity: 0.8;
   border: thin solid rgb(0,0,0,0.12);
 }
-
+.v-stepper{
+    box-shadow: none;
+}
+.v-stepper__header{
+    box-shadow: none;
+}
+.v-stepper--alt-labels .v-stepper__header .v-divider{
+    margin: 22px -80px 0;
+}
+.v-divider{
+    max-width: 90px;
+}
+.v-stepper__step{
+    padding: 10px;
+}
+.v-stepper--alt-labels .v-stepper__step{
+    flex-basis: 100px;
+}
 </style>
