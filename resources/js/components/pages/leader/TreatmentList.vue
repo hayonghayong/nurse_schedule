@@ -23,20 +23,24 @@
                     </v-list-item-content>
 
                     <v-list-item-icon>
-                        <v-icon
-                            class="ma-2"
-                            outlined
-                            color="#6c6c6c"
-                            @click="Edit(treatment.id)"
-                            >mdi-pencil</v-icon
-                        >
-                        <v-icon
-                            class="ma-2"
-                            outlined
-                            color="#6c6c6c"
-                            @click.prevent="Delete(treatment.id)"
-                            >mdi-delete</v-icon
-                        >
+                        <v-btn icon color="pink">
+                            <v-icon
+                                class="ma-2"
+                                outlined
+                                color="#6c6c6c"
+                                @click="Edit(treatment.id)"
+                                >mdi-pencil</v-icon
+                            >
+                        </v-btn>
+                        <v-btn icon color="pink">
+                            <v-icon
+                                class="ma-2"
+                                outlined
+                                color="#6c6c6c"
+                                @click.prevent="Delete(treatment.id)"
+                                >mdi-delete</v-icon
+                            >
+                        </v-btn>
                     </v-list-item-icon>
                 </v-list-item>
                 <v-divider
