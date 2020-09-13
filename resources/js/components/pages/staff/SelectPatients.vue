@@ -6,15 +6,19 @@
                 <v-list-item-title>【スタッフ】患者選択</v-list-item-title>
                 <ul>
                     <li v-for="patient in patients" v-bind:key="patient.id">
-                        {{ patient.room }}
-                        {{ patient.name }}
-                        <!-- dbには番号で登録してるけど表示は日本語で -->
-                        {{ patient.sex }}
-                        <!-- dbには誕生日登録してるけど表示は年齢にしたい！ -->
+                        <span>{{ patient.room }}号室</span>
+                        <p>{{ patient.name }}さん
+                        <span v-if="patient.sex　== 1">男</span>
+                        <span v-else>女</span>
                         {{ patient.birthday }}
+                        {{ today }}
+
+                        </p>
+                        <!-- dbには誕生日登録してるけど表示は年齢にしたい！ -->
+                        
                         {{ patient.hospitalization_date }}
                         {{ patient.surgery_date }}
-                        {{ patient.memo }}
+                        <p>{{ patient.memo }}</p>
                     </li>
                 </ul>
                 <v-text-field v-model="patients.id"></v-text-field>
@@ -33,7 +37,7 @@
 </template>
 <script>
 // コンポーネントのインポート
-
+import moment from 'moment';
 // Vue
 export default {
     components: {},
@@ -70,8 +74,17 @@ export default {
                 .catch(err => {
                     "err:", err;
                 });
+        },
+        age: function (patients) {
+            var today = moment();
+            var birthday = moment(birthday);
+            return today.diff(this.birthday, 'years');
         }
+
     },
+    computed: {
+    },
+
     created() {
         this.fetchPatients();
     }
