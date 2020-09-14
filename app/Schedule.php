@@ -8,14 +8,14 @@ class Schedule extends Model
 {
   protected $guarded = ["id"];
   
-  public function treatments()
+  public function treatment()
   {
-    return $this->belongsToMany('App\treatment');
+    return $this->belongsTo('App\treatment');
   }
 
-  public function patients()
+  public function patient()
   {
-    return $this->belongsToMany('App\patient');
+    return $this->belongsTo('App\patient');
   }
 
 }

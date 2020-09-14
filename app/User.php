@@ -52,7 +52,7 @@ class User extends Authenticatable
 
     public function team_users()
     {
-    return $this->belongsToMany('App\TeamUser');
+    return $this->belongsTo('App\TeamUser');
     }
 
 

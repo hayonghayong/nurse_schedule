@@ -14,7 +14,7 @@ class Treatment extends Model
 
   public function schedules()
   {
-    return $this->belongsToMany('App\schedule');
+    return $this->hasMany('App\schedule');
   }
 
 }
