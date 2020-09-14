@@ -6,7 +6,13 @@
                 <v-list-item-title>【スタッフ】処置スケジュール一覧</v-list-item-title>
                 <ul>
                     <li v-for="schedule in schedules" v-bind:key="schedule.id">
-                        {{ schedule }}
+                        {{ schedule.id }}
+                        {{ schedule.patient.room }}
+                        {{ schedule.patient.name}}
+                        {{ schedule.treatment.name}}
+                        {{ schedule.treatment.required_flg}}
+                        {{ schedule.treatment.time_required}}
+                        
                     </li>
                 </ul>
             </v-list-item-content>
@@ -30,7 +36,7 @@ export default {
                 .then(res => {
                     console.log("status:", res.status);
                     console.log("body:", res.data);
-                    this.staffs = res.data;
+                    this.schedules = res.data;
                 })
                 .catch(err => {
                     console.log("err:", err);

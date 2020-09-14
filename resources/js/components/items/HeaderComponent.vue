@@ -91,13 +91,6 @@
                             >
                         </v-list-item>
                     </router-link>
-                    <router-link :to="{ name: 'UpdateSchedule' }">
-                        <v-list-item>
-                            <v-list-item-title
-                                >【スタッフ】担当患者のスケジュール更新</v-list-item-title
-                            >
-                        </v-list-item>
-                    </router-link>
                     リーダーページ
                     <router-link :to="{ name: 'SelectStaff' }">
                         <v-list-item>
