@@ -22,8 +22,7 @@ use Illuminate\Support\Arr;
           $staffs = new TeamUser;
           $staffs->team_id =Team::find(Auth::user()->id)->id;
           $staffs->user_id =$val; 
-          $staffs->save();
-          $staffs->users()->attach($val); 
+          $staffs->save(); 
           }
           // 全てのuserをリターン
           $user = Auth::user();

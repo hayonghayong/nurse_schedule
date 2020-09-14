@@ -24,8 +24,6 @@ use Illuminate\Support\Arr;
       $schedules->patient_id = $request->patient_id;
       $schedules->start_date = $request->start_date;
       $schedules->save();
-      $schedules->treatments()->attach($request->treatment_id); 
-      $schedules->patients()->attach($request->patient_id); 
       return $schedules;
     }
 
@@ -34,19 +32,20 @@ use Illuminate\Support\Arr;
       { 
         // スケジュールと同時に処置と患者情報も全て取得
         $user_id = Auth::user()->id;
-        $all = Schedule::with('treatments','patients')
+        $all = Schedule::with('treatment','patient')
         ->where('user_id',$user_id)
         ->get();
-
+        
         // // スケジュールと関連する患者情報のみ取得
-        $allPatients = $all->pluck('patients');
-        $patient = Arr::flatten($allPatients);
+        // $allPatients = $all->pluck('patients');
+        // $patient = Arr::flatten($allPatients);
 
         // // スケジュールと関連する処置情報のみ取得
-        $allTreatments = $all->pluck('treatments');
-        $treatment = Arr::flatten($allTreatments);
+        // $allTreatments = $all->pluck('treatments');
+        // $treatment = Arr::flatten($allTreatments);
 
-        return [$patient,$treatment];
+        return $all;
+        // return [$patient,$treatment];
       }
 
       // チームのスケジュール取得
@@ -70,19 +69,20 @@ use Illuminate\Support\Arr;
           }
 
           // user_idに紐づいてるtreatmentとpatient情報を取得
-          $all = Schedule::with('treatments','patients')
+          $all = Schedule::with('treatment','patient')
           ->whereIn('user_id',$usersId)
           ->get();
 
-          // // スケジュールと関連する患者情報のみ取得
-          $allPatients = $all->pluck('patients');
-          $patient = Arr::flatten($allPatients);
+          // // // スケジュールと関連する患者情報のみ取得
+          // $allPatients = $all->pluck('patients');
+          // $patient = Arr::flatten($allPatients);
           
-          // // スケジュールと関連する処置情報のみ取得
-          $allTreatments = $all->pluck('treatments');
-          $treatment = Arr::flatten($allTreatments);
+          // // // スケジュールと関連する処置情報のみ取得
+          // $allTreatments = $all->pluck('treatments');
+          // $treatment = Arr::flatten($allTreatments);
           
-          return [$patient,$treatment];
+          return $all;
+          // return [$patient,$treatment];
       }
 
       // 自分の担当患者のスケジュール取得
@@ -95,7 +95,7 @@ use Illuminate\Support\Arr;
         $usersPatientsId = $usersPatients->pluck('id');
 
         // スケジュールテーブルから自分の担当患者と担当患者の処置情報を取得
-        $usersPatientsSchedules = Schedule::with('treatments','patients')
+        $usersPatientsSchedules = Schedule::with('treatment','patient')
         ->whereIn('patient_id',$usersPatientsId)
         ->where('user_id',$user_id)
         ->get();
@@ -106,7 +106,7 @@ use Illuminate\Support\Arr;
       // 編集するスケジュール取得
     public function editSchedule(Schedule $schedule)
     { 
-      $editSchedules = Schedule::with('treatments','patients')
+      $editSchedules = Schedule::with('treatment','patient')
       ->find($schedule);
       return $editSchedules;
     }
@@ -123,10 +123,6 @@ use Illuminate\Support\Arr;
       $schedules->patient_id = $request->patient_id;
       $schedules->treatment_id = $request->treatment_id;
       $schedules->save();
-      $schedules->treatments()->detach(); 
-      $schedules->treatments()->attach($request->treatment_id); 
-      $schedules->patients()->detach(); 
-      $schedules->patients()->attach($request->patient_id); 
       return $treatments;
     }
 
