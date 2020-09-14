@@ -13,7 +13,7 @@ use Illuminate\Support\Arr;
     
     class SchedulesController extends Controller
     {
-      // 新規スケジュール登録
+      // 新規スケジュール登録 (スタッフ)
     public function addSchedules(Request $request) 
     {
       $schedules = new Schedule;
@@ -27,7 +27,7 @@ use Illuminate\Support\Arr;
       return $schedules;
     }
 
-    // 自分のスケジュール取得
+    // 自分のスケジュール取得（スタッフ）
     public function getSchecules()
       { 
         // スケジュールと同時に処置と患者情報も全て取得
