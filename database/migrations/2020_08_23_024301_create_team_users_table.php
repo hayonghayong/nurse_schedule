@@ -13,12 +13,11 @@
                 public function up()
                 {
                     Schema::create("team_users", function (Blueprint $table) {
-						$table->increments('id');
-						$table->integer('ward_id');
-						$table->integer('user_id');
-						$table->timestamps();
-						$table->softDeletes();
-
+                      $table->increments('id');
+                      $table->integer('ward_id');
+                      $table->unsignedBigInteger('user_id');
+                      $table->timestamps();
+                      $table->softDeletes();
                     });
                 }
     

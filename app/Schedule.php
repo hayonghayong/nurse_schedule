@@ -7,6 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class Schedule extends Model
 {
   protected $guarded = ["id"];
+  protected $table = 'schedules';
+  protected $primaryKey = ['user_id','patient_id', 'treatment_id'];
+  public $incrementing = false;
+  protected $fillable = ['user_id', 'patient_id', 'treatment_id'];
   
   public function treatment()
   {

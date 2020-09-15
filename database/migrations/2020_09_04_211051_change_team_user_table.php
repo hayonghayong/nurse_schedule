@@ -15,8 +15,14 @@ class ChangeTeamUserTable extends Migration
     {
       Schema::table('team_users', function (Blueprint $table) {
         $table->dropColumn('ward_id');
-        $table->integer('team_id');
+        $table->unsignedInteger('team_id');
+
+      // 外部キー制約
+        $table->foreign('team_id')->references('id')->on('teams')->onDelete('cascade');
+        $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
+
+
     }
 
     /**
