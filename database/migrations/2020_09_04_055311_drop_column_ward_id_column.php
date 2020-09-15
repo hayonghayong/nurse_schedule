@@ -16,6 +16,18 @@ class DropColumnWardIdColumn extends Migration
         Schema::table('user_patient', function (Blueprint $table) {
           $table->dropColumn('ward_id');
         });
+
+        Schema::table('schedules', function (Blueprint $table) {
+          $table->dropColumn('ward_id');
+        });
+
+        Schema::table('teams', function (Blueprint $table) {
+          $table->dropColumn('ward_id');
+        });
+
+        Schema::table('attendances', function (Blueprint $table) {
+          $table->dropColumn('ward_id');
+        });
     }
 
     /**

@@ -18,7 +18,6 @@ use Illuminate\Support\Arr;
     {
       $schedules = new Schedule;
       $user = Auth::user();
-      $schedules->ward_id = $user->ward_id;
       $schedules->user_id = $user->id;
       $schedules->treatment_id = $request->treatment_id;
       $schedules->patient_id = $request->patient_id;
@@ -115,8 +114,6 @@ use Illuminate\Support\Arr;
     public function updateSchedule(Request $request ,$schedule) 
     {   
       $schedules = Schedule::find($schedule);
-      $user = Auth::user();
-      $user_ward_id = $user->ward_id;
       $user_id = Auth::id();
       $schedules->ward_id = $user_ward_id;
       $schedules->user_id = $user_id;
