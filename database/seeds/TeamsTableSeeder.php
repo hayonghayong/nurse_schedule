@@ -15,7 +15,6 @@ use Illuminate\Database\Seeder;
             $faker = Faker\Factory::create("ja_JP");
 
             DB::table('teams')->insert([
-                "ward_id" => 1,
                 "user_id" => 1,
                 "created_at" => $faker->dateTime("now"),
                 "updated_at" => $faker->dateTime("now")
