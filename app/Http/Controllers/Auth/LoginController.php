@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Auth;
-
+use Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -27,18 +27,7 @@ class LoginController extends Controller
      * @var string
      */
     
-    // protected $redirectTo = RouteServiceProvider::HOME;
-
-    // ▼admin_flgでログイン後のページ遷移を振り分ける
-    protected  function redirectTo()
-    {
-        $admin_flg = $this->guard()->user()->admin_flg;
-        if($admin_flg == 1){
-            return '/admin/setting/';
-        }else if($admin_flg == 0){
-            return '/staff/select-role/';
-        }
-    }
+    protected $redirectTo = RouteServiceProvider::HOME;
 
     // ▼ログアウト後の遷移先
     protected function loggedOut(\Illuminate\Http\Request $request)
@@ -53,9 +42,13 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest')->except('logout');
+        $this->middleware('guest:user')->except('logout');
     }
-
+    // Guardの認証方法を指定
+    protected function guard()
+    {
+        return Auth::guard('user');
+    }
     // ▼loginに必要な項目を追記
     public function username(){
       return 'login_id';

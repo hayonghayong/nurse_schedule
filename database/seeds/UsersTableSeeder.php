@@ -45,16 +45,6 @@ use Illuminate\Database\Seeder;
             ]);
 
             DB::table('users')->insert([
-                "ward_id" => 1,
-                "name" => '山崎先生',
-                "login_id" => 'admin1',
-                "password" =>  bcrypt('admin1'),
-                "admin_flg" => 1,
-                "created_at" => $faker->dateTime("now"),
-                "updated_at" => $faker->dateTime("now")
-            ]);
-
-            DB::table('users')->insert([
                 "ward_id" => 2,
                 "name" => '難波江　基己',
                 "login_id" => 'nurse4',
@@ -81,15 +71,7 @@ use Illuminate\Database\Seeder;
                 "created_at" => $faker->dateTime("now"),
                 "updated_at" => $faker->dateTime("now")
             ]);
-            DB::table('users')->insert([
-                "ward_id" => 2,
-                "name" => '児玉さん',
-                "login_id" => 'admin2',
-                "password" =>  bcrypt('admin2'),
-                "admin_flg" => 1,
-                "created_at" => $faker->dateTime("now"),
-                "updated_at" => $faker->dateTime("now")
-            ]);
+
 
             DB::table('users')->insert([
                 "ward_id" => 1,

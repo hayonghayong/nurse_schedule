@@ -22,10 +22,14 @@ class AppServiceProvider extends ServiceProvider
      * @return void
      */
     public function boot()
-    {
-        // // adminのみ許可
-        // \Gate::define('admin', function ($user) {
-        //     return ($user->admin_flg == 1);
-        // });
+    {        
+        //  管理画面用のクッキー名称、セッションテーブル名を変更する < いったんコメントアウト
+        // $uri = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
+        // if (strpos($uri, '/admin/') === 0 || $uri === '/admin') {
+        //     config([
+        //         'session.cookie' => config('const.session_cookie_admin'),
+        //         'session.table' => config('const.ssession_table_admin'),
+        //     ]);
+        // }
     }
 }

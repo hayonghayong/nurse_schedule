@@ -2,14 +2,14 @@
 
 @section('content')
 <div class="container">
-    <a href="/admin/login">管理者ログインへ</a>
+    <a href="/login">ユーザーログインへ</a>
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header"><img class="logo" src="{{ asset('img/logo.png') }}" alt="logo"></div>
-
+                <p>アドミン用</p>
                 <div class="card-body">
-                    <form method="POST" action="{{ route('login') }}">
+                    <form method="POST" action="{{ route('admin.login') }}">
                         @csrf
 
                         <div class="form-group row">
