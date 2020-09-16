@@ -1,28 +1,24 @@
 <template>
-    <!-- 仮ヘッダー -->
-    <div>
-        <v-app-bar color="blue" dark>
-            <div>
-                <router-link to="home" class="link">＜戻る</router-link>
-            </div>
+  <!-- 仮ヘッダー -->
+  <div>
+    <v-app-bar color="blue" dark>
+      <div>
+        <router-link to="home" class="link">＜戻る</router-link>
+      </div>
+      <v-spacer></v-spacer>
+      <v-toolbar-title class="white--text title">タイトルが入る（仮）</v-toolbar-title>
 
-            <v-spacer></v-spacer>
-            <v-toolbar-title class="white--text title">タイトルが入る（仮）</v-toolbar-title>
-        
+      <v-spacer></v-spacer>
 
-            <v-spacer></v-spacer>
+      <v-btn icon>
+        <v-icon>mdi-account-cog</v-icon>
+      </v-btn>
 
-            <v-btn icon>
-                <v-icon>mdi-account-cog</v-icon>
-            </v-btn>
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
 
-                <v-app-bar-nav-icon
-                @click.stop="drawer = !drawer"
-            ></v-app-bar-nav-icon>
+      <span @click="logout" style="cursor: pointer;">ログアウト</span>
 
-            <span @click="logout" style="cursor: pointer;">ログアウト</span>
-
-            <!--<v-menu left bottom>
+      <!--<v-menu left bottom>
                 <template v-slot:activator="{ on, attrs }">
                     <v-btn icon v-bind="attrs" v-on="on">
                         <v-icon>mdi-dots-vertical</v-icon>
@@ -35,41 +31,30 @@
                     </v-list-item>
                 </v-list>
             </v-menu>
-            -->
+      -->
+    </v-app-bar>
 
-        </v-app-bar>
-
-        <!-- ▼仮ルーティングナビゲーション-->
-        <!--  ※作業が進んできたら消します -->
-        <v-navigation-drawer v-model="drawer" absolute temporary>
-            <v-list nav dense>
-                <v-list-item-group
-                    v-model="group"
-                    active-class="deep-purple--text text--accent-4"
-                >
-                    スタッフページ
-                    <router-link :to="{ name: 'SelectRole' }">
-                        <v-list-item>
-                            <v-list-item-title
-                                >【スタッフ】役割選択</v-list-item-title
-                            >
-                        </v-list-item>
-                    </router-link>
-                    <router-link :to="{ name: 'SelectPatients' }">
-                        <v-list-item>
-                            <v-list-item-title
-                                >【スタッフ】患者選択</v-list-item-title
-                            >
-                        </v-list-item>
-                    </router-link>
-                    <router-link :to="{ name: 'RegistTreatmentSchedule' }">
-                        <v-list-item>
-                            <v-list-item-title
-                                >【スタッフ】処置スケジュール登録</v-list-item-title
-                            >
-                        </v-list-item>
-                    </router-link>
-
+    <!-- ▼仮ルーティングナビゲーション-->
+    <!--  ※作業が進んできたら消します -->
+    <v-navigation-drawer v-model="drawer" absolute temporary>
+      <v-list nav dense>
+        <v-list-item-group v-model="group" active-class="deep-purple--text text--accent-4">
+          スタッフページ
+          <router-link :to="{ name: 'SelectRole' }">
+            <v-list-item>
+              <v-list-item-title>【スタッフ】役割選択</v-list-item-title>
+            </v-list-item>
+          </router-link>
+          <router-link :to="{ name: 'SelectPatients' }">
+            <v-list-item>
+              <v-list-item-title>【スタッフ】患者選択</v-list-item-title>
+            </v-list-item>
+          </router-link>
+          <router-link :to="{ name: 'RegistTreatmentSchedule' }">
+            <v-list-item>
+              <v-list-item-title>【スタッフ】処置スケジュール登録</v-list-item-title>
+            </v-list-item>
+          </router-link>
                     <router-link :to="{ name: 'RegistSchedule' }">
                         <v-list-item>
                             <v-list-item-title
@@ -205,46 +190,55 @@
     </div>
 </template>
 <script>
+import { mapActions, mapGetters, mapState } from "vuex"; //vuexで使用
+
 export default {
-    components: {},
-    data: () => ({
-        // 仮ドロワートグル
-        drawer: false,
-        group: null
-    }),
-    watch: {
-        // 仮ドロワートグル
-        group() {
-            this.drawer = false;
-        }
-    },
-    created() {},
-    computed: {},
-    methods: {
-        //ログアウト
-        logout: function() {
-            axios
-                .post("/logout")
-                .then(res => {
-                    location.href = "/";
-                })
-                .catch(err => console.log(err));
-        }
+  components: {},
+  data: () => ({
+    // 仮ドロワートグル
+    drawer: false,
+    group: null
+  }),
+  watch: {
+    // 仮ドロワートグル
+    group() {
+      this.drawer = false;
     }
+  },
+  created() {
+    //ログインしているユーザーの情報を取得：参照したactionsを発火
+    this.getLoginUserData();
+  },
+  computed: {
+    //ログインしているユーザーの情報を取得：stateを参照
+    ...mapState("auth", ["loginUser"])
+  },
+  methods: {
+    //ログインしているユーザーの情報を取得：Actionsを参照
+    ...mapActions("auth", ["getLoginUserData"]),
+    //ログアウト
+    logout: function() {
+      axios
+        .post("/logout")
+        .then(res => {
+          location.href = "/";
+        })
+        .catch(err => console.log(err));
+    }
+  }
 };
 </script>
 
 <style scoped>
 /* スコープ付きのスタイル */
-    .link{
-    color:white;
-    text-decoration:none;
+.link {
+  color: white;
+  text-decoration: none;
 }
-.link:hover{
-    opacity: 0.6;
+.link:hover {
+  opacity: 0.6;
 }
-.title{
-    font-weight:bold;
+.title {
+  font-weight: bold;
 }
-
 </style>

@@ -24,18 +24,13 @@ import RegistTreatment from "./components/pages/leader/RegistTreatment.vue";
 import TreatmentList from "./components/pages/leader/TreatmentList.vue";
 import EditTreatment from "./components/pages/leader/EditTreatment.vue";
 import UpdateUsersPatients from "./components/pages/leader/UpdateUsersPatients.vue";
-// 管理者ページ
-import Setting from "./components/pages/admin/Setting.vue";
-import StaffList from "./components/pages/admin/StaffList.vue";
-import RegistStaff from "./components/pages/admin/RegistStaff.vue";
-import EditStaff from "./components/pages/admin/EditStaff.vue";
 // ▲ページコンポーネントのインポート
 
 // ▼ルーティング１１
 const routes = [
     // スタッフページ：6
     {
-        path: "/staff/select-role",
+        path: "/",
         component: SelectRole,
         name: "SelectRole",
         meta: { title: "役割選択" }
@@ -120,33 +115,11 @@ const routes = [
         path: "/leader/treatment-list",
         component: TreatmentList,
         name: "TreatmentList"
-  },
-  {
-    path: "/staff/update-users-patients",
-    component: UpdateUsersPatients,
-    name: "UpdateUsersPatients",
-  },
-
-    // 管理者ページ：4
-    {
-        path: "/admin/setting",
-        component: Setting,
-        name: "Setting"
     },
     {
-        path: "/admin/staff-list",
-        component: StaffList,
-        name: "StaffList"
-    },
-    {
-        path: "/admin/regist-staff",
-        component: RegistStaff,
-        name: "RegistStaff"
-    },
-    {
-        path: "/admin/edit-staff/:user_id",
-        component: EditStaff,
-        name: "EditStaff"
+        path: "/staff/update-users-patients",
+        component: UpdateUsersPatients,
+        name: "UpdateUsersPatients"
     }
 ];
 // ▲ルーティング

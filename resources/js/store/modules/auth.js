@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const state = {
-    loginUser: "未ログイン",
+    loginUser: ""
 };
 
 const mutations = {
@@ -15,9 +15,10 @@ const actions = {
         await axios
             .get("/api/users/login-user")
             .then(res => {
+                console.log(res);
                 commit("setLoginUser", res.data);
             })
-            .catch(err => console.log(err));
+            .catch(err => console.log(err.response.data));
     }
 };
 
