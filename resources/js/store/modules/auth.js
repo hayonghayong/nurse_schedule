@@ -15,7 +15,6 @@ const actions = {
         await axios
             .get("/api/users/login-user")
             .then(res => {
-                console.log(res);
                 commit("setLoginUser", res.data);
             })
             .catch(err => console.log(err.response.data));

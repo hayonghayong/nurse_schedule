@@ -66,12 +66,12 @@ const routes = [
 
     // リーダーページ：10
     {
-        path: "/leader/select-staff",
+        path: "/leader/select-staff/:team_id",
         component: SelectStaff,
         name: "SelectStaff"
     },
     {
-        path: "/leader/schedule-list",
+        path: "/leader/schedule-list/:team_id",
         component: ScheduleList,
         name: "ScheduleList"
     },
