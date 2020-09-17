@@ -17,14 +17,12 @@ use Illuminate\Database\Seeder;
 
             
                 DB::table('attendances')->insert([
-					"ward_id" => 1,
 					"user_id" => 1,
 					"attendance_flg" => 0,
 					"created_at" => $faker->dateTime("now"),
 					"updated_at" => $faker->dateTime("now")
                 ]);
                 DB::table('attendances')->insert([
-					"ward_id" => 1,
 					"user_id" => 1,
 					"attendance_flg" => 1,
 					"created_at" => $faker->dateTime("now"),

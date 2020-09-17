@@ -96,7 +96,7 @@ use Illuminate\Database\Seeder;
             ]);
 
             DB::table('patients')->insert([
-                "ward_id" => 4,
+                "ward_id" => 1,
                 "name" => '櫨元航太',
                 "birthday" => $faker->date()." ".$faker->time(),
                 "sex" => 1,
@@ -110,7 +110,7 @@ use Illuminate\Database\Seeder;
             ]);
 
             DB::table('patients')->insert([
-                "ward_id" => 4,
+                "ward_id" => 1,
                 "name" => 'Mayo Nakamura',
                 "birthday" => $faker->date()." ".$faker->time(),
                 "sex" => 2,

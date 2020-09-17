@@ -9,15 +9,25 @@ use DB;
 use App\User;
 use App\Patient;
 
+
     class UsersController extends Controller
     {
         // ログイン中のユーザー情報を取得
         public function getLoginUser()
         {   
-            if(Auth::user()){
-                $userData = Auth::user(); 
+            if(Auth::guard('user')->check()){
+                $userData = Auth::guard('user')->user(); 
                 return response()->json($userData);
+            }else if(Auth::guard('admin')->check()){
+              $userData = Auth::guard('admin')->user();
+              return response()->json($userData);
             }
+            return '未ログイン';
+        }
+        public function getAdmin()
+        {   
+            $userData = Auth()->guard('admin')->user();
+              return response()->json($userData);
         }
 
         //登録ユーザー表示

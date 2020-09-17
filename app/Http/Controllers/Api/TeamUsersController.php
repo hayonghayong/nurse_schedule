@@ -16,47 +16,39 @@ use Illuminate\Support\Arr;
       // チームメンバー登録
       public function addTeamUser(Request $request) 
         {
+          $leader_id = Auth::id();
           // 配列処理
           foreach($request->id as $val)
           {
-          $staffs = new TeamUser;
-          $staffs->team_id =Team::find(Auth::user()->id)->id;
-          $staffs->user_id =$val; 
-          $staffs->save();
-          $staffs->users()->attach($val); 
+            $staffs = new TeamUser;
+            // $staffs->team_id =Team::find(Auth::user()->id)->id;
+            // 最新のチームidを取得して格納
+            $staffs->team_id =Team::orderBy('created_at', 'desc')->where('user_id','=',$leader_id)->first()->id;
+            $staffs->user_id =$val; 
+            $staffs->save(); 
           }
-          // 全てのuserをリターン
-          $user = Auth::user();
-          $user_ward_id = $user->ward_id;
-          $staffs = User::where('ward_id', $user_ward_id)
-            ->where('admin_flg','=',0) //管理者を除く
-            ->orderBy('id', 'asc')
-            ->get();
-          return $staffs;
         }
 
       // チームメンバー表示
-      public function getTeamUsers()
+      public function getTeamUsers($team_id)
         { 
           $user_id = Auth::id();
           // ログインユーザーのチームとteam_usersを取得
           $teams = Team::with(['team_users'])
-          ->where('user_id', $user_id)
+          ->where('id', $team_id)
           ->get();
 
-          // そのチームに所属するuser情報を取得
+          // // そのチームに所属するuser情報を取得
           $allUsers = $teams->pluck('team_users');
           $users = Arr::flatten($allUsers);
 
           // user情報からuser_id取得
+          $users_id = [];
           foreach($users as $val)
           {
-            $user = $val
-            ->pluck('user_id');
+            array_push($users_id,$val->user_id);
           }
-
-            $staffs = User::find($user);
-
+          $staffs = User::find($users_id);
           return $staffs;
         }
         

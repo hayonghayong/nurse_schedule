@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
         // Cmd:[ php artisan db:seed ]
         //********************************************
         $this->call(UsersTableSeeder::class);
+        $this->call(AdminTableSeeder::class);
         $this->call(TreatmentsTableSeeder::class);
         $this->call(PatientsTableSeeder::class);
         $this->call(SchedulesTableSeeder::class);
@@ -24,8 +25,5 @@ class DatabaseSeeder extends Seeder
         $this->call(AttendancesTableSeeder::class);
         $this->call(HospitalsTableSeeder::class);
         $this->call(WardsTableSeeder::class);
-        $this->call(TeamUserUserTableSeeder::class);
-        $this->call(ScheduleTreatmentTableSeeder::class);
-        $this->call(PatientScheduleTableSeeder::class);
    }
 }

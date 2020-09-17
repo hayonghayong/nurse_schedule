@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePatientScheduleTable extends Migration
+class CreateAdminsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,15 @@ class CreatePatientScheduleTable extends Migration
      */
     public function up()
     {
-        Schema::create('patient_schedule', function (Blueprint $table) {
-            $table->unsignedInteger('schedule_id');
-            $table->unsignedInteger('patient_id');
-            $table->primary(['schedule_id', 'patient_id']);
+        Schema::create('admins', function (Blueprint $table) {
+            $table->bigIncrements('id');
+			$table->integer('ward_id');
+            $table->string('name');
+            $table->string('login_id')->unique();
+            $table->string('password');
+            $table->rememberToken();
             $table->timestamps();
-            $table->softDeletes();
+			$table->softDeletes();
         });
     }
 
@@ -29,6 +32,6 @@ class CreatePatientScheduleTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('patient_schedule');
+        Schema::dropIfExists('admins');
     }
 }

@@ -7,15 +7,19 @@ use Illuminate\Database\Eloquent\Model;
 class Schedule extends Model
 {
   protected $guarded = ["id"];
+  protected $table = 'schedules';
+  protected $primaryKey = ['user_id','patient_id', 'treatment_id'];
+  public $incrementing = false;
+  protected $fillable = ['user_id', 'patient_id', 'treatment_id'];
   
-  public function treatments()
+  public function treatment()
   {
-    return $this->belongsToMany('App\treatment');
+    return $this->belongsTo('App\treatment');
   }
 
-  public function patients()
+  public function patient()
   {
-    return $this->belongsToMany('App\patient');
+    return $this->belongsTo('App\patient');
   }
 
 }

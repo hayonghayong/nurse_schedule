@@ -20,12 +20,7 @@
             </div>
             <!-- ▼リーダーボタン -->
             <div class="button_wrap my-3">
-                <router-link
-                    :to="{ name: 'SelectStaff' }"
-                    style="text-decoration: none;"
-                >
-                    <v-btn depressed dark x-large height="110" width="260" class="button" color="#2196F3" @click="postTeam()">リーダー</v-btn>
-                </router-link>
+                <v-btn depressed dark x-large height="110" width="260" class="button" color="#2196F3" @click="postTeam()">リーダー</v-btn>
             </div>
             <!-- ▲リーダーボタンここまで -->
 
@@ -68,8 +63,14 @@ export default {
             axios
                 .post("/api/teams/post")
                 .then(res => {
-                    console.log("status:", res.status);
-                    console.log("body:", res.data);
+                    console.log(res.data.id)
+                    // ページ遷移
+                    this.$router.push({
+                    name: "SelectStaff",
+                    params:{
+                        team_id:res.data.id
+                    }
+                });
                 })
                 .catch(err => {
                     console.log(err.response.data);

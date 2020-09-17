@@ -49,20 +49,19 @@
           </v-item>
         </v-col>
       </v-row>
-        {{saveSelecyedStaff}}
 
-      <v-footer
-      fixed
-      class="font-weight-medium footer"
-      >
-          <v-btn
-            class="mx-auto my-2 px-12 py-4 submit_btn"
-            color="#62ABF8"
-            rounded
-            dark depressed width="220"
-            type="submit"
-            @click="pushSelectedData()"
-          >決定</v-btn>
+      {{saveSelecyedStaff}}
+      <v-footer fixed class="font-weight-medium footer">
+        <v-btn
+          class="mx-auto my-2 px-12 py-4 submit_btn"
+          color="#62ABF8"
+          rounded
+          dark
+          depressed
+          width="220"
+          type="submit"
+          @click="pushSelectedData()"
+        >決定</v-btn>
       </v-footer>
     </v-container>
   </v-item-group>
@@ -80,8 +79,6 @@ export default {
       axios
         .get("/api/users/get/all")
         .then(res => {
-          console.log("status:", res.status);
-          console.log("body:", res.data);
           this.staffs = res.data;
         })
         .catch(err => {
@@ -94,12 +91,17 @@ export default {
           id: this.saveSelecyedStaff
         })
         .then(res => {
-          console.log("status:", res.status);
-          console.log("body:", res.data);
           this.staffs = res.data;
+          // ページ遷移
+          this.$router.push({
+            name: "ScheduleList",
+            params:{
+              team_id:this.$route.params.team_id
+            }
+          });
         })
         .catch(err => {
-          "err:", err;
+          console.log(err.response.data)
         });
     }
   },
@@ -111,23 +113,22 @@ export default {
 
 <style scoped>
 /* スコープ付きのスタイル */
-.footer{
-  background:rgba(255,0 0,0.5);
+.footer {
+  background: rgba(255, 0 0, 0.5);
 }
-.name{
-  font-size:17px;
+.name {
+  font-size: 17px;
 }
-.center{
-  text-align:center;
-  padding:1.2rem 0;
+.center {
+  text-align: center;
+  padding: 1.2rem 0;
 }
-.theme--light.v-sheet--outlined{
-  border:  solid 2px rgb(98,171,248,0.9);
+.theme--light.v-sheet--outlined {
+  border: solid 2px rgb(98, 171, 248, 0.9);
 }
 
 .v-card:not(.on-hover) {
   opacity: 0.8;
-  border: thin solid rgb(0,0,0,0.12);
+  border: thin solid rgb(0, 0, 0, 0.12);
 }
-
 </style>

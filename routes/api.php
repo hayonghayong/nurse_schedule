@@ -8,7 +8,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 // ログイン認証後に使用できるAPI <最終的には全てこのgroupの中に記載します
-Route::group(['middleware' => 'auth'], function () {
+// Route::group(['middleware' => 'auth'], function () {
   // -----users_tabel crud -----
   // ログイン中のユーザー情報取得
   Route::get('/users/login-user', 'Api\UsersController@getLoginUser');
@@ -25,7 +25,8 @@ Route::group(['middleware' => 'auth'], function () {
   // ソフトデリートを解除
   Route::post('/users/restore','Api\UsersController@restoreUser');
 
-
+  // ログイン中のユーザー情報取得
+  Route::get('/users/admin-user', 'Api\UsersController@getAdmin');
   // -----teams_tabel crud -----
   // チーム生成
   Route::post('/teams/post','Api\TeamsController@post'); 
@@ -86,7 +87,7 @@ Route::group(['middleware' => 'auth'], function () {
   Route::post('/team_users/add','Api\TeamUsersController@addTeamUser'); 
 
   // チームメンバー取得
-  Route::get('/team_users/get/all','Api\TeamUsersController@getTeamUsers'); 
+  Route::get('/team_users/get/all/{team_id}','Api\TeamUsersController@getTeamUsers'); 
 
   // -----schedule_table_API-----
   // 看護師によるスケジュールデータの登録
@@ -110,4 +111,4 @@ Route::group(['middleware' => 'auth'], function () {
 
 
 
-});
+// });
