@@ -87,7 +87,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
   Route::post('/team_users/add','Api\TeamUsersController@addTeamUser'); 
 
   // チームメンバー取得
-  Route::get('/team_users/get/all','Api\TeamUsersController@getTeamUsers'); 
+  Route::get('/team_users/get/all/{team_id}','Api\TeamUsersController@getTeamUsers'); 
 
   // -----schedule_table_API-----
   // 看護師によるスケジュールデータの登録

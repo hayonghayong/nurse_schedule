@@ -27,14 +27,14 @@ export default {
     methods: {
       fetchStaff: function() {
             axios
-                .get("/api/team_users/get/all")
+                .get("/api/team_users/get/all/" + this.$route.params.team_id)
                 .then(res => {
                     console.log("status:", res.status);
                     console.log("body:", res.data);
                     this.staffs = res.data;
                 })
                 .catch(err => {
-                    console.log("err:", err);
+                    console.log(err.response.data);
                 });
         },
       
