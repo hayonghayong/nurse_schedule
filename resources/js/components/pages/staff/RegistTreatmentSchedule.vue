@@ -20,7 +20,7 @@
     </v-stepper>
     </div>-->
 
-
+    <!--
     <v-card>
       <v-list-item>
         <v-list-item-content>
@@ -35,7 +35,7 @@
         </v-list-item-content>
       </v-list-item>
     </v-card>
-
+    -->
     <!-- ここまで -->
     <v-container>
         <v-stepper value="2" alt-labels>
