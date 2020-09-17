@@ -36,5 +36,8 @@ export default {
 .v-stepper__label{
     font-size:8px;
 }
+.vue__time-picker input.display-time,.vue__time-picker{
+  width: 6em;
+}
 
 </style>
