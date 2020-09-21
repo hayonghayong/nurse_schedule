@@ -23,6 +23,7 @@
         <span v-else-if="usersPatients[setTreatmentPage].sex　== 2">女性</span>
         <BirthdayMomentJS :time="usersPatients[setTreatmentPage].birthday" />
       </li>
+      {{setTreatmentPage + 1}}/{{usersPatientsLength + 1}}人
     </div>
     <p class="center">今日行う処置を選択してください</p>
 
@@ -72,16 +73,11 @@
               id="start_time"
               name="startTime"
               placeholder="開始時間"
+              hour-label="時"
+              minute-label="分"
               input-class="form-control"
-              @change="updateSetTreatmentsData(index)"
+              @input="updateSetTreatmentsData(index)"
             ></vue-timepicker>
-            <!-- <vue-timepicker
-              :minute-interval="10"
-              id="end_time"
-              name="endTime"
-              placeholder="終了時間"
-              input-class="form-control"
-            ></vue-timepicker>-->
           </td>
           <td class="button">
             <v-btn
@@ -105,7 +101,7 @@
       color="#62ABF8"
       type="submit"
       @click="setTreatmentsSchedule()"
-    >次へ</v-btn>
+    >保存</v-btn>
   </v-container>
 </template>
 <script>
@@ -159,7 +155,7 @@ export default {
       if (day < 10) {
         day = "0" + day;
       }
-      return (this.transfer_data = year + "-" + month + "-" + day);
+      return (this.today = year + "-" + month + "-" + day);
     }
   },
   methods: {
@@ -188,22 +184,6 @@ export default {
           console.log("err:", err);
         });
     },
-    add: function(schedule) {
-      axios
-        .post("/api/schedules/post", {
-          treatment_id: this.schedule.treatment_id,
-          patient_id: this.schedule.patient_id,
-          start_date: this.schedule.start_date
-        })
-        .then(res => {
-          console.log("status:", res.status);
-          console.log("body:", res.data);
-          this.treatment = res.data;
-        })
-        .catch(err => {
-          console.log("err:", err);
-        });
-    },
     // 処置を追加して入力欄を表示
     pushSettreatmentData: function() {
       const selectedTreatmentId = this.selectedTreatment;
@@ -219,7 +199,6 @@ export default {
         patient_id: this.usersPatients[this.setTreatmentPage].id,
         start_date: ""
       });
-      console.log(this.setTreatmentsData);
     },
     // 登録したスケジュールの削除
     deleteTreatmentData: function(index) {
@@ -227,13 +206,39 @@ export default {
     },
     // 登録したスケジュールの開始時間を更新
     updateSetTreatmentsData: function(index) {
-      console.log(this.treatmentTimes[index]);
-      // this.setTreatmentsData[index].start_date = this.treatmentTimes[index];
-      // console.log(this.setTreatmentsData);
+      const setTime = this.treatmentTimes[index];
+      if (setTime.HH && setTime.mm) {
+        const startTime =
+          this.setToday + " " + setTime.HH + ":" + setTime.mm + ":00";
+        this.setTreatmentsData[index].start_date = startTime;
+      } else {
+        const startTime = this.setToday;
+        this.setTreatmentsData[index].start_date = startTime;
+      }
     },
     // 登録した処置をDBに保存
     setTreatmentsSchedule: function() {
-      this.setTreatmentPage++;
+      console.log(this.setTreatmentsData);
+      axios
+        .post("/api/schedules/post", {
+          tratmentSchedule: this.setTreatmentsData
+        })
+        .then(res => {
+          console.log("status:", res.status);
+          console.log("body:", res.data);
+          this.setTreatmentPage++;
+          this.setTreatmentsData = [];
+          //　全員分登録が完了したら...
+          if (this.setTreatmentPage == this.usersPatientsLength) {
+            const transitionDestinationObj = {
+              name: "RegistSchedule"
+            };
+            this.$router.push(transitionDestinationObj);
+          }
+        })
+        .catch(err => {
+          console.log("err:", err);
+        });
     }
   },
   created() {
