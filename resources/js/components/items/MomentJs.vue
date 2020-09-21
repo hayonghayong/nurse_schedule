@@ -1,5 +1,5 @@
 <template>
-    <p class="moment ma-0">{{ setTime }}歳</p>
+    <p class="moment ma-0">{{ setTime }}</p>
 </template>
 <script>
 import moment from "moment";
@@ -9,7 +9,7 @@ export default {
         time: String
     },
     computed: {
-        postTime: function() {
+        setTime: function() {
             return moment(this.time)
                 .add(9, "hours")
                 .format("YYYY/MM/DD(ddd) hh:mm");
