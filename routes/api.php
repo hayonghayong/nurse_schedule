@@ -53,7 +53,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
   // -----patient_user_tabel API -----
   // 担当患者登録
-  Route::post('/users_patients/add/{userPatients}','Api\UsersController@addUsersPatients'); 
+  Route::post('/users_patients/add','Api\UsersController@addUsersPatients'); 
 
   // 担当患者取得
   Route::get('/users_patients/get/all','Api\UsersController@getUsersPatients'); 
