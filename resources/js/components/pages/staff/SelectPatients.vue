@@ -166,11 +166,14 @@ export default {
                 .post("/api/users_patients/add/", {
                     id: this.saveSelectedPatient
                 })
-
                 .then(res => {
                     console.log("status:", res.status);
                     console.log("body:", res.data);
                     this.usersPatients = res.data;
+                    const transitionDestinationObj = {
+                        name: "RegistTreatmentSchedule"
+                    };
+                    this.$router.push(transitionDestinationObj);
                 })
                 .catch(err => {
                     "err:", err;
