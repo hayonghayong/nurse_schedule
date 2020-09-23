@@ -68,7 +68,7 @@ use Illuminate\Support\Arr;
           }
 
           // user_idに紐づいてるtreatmentとpatient情報を取得
-          $all = Schedule::with('treatment','patient')
+          $all = Schedule::with('user','treatment','patient')
           ->whereIn('user_id',$usersId)
           ->get();
 

@@ -12,6 +12,11 @@ class Schedule extends Model
   public $incrementing = false;
   protected $fillable = ['user_id', 'patient_id', 'treatment_id'];
   
+  public function user()
+  {
+    return $this->belongsTo('App\user');
+  }
+
   public function treatment()
   {
     return $this->belongsTo('App\treatment');
