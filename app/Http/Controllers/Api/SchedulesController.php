@@ -110,17 +110,28 @@ use Illuminate\Support\Arr;
       return $editSchedules;
     }
   
-    // スケジュール編集
+    // スケジュール編集<スタッフ>
     public function updateSchedule(Request $request ,$schedule) 
-    {   
-      $schedules = Schedule::find($schedule);
+    { 
+      $schedules = Schedule::where('id','=',$schedule)->first();
       $user_id = Auth::id();
-      $schedules->ward_id = $user_ward_id;
       $schedules->user_id = $user_id;
       $schedules->patient_id = $request->patient_id;
       $schedules->treatment_id = $request->treatment_id;
+      $schedules->start_date = $request->start_date;
       $schedules->save();
-      return $treatments;
+      return $schedules;
+    }
+  
+    // スケジュール編集<リーダー>
+    public function updateLeaderSchedule(Request $request ,$schedule) 
+    { 
+      $schedules = Schedule::find($schedule);
+      $schedules->patient_id = $request->patient_id;
+      $schedules->treatment_id = $request->treatment_id;
+      $schedules->start_date = $request->start_date;
+      $schedules->save();
+      return $schedules;
     }
 
 
