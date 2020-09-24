@@ -93,9 +93,20 @@
         >
             <v-card-text>
                 <p>{{ selectedEvent.category }}</p>
-                <p>{{ selectedEvent.patient }}</p>
                 <p>{{ selectedEvent.name }}</p>
                 <MomentJs :time="selectedEvent.start" />
+                変更後の時間
+                <vue-timepicker
+                    :minute-interval="10"
+                    v-model="selectedEvent.update_time"
+                    id="start_time"
+                    name="startTime"
+                    placeholder="開始時間"
+                    hour-label="時"
+                    minute-label="分"
+                    input-class="form-control"
+                ></vue-timepicker>
+                <v-btn @click="updateSchedule()">変更</v-btn>
             </v-card-text>
             <v-card-actions>
                 <v-btn text color="secondary" @click="selectedOpen = false">
@@ -109,14 +120,19 @@
 <script>
 // コンポーネントのインポート
 import MomentJs from "../../items/MomentJs";
+import VueTimepicker from "vue2-timepicker";
+import "vue2-timepicker/dist/VueTimepicker.css";
 
 // Vue
 export default {
     components: {
-        MomentJs
+        MomentJs,
+        "vue-timepicker": VueTimepicker
     },
     data: () => ({
         staffs: [],
+        postScheduleData: "", //postするスケジュールデータを格納
+        today: "",
         // ▼カレンダー関連
         //   nowライン
         value: "",
@@ -141,6 +157,7 @@ export default {
     created() {
         this.fetchStaff();
         this.fetchSchedule();
+        this.setDatetime();
     },
     computed: {
         cal() {
@@ -153,6 +170,7 @@ export default {
         }
     },
     mounted() {
+        this.setToday();
         //   nowライン
         this.ready = true;
         this.scrollToTime();
@@ -166,6 +184,7 @@ export default {
             axios
                 .get("/api/team_users/get/all/" + this.$route.params.team_id)
                 .then(res => {
+                    console.log(res.data);
                     this.staffs = res.data;
                     //   カレンダー表記用の配列に格納
                     this.categories = this.staffs.map(el => el.name);
@@ -187,6 +206,52 @@ export default {
                     console.log("err:", err.response.data);
                 });
         },
+        // 【API】スケジュール登録更新
+        updateSchedule: function() {
+            this.postScheduleData = this.selectedEvent;
+            // 時刻の整形
+            const setTime = this.postScheduleData.update_time;
+            if (setTime.HH && setTime.mm) {
+                const startTime =
+                    this.today + " " + setTime.HH + ":" + setTime.mm + ":00";
+                this.postScheduleData.start_date = startTime;
+            } else {
+                const startTime = this.today;
+                this.postScheduleData.start_date = startTime;
+            }
+            const schedule_id = this.postScheduleData.schedule_id;
+            axios
+                .post(
+                    "/api/schedules/update/leader/" + schedule_id,
+                    this.postScheduleData
+                )
+                .then(res => {
+                    // 描画し直し
+                    console.log(res.data);
+                    this.fetchSchedule();
+                    //  イベントを取得
+                    this.fetchEvents();
+                })
+                .catch(err => {
+                    console.log("err:", err.response.data);
+                });
+        },
+        // DB保存用に日付を整形
+        setDatetime: function() {
+            var today = new Date();
+            var year = today.getFullYear();
+            var month = today.getMonth() + 1;
+            var week = today.getDay();
+            var day = today.getDate();
+            if (month < 10) {
+                month = "0" + month;
+            }
+            if (day < 10) {
+                day = "0" + day;
+            }
+            return (this.today = year + "-" + month + "-" + day);
+        },
+
         // ---------- スケジュール表示関連 ---------- //
         // ▼イベント取得&表示
         // ▼nowライン表示
@@ -218,6 +283,9 @@ export default {
                 const endTime = startdate.getTime() + addition_time;
                 // イベントにpush < テストデータ
                 events.push({
+                    schedule_id: this.schedules[i].id, //スケジュールid
+                    patient_id: this.schedules[i].patient_id, //患者id
+                    treatment_id: this.schedules[i].treatment_id, //処置id
                     category: this.schedules[i].user.name, //スタッフの名前
                     name:
                         this.schedules[i].patient.name +
@@ -227,7 +295,6 @@ export default {
                     end: endTime, // 終了時刻
                     color: this.colors[0], //デフォルトのカラー
                     timed: true,
-                    id: this.schedules[i].id,
                     room: this.schedules[i].patient.room,
                     treatment: this.schedules[i].treatment.name,
                     patient: this.schedules[i].patient.name
@@ -269,6 +336,7 @@ export default {
                 const start = this.dragEvent.start;
 
                 this.dragTime = mouse - start;
+
             } else {
                 // イベント追加
                 this.createStart = this.roundTime(mouse);
@@ -291,7 +359,6 @@ export default {
         },
         mouseMove(tms) {
             const mouse = this.toTime(tms);
-
             // イベントドラッグ中
             if (this.dragEvent && this.dragTime !== null) {
                 const start = this.dragEvent.start;
@@ -322,6 +389,7 @@ export default {
             this.createEvent = null;
             this.createStart = null;
             this.extendOriginal = null;
+
         },
         cancelDrag() {
             if (this.createEvent) {
