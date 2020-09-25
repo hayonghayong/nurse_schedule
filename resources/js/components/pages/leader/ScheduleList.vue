@@ -72,11 +72,11 @@
                                 class="v-event-draggable"
                                 v-html="eventSummary()"
                             ></div>
-                            <div
+                            <!-- <div
                                 v-if="timed"
                                 class="v-event-drag-bottom"
                                 @mousedown.stop="extendBottom(event)"
-                            ></div>
+                            ></div> -->
                         </template>
                         <!-- ドラック&ドロップ設定ここまで -->
                     </v-calendar>
@@ -94,7 +94,7 @@
             <v-card-text>
                 <p>{{ selectedEvent.category }}</p>
                 <p>{{ selectedEvent.name }}</p>
-                <MomentJs :time="selectedEvent.start" />
+                <!-- <MomentJs /> -->
                 変更後の時間
                 <vue-timepicker
                     :minute-interval="10"
@@ -143,6 +143,7 @@ export default {
         createEvent: null,
         createStart: null,
         extendOriginal: null,
+        selectedStaff: "",
         //   イベントで使用するデータ
         focus: "",
         events: [], //ここを表示
@@ -184,7 +185,6 @@ export default {
             axios
                 .get("/api/team_users/get/all/" + this.$route.params.team_id)
                 .then(res => {
-                    console.log(res.data);
                     this.staffs = res.data;
                     //   カレンダー表記用の配列に格納
                     this.categories = this.staffs.map(el => el.name);
@@ -227,10 +227,7 @@ export default {
                 )
                 .then(res => {
                     // 描画し直し
-                    console.log(res.data);
                     this.fetchSchedule();
-                    //  イベントを取得
-                    this.fetchEvents();
                 })
                 .catch(err => {
                     console.log("err:", err.response.data);
@@ -281,8 +278,9 @@ export default {
                 const requiredTime = this.schedules[i].treatment.time_required;
                 const addition_time = requiredTime * 60 * 1000;
                 const endTime = startdate.getTime() + addition_time;
-                // イベントにpush < テストデータ
+                // イベントにpush
                 events.push({
+                    user_id: this.schedules[i].user_id, //ユーザーid
                     schedule_id: this.schedules[i].id, //スケジュールid
                     patient_id: this.schedules[i].patient_id, //患者id
                     treatment_id: this.schedules[i].treatment_id, //処置id
@@ -301,7 +299,6 @@ export default {
                 });
             }
             this.events = events;
-            console.log(this.events);
         },
         // -----------  イベント取得&表示ここまで ---------- //
 
@@ -328,6 +325,10 @@ export default {
                 this.dragEvent = event;
                 this.dragTime = null;
                 this.extendOriginal = null;
+                // ドラック前のスタッフ名を保持
+                this.selectedStaff = event.category;
+                // postデータ保持
+                this.selectedEvent = event;
             }
         },
         startTime(tms) {
@@ -336,7 +337,6 @@ export default {
                 const start = this.dragEvent.start;
 
                 this.dragTime = mouse - start;
-
             } else {
                 // イベント追加
                 this.createStart = this.roundTime(mouse);
@@ -352,6 +352,7 @@ export default {
                 this.events.push(this.createEvent);
             }
         },
+        // イベントを伸ばした後の処理
         extendBottom(event) {
             this.createEvent = event;
             this.createStart = event.start;
@@ -384,12 +385,35 @@ export default {
             }
         },
         endDrag() {
+            // *スタッフ間を移動した場合に、postデータのuser_idを変更
+            if (this.selectedStaff !== this.dragEvent.category) {
+                const target = this.staffs.find(el => {
+                    return el.name === this.dragEvent.category;
+                });
+                this.selectedEvent.user_id = target.id;
+            }
+            const update_time = new Date(this.selectedEvent.start);
+            const hour = update_time
+                .getHours()
+                .toString()
+                .padStart(2, "0");
+            const minutes = update_time
+                .getMinutes()
+                .toString()
+                .padStart(2, "0");
+            this.selectedEvent.update_time = {
+                HH: hour,
+                mm: minutes
+            };
+            // 更新
+            this.updateSchedule();
+
+            // 初期化
             this.dragTime = null;
             this.dragEvent = null;
             this.createEvent = null;
             this.createStart = null;
             this.extendOriginal = null;
-
         },
         cancelDrag() {
             if (this.createEvent) {
@@ -438,8 +462,6 @@ export default {
             const open = () => {
                 this.selectedEvent = event;
                 this.selectedElement = nativeEvent.target;
-                console.log(event);
-
                 setTimeout(() => (this.selectedOpen = true), 10);
             };
 

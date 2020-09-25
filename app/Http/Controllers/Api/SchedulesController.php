@@ -127,6 +127,7 @@ use Illuminate\Support\Arr;
     public function updateLeaderSchedule(Request $request ,$schedule) 
     { 
       $schedules = Schedule::find($schedule);
+      $schedules->user_id =  $request->user_id;
       $schedules->patient_id = $request->patient_id;
       $schedules->treatment_id = $request->treatment_id;
       $schedules->start_date = $request->start_date;
