@@ -13,18 +13,14 @@
                 public function up()
                 {
                     Schema::create("users_patients", function (Blueprint $table) {
-						$table->increments('id');
-						$table->integer('ward_id');
-						$table->integer('user_id');
-						$table->integer('patient_id');
-						$table->integer('end_flg');
-						$table->timestamps();
-            $table->softDeletes();
-            
-            // // 外部キー制約
-            // $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            // $table->foreign('patient_id')->references('id')->on('patients')->onDelete('cascade');
+                      $table->increments('id');
+                      $table->unsignedInteger('schedule_id');
+                      $table->unsignedInteger('patient_id');
+                      $table->timestamps();
+                      $table->softDeletes();
 
+                      $table->foreign('schedule_id')->references('id')->on('schedules')->onDelete('cascade');
+                      $table->foreign('patient_id')->references('id')->on('patients')->onDelete('cascade');
                     });
                 }
     

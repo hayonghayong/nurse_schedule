@@ -14,7 +14,6 @@
                 {
                     Schema::create("attendances", function (Blueprint $table) {
 						$table->increments('id');
-						$table->integer('ward_id');
 						$table->integer('user_id');
 						$table->integer('attendance_flg');
 						$table->timestamps();

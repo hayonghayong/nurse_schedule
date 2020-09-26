@@ -233,15 +233,15 @@ export default {
         setTreatmentsSchedule: function() {
             console.log(this.setTreatmentsData);
             axios
-                .post("/api/schedules/post", {
-                    tratmentSchedule: this.setTreatmentsData
+                .post("/api/tasks/post", {
+                    treatmentSchedule: this.setTreatmentsData
                 })
                 .then(res => {
                     console.log("status:", res.status);
                     console.log("body:", res.data);
                     this.setTreatmentPage++;
                     this.setTreatmentsData = [];
-                    //　全員分登録が完了したら...
+                    //全員分登録が完了したら...
                     if (this.setTreatmentPage == this.usersPatientsLength) {
                         const transitionDestinationObj = {
                             name: "RegistSchedule"

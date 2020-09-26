@@ -42,12 +42,7 @@ class User extends Authenticatable
 
     public function schedules()
     {
-      return $this->belongsToMany('App\Schedule');
-    }
-
-    public function patients()
-    {
-      return $this->belongsToMany('App\Patient');
+      return $this->hasMany('App\Schedule');
     }
 
     public function teams()

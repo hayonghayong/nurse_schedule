@@ -32,7 +32,7 @@ export default {
     methods: {
       fetchSchedule: function() {
             axios
-                .get("/api/schedules/get/all")
+                .get("/api/tasks/get/all")
                 .then(res => {
                     console.log("status:", res.status);
                     console.log("body:", res.data);
