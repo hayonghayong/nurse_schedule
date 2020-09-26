@@ -114,5 +114,12 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
   // 更新するタスク取得 
   Route::get('/schedules/get/{schedule}','Api\SchedulesController@editSchedule');
 
-   // タスク更新
-  Route::post('/schedules/update/{schedule}','Api\TreatmentsController@updateSchedule');
+   // スケジュール更新<スタッフ>
+  Route::post('/schedules/update/{schedule}','Api\SchedulesController@updateSchedule');
+   // スケジュール更新<リーダー>
+  Route::post('/schedules/update/leader/{schedule}','Api\SchedulesController@updateLeaderSchedule');
+
+
+
+
+// });

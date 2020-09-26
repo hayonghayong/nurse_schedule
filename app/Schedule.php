@@ -9,7 +9,7 @@ class Schedule extends Model
   protected $guarded = ["id"];
   protected $table = 'schedules';
   
-   public function users_patients()
+  public function users_patients()
   {
     return $this->hasMany('App\UsersPatient');
   }

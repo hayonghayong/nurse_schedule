@@ -72,11 +72,11 @@
                                 class="v-event-draggable"
                                 v-html="eventSummary()"
                             ></div>
-                            <div
+                            <!-- <div
                                 v-if="timed"
                                 class="v-event-drag-bottom"
                                 @mousedown.stop="extendBottom(event)"
-                            ></div>
+                            ></div> -->
                         </template>
                         <!-- ドラック&ドロップ設定ここまで -->
                     </v-calendar>
@@ -93,9 +93,20 @@
         >
             <v-card-text>
                 <p>{{ selectedEvent.category }}</p>
-                <p>{{ selectedEvent.patient }}</p>
                 <p>{{ selectedEvent.name }}</p>
-                <MomentJs :time="selectedEvent.start" />
+                <!-- <MomentJs /> -->
+                変更後の時間
+                <vue-timepicker
+                    :minute-interval="10"
+                    v-model="selectedEvent.update_time"
+                    id="start_time"
+                    name="startTime"
+                    placeholder="開始時間"
+                    hour-label="時"
+                    minute-label="分"
+                    input-class="form-control"
+                ></vue-timepicker>
+                <v-btn @click="updateSchedule()">変更</v-btn>
             </v-card-text>
             <v-card-actions>
                 <v-btn text color="secondary" @click="selectedOpen = false">
@@ -109,14 +120,19 @@
 <script>
 // コンポーネントのインポート
 import MomentJs from "../../items/MomentJs";
+import VueTimepicker from "vue2-timepicker";
+import "vue2-timepicker/dist/VueTimepicker.css";
 
 // Vue
 export default {
     components: {
-        MomentJs
+        MomentJs,
+        "vue-timepicker": VueTimepicker
     },
     data: () => ({
         staffs: [],
+        postScheduleData: "", //postするスケジュールデータを格納
+        today: "",
         // ▼カレンダー関連
         //   nowライン
         value: "",
@@ -127,6 +143,7 @@ export default {
         createEvent: null,
         createStart: null,
         extendOriginal: null,
+        selectedStaff: "",
         //   イベントで使用するデータ
         focus: "",
         events: [], //ここを表示
@@ -141,6 +158,7 @@ export default {
     created() {
         this.fetchStaff();
         this.fetchSchedule();
+        this.setDatetime();
     },
     computed: {
         cal() {
@@ -153,6 +171,7 @@ export default {
         }
     },
     mounted() {
+        this.setToday();
         //   nowライン
         this.ready = true;
         this.scrollToTime();
@@ -187,6 +206,49 @@ export default {
                     console.log("err:", err.response.data);
                 });
         },
+        // 【API】スケジュール登録更新
+        updateSchedule: function() {
+            this.postScheduleData = this.selectedEvent;
+            // 時刻の整形
+            const setTime = this.postScheduleData.update_time;
+            if (setTime.HH && setTime.mm) {
+                const startTime =
+                    this.today + " " + setTime.HH + ":" + setTime.mm + ":00";
+                this.postScheduleData.start_date = startTime;
+            } else {
+                const startTime = this.today;
+                this.postScheduleData.start_date = startTime;
+            }
+            const schedule_id = this.postScheduleData.schedule_id;
+            axios
+                .post(
+                    "/api/schedules/update/leader/" + schedule_id,
+                    this.postScheduleData
+                )
+                .then(res => {
+                    // 描画し直し
+                    this.fetchSchedule();
+                })
+                .catch(err => {
+                    console.log("err:", err.response.data);
+                });
+        },
+        // DB保存用に日付を整形
+        setDatetime: function() {
+            var today = new Date();
+            var year = today.getFullYear();
+            var month = today.getMonth() + 1;
+            var week = today.getDay();
+            var day = today.getDate();
+            if (month < 10) {
+                month = "0" + month;
+            }
+            if (day < 10) {
+                day = "0" + day;
+            }
+            return (this.today = year + "-" + month + "-" + day);
+        },
+
         // ---------- スケジュール表示関連 ---------- //
         // ▼イベント取得&表示
         // ▼nowライン表示
@@ -216,8 +278,12 @@ export default {
                 const requiredTime = this.schedules[i].treatment.time_required;
                 const addition_time = requiredTime * 60 * 1000;
                 const endTime = startdate.getTime() + addition_time;
-                // イベントにpush < テストデータ
+                // イベントにpush
                 events.push({
+                    user_id: this.schedules[i].user_id, //ユーザーid
+                    schedule_id: this.schedules[i].id, //スケジュールid
+                    patient_id: this.schedules[i].patient_id, //患者id
+                    treatment_id: this.schedules[i].treatment_id, //処置id
                     category: this.schedules[i].user.name, //スタッフの名前
                     name:
                         this.schedules[i].patient.name +
@@ -227,14 +293,12 @@ export default {
                     end: endTime, // 終了時刻
                     color: this.colors[0], //デフォルトのカラー
                     timed: true,
-                    id: this.schedules[i].id,
                     room: this.schedules[i].patient.room,
                     treatment: this.schedules[i].treatment.name,
                     patient: this.schedules[i].patient.name
                 });
             }
             this.events = events;
-            console.log(this.events);
         },
         // -----------  イベント取得&表示ここまで ---------- //
 
@@ -261,6 +325,10 @@ export default {
                 this.dragEvent = event;
                 this.dragTime = null;
                 this.extendOriginal = null;
+                // ドラック前のスタッフ名を保持
+                this.selectedStaff = event.category;
+                // postデータ保持
+                this.selectedEvent = event;
             }
         },
         startTime(tms) {
@@ -284,6 +352,7 @@ export default {
                 this.events.push(this.createEvent);
             }
         },
+        // イベントを伸ばした後の処理
         extendBottom(event) {
             this.createEvent = event;
             this.createStart = event.start;
@@ -291,7 +360,6 @@ export default {
         },
         mouseMove(tms) {
             const mouse = this.toTime(tms);
-
             // イベントドラッグ中
             if (this.dragEvent && this.dragTime !== null) {
                 const start = this.dragEvent.start;
@@ -317,6 +385,30 @@ export default {
             }
         },
         endDrag() {
+            // *スタッフ間を移動した場合に、postデータのuser_idを変更
+            if (this.selectedStaff !== this.dragEvent.category) {
+                const target = this.staffs.find(el => {
+                    return el.name === this.dragEvent.category;
+                });
+                this.selectedEvent.user_id = target.id;
+            }
+            const update_time = new Date(this.selectedEvent.start);
+            const hour = update_time
+                .getHours()
+                .toString()
+                .padStart(2, "0");
+            const minutes = update_time
+                .getMinutes()
+                .toString()
+                .padStart(2, "0");
+            this.selectedEvent.update_time = {
+                HH: hour,
+                mm: minutes
+            };
+            // 更新
+            this.updateSchedule();
+
+            // 初期化
             this.dragTime = null;
             this.dragEvent = null;
             this.createEvent = null;
@@ -370,8 +462,6 @@ export default {
             const open = () => {
                 this.selectedEvent = event;
                 this.selectedElement = nativeEvent.target;
-                console.log(event);
-
                 setTimeout(() => (this.selectedOpen = true), 10);
             };
 
