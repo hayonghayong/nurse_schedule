@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class PatientUserTableSeeder extends Seeder
+class UsersPatientsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -13,29 +13,29 @@ class PatientUserTableSeeder extends Seeder
     {
       $faker = Faker\Factory::create("ja_JP");
 
-            DB::table('patient_user')->insert([
-                "user_id" => 1,
+            DB::table('users_patients')->insert([
+                "schedule_id" => 1,
                 "patient_id" => 1,
                 "created_at" => $faker->dateTime("now"),
                 "updated_at" => $faker->dateTime("now")
             ]);
 
-            DB::table('patient_user')->insert([
-                "user_id" => 1,
+            DB::table('users_patients')->insert([
+                "schedule_id" => 1,
                 "patient_id" => 2,
                 "created_at" => $faker->dateTime("now"),
                 "updated_at" => $faker->dateTime("now")
             ]);
 
-            DB::table('patient_user')->insert([
-                "user_id" => 2,
+            DB::table('users_patients')->insert([
+                "schedule_id" => 2,
                 "patient_id" => 1,
                 "created_at" => $faker->dateTime("now"),
                 "updated_at" => $faker->dateTime("now")
             ]);
 
-            DB::table('patient_user')->insert([
-                "user_id" => 2,
+            DB::table('users_patients')->insert([
+                "schedule_id" => 2,
                 "patient_id" => 2,
                 "created_at" => $faker->dateTime("now"),
                 "updated_at" => $faker->dateTime("now")

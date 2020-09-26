@@ -27,9 +27,14 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
   // ログイン中のユーザー情報取得
   Route::get('/users/admin-user', 'Api\UsersController@getAdmin');
+
+
+
   // -----teams_tabel crud -----
   // チーム生成
   Route::post('/teams/post','Api\TeamsController@post'); 
+
+
 
   // -----patients_tabel API -----
   // 病棟内患者一覧取得
@@ -51,12 +56,12 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
   Route::get('/patients_users/get/{patient}','Api\PatientsController@patientUser');
 
 
-  // -----patient_user_tabel API -----
+  // -----users_patients_tabel API -----
   // 担当患者登録
-  Route::post('/users_patients/add','Api\UsersController@addUsersPatients'); 
+  Route::post('/users_patients/add','Api\UsersPatientsController@addUsersPatients'); 
 
   // 担当患者取得
-  Route::get('/users_patients/get/all','Api\UsersController@getUsersPatients'); 
+  Route::get('/users_patients/get/all','Api\UsersPatientsController@getUsersPatients'); 
 
   // 特定のuserの担当患者取得
   Route::get('/users_patients/get/{user}','Api\UsersController@selectUsersPatients');
@@ -64,7 +69,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
   // 担当患者更新
   Route::post('/api/users_patients/update/{userPatients}','Api\PatientsController@updateUsersPatients'); 
 
-  
+
 
   // -----treatment_tabel API -----
   // 処置一覧表示
@@ -82,33 +87,32 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
   // 処置更新
   Route::post('/treatments/update/{editTreatment}','Api\TreatmentsController@updateTreatment');
 
+
+
   // -----team_users_table API-----
-  // チームメンバー登録
+  // チームメンバー登録  !済！
   Route::post('/team_users/add','Api\TeamUsersController@addTeamUser'); 
 
-  // チームメンバー取得
+  // チームメンバー取得  !済！
   Route::get('/team_users/get/all/{team_id}','Api\TeamUsersController@getTeamUsers'); 
 
-  // -----schedule_table_API-----
-  // 看護師によるスケジュールデータの登録
-  Route::post('/schedules/post','Api\SchedulesController@addSchedules'); 
+
+
+  // -----task_table_API-----
+  // 看護師によるタスクデータの登録
+  Route::post('/tasks/post','Api\TasksController@addtasks'); 
   
-  // 登録スケジュール取得
-  Route::get('/schedules/get/all','Api\SchedulesController@getSchecules');
+  // 登録タスク取得  !済！
+  Route::get('/tasks/get/all','Api\TasksController@getTasks');
 
-  // チームのスケジュール表示
-  Route::get('/schedules/get/team','Api\SchedulesController@getTeamSchecules');
+  // チームのタスク表示  !済！
+  Route::get('/tasks/get/team','Api\TasksController@getTeamTasks');
 
-  // 患者のスケジュール取得
+  // 患者のタスク取得
   Route::get('/schedules/get/patients','Api\SchedulesController@getPatientsSchecules');
 
-  // 更新するスケジュール取得 
+  // 更新するタスク取得 
   Route::get('/schedules/get/{schedule}','Api\SchedulesController@editSchedule');
 
-   // スケジュール更新
+   // タスク更新
   Route::post('/schedules/update/{schedule}','Api\TreatmentsController@updateSchedule');
-
-
-
-
-// });

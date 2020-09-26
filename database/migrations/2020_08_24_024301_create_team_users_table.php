@@ -14,10 +14,13 @@
                 {
                     Schema::create("team_users", function (Blueprint $table) {
                       $table->increments('id');
-                      $table->integer('ward_id');
+                      $table->unsignedInteger('team_id');
                       $table->unsignedBigInteger('user_id');
                       $table->timestamps();
                       $table->softDeletes();
+
+                      $table->foreign('team_id')->references('id')->on('teams')->onDelete('cascade');
+                      $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
                     });
                 }
     

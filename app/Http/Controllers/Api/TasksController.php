@@ -7,19 +7,24 @@ use Auth;
 use Validate;
 use DB;
 use App\Schedule;
+use App\Task;
 use App\Team;
 use App\User;
 use Illuminate\Support\Arr;
     
-    class SchedulesController extends Controller
+    class TasksController extends Controller
     {
       // 新規スケジュール登録 (スタッフ)
-    public function addSchedules(Request $request) 
+    public function addTasks(Request $treatmentSchedule) 
     {
-      $schedules = new Schedule;
-      $user = Auth::user();
-      $schedules->user_id = $user->id;
-      $schedules->treatment_id = $request->treatment_id;
+      $schedules = new Task;
+      $user = Auth::id();
+      $scheduleId = Schedule::orderBy('created_at', 'desc')
+      ->where('user_id',$user)
+      ->first()
+      ->id;
+      $schedules->schedule_id = $scheduleId;
+      $schedules->treatment_id = $treatmentSchedule->treatment_id;
       $schedules->patient_id = $request->patient_id;
       $schedules->start_date = $request->start_date;
       $schedules->save();
@@ -27,61 +32,42 @@ use Illuminate\Support\Arr;
     }
 
     // 自分のスケジュール取得（スタッフ）
-    public function getSchecules()
+    public function getTasks()
       { 
         // スケジュールと同時に処置と患者情報も全て取得
-        $user_id = Auth::user()->id;
-        $all = Schedule::with('treatment','patient')
-        ->where('user_id',$user_id)
+        $user = Auth::id();
+        $scheduleId = Schedule::orderBy('created_at', 'desc')
+        ->where('user_id',$user)
+        ->first()
+        ->id;
+        $all = Task::with('treatment','patient')
+        ->where('schedule_id',$scheduleId)
         ->get();
-        
-        // // スケジュールと関連する患者情報のみ取得
-        // $allPatients = $all->pluck('patients');
-        // $patient = Arr::flatten($allPatients);
-
-        // // スケジュールと関連する処置情報のみ取得
-        // $allTreatments = $all->pluck('treatments');
-        // $treatment = Arr::flatten($allTreatments);
-
         return $all;
-        // return [$patient,$treatment];
       }
 
       // チームのスケジュール取得
-      public function getTeamSchecules()
+      public function getTeamTasks()
       { 
         $user_id = Auth::id();
           // ログインユーザーのチームとteam_usersを取得
-          $teams = Team::with(['team_users'])
+          $team = Team::with(['team_users'])
+          ->orderBy('created_at', 'desc')
           ->where('user_id', $user_id)
+          ->first();
+
+          // そのチームに所属するuserのuser_id取得
+          $userIds = $team->team_users->pluck('user_id');
+          
+          // user_idからshcedule_id取得
+          $scheduleId = Schedule::whereIn('user_id',$userIds)
           ->get();
 
-          // そのチームに所属するuser情報を取得
-          $allUsers = $teams->pluck('team_users');
-          $users = Arr::flatten($allUsers);
-
-          // user情報からuser_id取得
-          foreach($users as $val)
-          {
-            $usersId = $val
-            ->pluck('user_id');
-          }
-
-          // user_idに紐づいてるtreatmentとpatient情報を取得
-          $all = Schedule::with('user','treatment','patient')
-          ->whereIn('user_id',$usersId)
+          // schedule_idに紐づいてるtreatmentとpatient情報を取得
+          $all = Task::with('treatment','patient')
+          ->whereIn('schedule_id',$scheduleId)
           ->get();
-
-          // // // スケジュールと関連する患者情報のみ取得
-          // $allPatients = $all->pluck('patients');
-          // $patient = Arr::flatten($allPatients);
-          
-          // // // スケジュールと関連する処置情報のみ取得
-          // $allTreatments = $all->pluck('treatments');
-          // $treatment = Arr::flatten($allTreatments);
-          
           return $all;
-          // return [$patient,$treatment];
       }
 
       // 自分の担当患者のスケジュール取得

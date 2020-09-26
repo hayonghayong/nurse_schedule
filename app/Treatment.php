@@ -12,9 +12,9 @@ class Treatment extends Model
   protected $dates = ['deleted_at'];
   protected $fillable = ['body'];
 
-  public function schedules()
+  public function tasks()
   {
-    return $this->hasMany('App\schedule');
+    return $this->hasMany('App\task');
   }
 
 }

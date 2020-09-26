@@ -12,14 +12,15 @@ class Patient extends Model
   protected $dates = ['deleted_at'];
   protected $fillable = ['body'];
 
-  public function users()
-    {
-      return $this->belongsToMany('App\User');
-    }
   
-  public function schedules()
+  public function tasks()
   {
-    return $this->hasMany('App\schedule');
+    return $this->hasMany('App\Task');
+  }
+
+  public function users_patients()
+  {
+    return $this->hasMany('App\UsersPatient');
   }
 
 }

@@ -8,28 +8,43 @@ use Validate;
 use DB;
 use App\UsersPatient;
 use App\Patient;
+use App\Schedule;
 
     class UsersPatientsController extends Controller
     {
 
-    // 担当患者登録
-    public function addUsersPatients(Request $request) 
-    {
-      $collection = collect([1, 2, 3]);
-      $ids = $collection->toArray();
 
-      foreach ($ids as $val) {
-        $usersPatients = new UsersPatient;
-        $user = Auth::user();
-        $user_ward_id = $user->ward_id;
-        $usersPatients->ward_id = $user_ward_id;
-        $usersPatients->user_id = Auth::id();
-        $usersPatients->patient_id = $val;
-        $usersPatients->end_flg = "0";
-        $usersPatients->save();
-      }
-      return $usersPatients;
-    }
+    // 担当患者登録
+        public function addUsersPatients(Request $request) 
+        {
+          $user = Auth::id();
+          $ids = $request->id;
+          foreach ($ids as $val) {
+          $usersPatients = new UsersPatient;
+          $usersPatients->schedule_id =Schedule::orderBy('created_at', 'desc')
+          ->where('user_id',$user)
+          ->first()
+          ->id;
+          $usersPatients->patient_id = $val;
+          $usersPatients->save();
+          }
+        }
+    
+     // 担当患者取得
+        public function getUsersPatients()
+        { 
+          $user = Auth::id();
+          $scheduleId = Schedule::orderBy('created_at', 'desc')
+          ->where('user_id',$user)
+          ->first()
+          ->id;
+          $allusersPatients = UsersPatient::with('patient')
+          ->where('schedule_id',$scheduleId)
+          ->get();
+          $usersPatients = $allusersPatients->pluck('patient');
+          return $usersPatients;
+        }
+
 
     
     

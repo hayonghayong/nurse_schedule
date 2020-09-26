@@ -177,7 +177,7 @@ export default {
         // 【API】スケジュールを取得
         fetchSchedule: function() {
             axios
-                .get("/api/schedules/get/team")
+                .get("/api/tasks/get/team")
                 .then(res => {
                     this.schedules = res.data;
                     //  イベントを取得
