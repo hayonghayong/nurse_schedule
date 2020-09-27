@@ -109,16 +109,22 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
   Route::get('/tasks/get/team','Api\TasksController@getTeamTasks');
 
   // 患者のタスク取得
-  Route::get('/schedules/get/patients','Api\SchedulesController@getPatientsSchecules');
+  Route::get('/tasts/get/patients','Api\TasksController@getPatientsSchecules');
 
   // 更新するタスク取得 
-  Route::get('/schedules/get/{schedule}','Api\SchedulesController@editSchedule');
+  Route::get('/tasks/get/{schedule}','Api\TasksController@editSchedule');
 
    // スケジュール更新<スタッフ>
-  Route::post('/schedules/update/{schedule}','Api\SchedulesController@updateSchedule');
+  Route::post('/tasks/update/{schedule}','Api\TasksController@updateSchedule');
    // スケジュール更新<リーダー>
-  Route::post('/schedules/update/leader/{schedule}','Api\SchedulesController@updateLeaderSchedule');
+  Route::post('/tasks/update/leader/{schedule}','Api\TasksController@updateLeaderSchedule');
 
+
+
+
+  // -----schedules_tabel crud -----
+  // チーム生成
+  Route::post('/schedules/post','Api\SchedulesController@post'); 
 
 
 
