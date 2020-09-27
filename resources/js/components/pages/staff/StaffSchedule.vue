@@ -54,6 +54,7 @@
                         @mouseup:time="endDrag"
                         @touchendup:time="endDrag"
                         @mouseleave.native="cancelDrag"
+                        @touchleave.native="cancelDrag"
                         @click:event="showEvent"
                     >
                         <!-- nowライン設定 -->
@@ -249,7 +250,7 @@ export default {
         // 【API】スケジュールを取得
         fetchSchedule: function() {
             axios
-                .get("/api/tasks/get/all")
+                .get("/api/tasks/get/all/1")
                 .then(res => {
                     console.log("status:", res.status);
                     console.log("body:", res.data);
@@ -350,6 +351,14 @@ export default {
                 const requiredTime = this.schedules[i].treatment.time_required;
                 const addition_time = requiredTime * 60 * 1000;
                 const endTime = unixStartdate + addition_time;
+                const endFlag = this.schedules[i].end_flg;
+                const endFlagData = "";
+                // 完了しているかでタスクの色を変更
+                if (endFlag == null) {
+                    endFlagData = "blue";
+                } else if (endFlag == 1) {
+                    endFlagData = "grey darken-1";
+                }
                 // イベントにpush
                 getEventsData.push({
                     name:
@@ -359,7 +368,7 @@ export default {
                     start: unixStartdate, // 開始時刻
                     // start: this.schedules[i].start_date, // 開始時刻
                     end: endTime, // 終了時刻(UNIX型)
-                    color: this.colors[i],
+                    color: endFlagData, // end_flgで判定した色
                     timed: true,
                     id: this.schedules[i].id,
                     room: this.schedules[i].patient.room,
@@ -519,9 +528,30 @@ export default {
 
             nativeEvent.stopPropagation();
         },
+        // end_flgの更新（独立したAPIを使用する場合）
+        // saveEndFlag(schedule_id) {
+        //     axios
+        //         .post("/api/schedules/endflag/" + schedule_id)
+        //         .then(res => {
+        //             // 描画し直し
+        //             this.fetchSchedule();
+        //         })
+        //         .catch(err => {
+        //             console.log("err:", err.response.data);
+        //         });
+        // }
+        // end_flgの更新（ /api/schedules/update/ APIを使用する場合）
         saveEndFlag(schedule_id) {
+            const updateSchedule = this.selectedEvent;
+            if (updateSchedule.end_flag == null) {
+                updateSchedule.end_flag = 1;
+                this.selectedEvent.end_flg = 1;
+            } else if (updateSchedule.end_flag == 1) {
+                updateSchedule.end_flag = null;
+                this.selectedEvent.end_flg = null;
+            }
             axios
-                .post("/api/schedules/endflag/" + schedule_id)
+                .post("/api/schedules/update/" + schedule_id)
                 .then(res => {
                     // 描画し直し
                     this.fetchSchedule();
