@@ -32,16 +32,12 @@ use Illuminate\Support\Arr;
     }
 
     // 自分のスケジュール取得（スタッフ）
-    public function getTasks()
+    public function getTasks($schedule_id)
       { 
         // スケジュールと同時に処置と患者情報も全て取得
         $user = Auth::id();
-        $scheduleId = Schedule::orderBy('created_at', 'desc')
-        ->where('user_id',$user)
-        ->first()
-        ->id;
         $all = Task::with('treatment','patient')
-        ->where('schedule_id',$scheduleId)
+        ->where('schedule_id',$schedule_id)
         ->get();
         return $all;
       }
@@ -97,16 +93,15 @@ use Illuminate\Support\Arr;
     }
   
     // スケジュール編集<スタッフ>
-    public function updateSchedule(Request $request ,$schedule) 
+    public function updateSchedule(Request $request ,$task_id) 
     { 
-      $schedules = Schedule::where('id','=',$schedule)->first();
-      $user_id = Auth::id();
-      $schedules->user_id = $user_id;
-      $schedules->patient_id = $request->patient_id;
-      $schedules->treatment_id = $request->treatment_id;
-      $schedules->start_date = $request->start_date;
-      $schedules->save();
-      return $schedules;
+      $task = Task::find($task_id);
+      // $task->schedule_id = $$request->schedule_id;
+      $task->patient_id = $request->patient_id;
+      $task->treatment_id = $request->treatment_id;
+      $task->start_date = $request->start_date;
+      $task->save();
+      return $task;
     }
   
     // スケジュール編集<リーダー>

@@ -103,7 +103,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
   Route::post('/tasks/post','Api\TasksController@addtasks'); 
   
   // 登録タスク取得  !済！
-  Route::get('/tasks/get/all','Api\TasksController@getTasks');
+  Route::get('/tasks/get/all/{schedule_id}','Api\TasksController@getTasks');
 
   // チームのタスク表示  !済！
   Route::get('/tasks/get/team','Api\TasksController@getTeamTasks');

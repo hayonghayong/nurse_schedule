@@ -8,7 +8,7 @@ class Task extends Model
 {
   protected $guarded = ["id"];
   protected $table = 'tasks';
-  protected $primaryKey = ['schedule_id','patient_id', 'treatment_id'];
+  // protected $primaryKey = ['schedule_id','patient_id', 'treatment_id'];
   public $incrementing = false;
   protected $fillable = ['schedule_id', 'patient_id', 'treatment_id'];
   
