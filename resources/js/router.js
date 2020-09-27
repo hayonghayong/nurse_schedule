@@ -36,30 +36,30 @@ const routes = [
         meta: { title: "役割選択" }
     },
     {
-        path: "/staff/select-patients",
+        path: "/staff/select-patients/:schedule_id",
         component: SelectPatients,
         name: "SelectPatients",
         meta: { title: "患者選択" }
     },
     {
-        path: "/staff/regist-treatment-schedule",
+        path: "/staff/regist-treatment-schedule/:schedule_id",
         component: RegistTreatmentSchedule,
         name: "RegistTreatmentSchedule",
         meta: { title: "処置設定" }
     },
     {
-        path: "/staff/regist-schedule",
+        path: "/staff/regist-schedule/:schedule_id",
         component: RegistSchedule,
         name: "RegistSchedule",
         meta: { title: "スケジュール登録" }
     },
     {
-        path: "/staff/schedule-detail",
+        path: "/staff/schedule-detail/:schedule_id",
         component: ScheduleDetail,
         name: "ScheduleDetail"
     },
     {
-        path: "/staff/staff-schedule",
+        path: "/staff/staff-schedule/:schedule_id",
         component: StaffSchedule,
         name: "StaffSchedule"
     },

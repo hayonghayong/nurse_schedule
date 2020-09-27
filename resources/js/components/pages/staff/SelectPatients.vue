@@ -171,7 +171,10 @@ export default {
                     console.log("body:", res.data);
                     this.usersPatients = res.data;
                     const transitionDestinationObj = {
-                        name: "RegistTreatmentSchedule"
+                        name: "RegistTreatmentSchedule",
+                        params:{
+                            schedule_id: this.$route.params.schedule_id
+                        }
                     };
                     this.$router.push(transitionDestinationObj);
                 })
