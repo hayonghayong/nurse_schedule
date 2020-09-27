@@ -9,6 +9,29 @@ Vue.use(Vuex);
 export default new Vuex.Store({
     modules: {
         auth,
-        patient
+        patient,
+        common: {
+            namespaced: true,
+            state: {
+              pageTitle: 'Home',
+            },
+            actions: {
+              changePage({ commit }, title) {
+                commit('cahgePageTitle', title);
+              },
+            },
+            mutations: {
+              cahgePageTitle(state, title) {
+                const st = state;
+                st.pageTitle = title;
+              },
+            },
+            getters: {
+              pageTitle(state) {
+                const st = state;
+                return st.pageTitle;
+              },
+             },
+        },
     }
 });
