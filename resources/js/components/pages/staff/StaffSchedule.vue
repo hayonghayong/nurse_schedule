@@ -46,9 +46,13 @@
                         interval-height="80px"
                         type="day"
                         @mousedown:event="startDrag"
+                        @touchstart:event="startDrag"
                         @mousedown:time="startTime"
+                        @touchstart:time="startTime"
                         @mousemove:time="mouseMove"
+                        @touchmove:time="mouseMove"
                         @mouseup:time="endDrag"
+                        @touchendup:time="endDrag"
                         @mouseleave.native="cancelDrag"
                         @click:event="showEvent"
                     >
