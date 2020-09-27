@@ -551,7 +551,9 @@ export default {
                 this.selectedEvent.end_flg = null;
             }
             axios
-                .post("/api/schedules/update/" + schedule_id)
+                .post("/api/schedules/update/" + schedule_id, {
+                    updateSchedule
+                })
                 .then(res => {
                     // 描画し直し
                     this.fetchSchedule();
