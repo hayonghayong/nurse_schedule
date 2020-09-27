@@ -1,9 +1,11 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+import store from './store';
 
 Vue.use(VueRouter);
 
 // ▼ページコンポーネントのインポート
+
 // スタッフページ
 import SelectRole from "./components/pages/staff/SelectRole.vue";
 import SelectPatients from "./components/pages/staff/SelectPatients.vue";
@@ -132,3 +134,11 @@ const router = new VueRouter({
 
 // VueRouterインスタンスを作成してエクスポート
 export default router;
+
+router.afterEach((to,from) =>{
+    // console.log('呼ばれたよ!')
+    // console.log(to.meta.title);
+    if (to.meta && to.meta.title) {
+        store.dispatch('common/changePage', to.meta.title)
+      }
+  })

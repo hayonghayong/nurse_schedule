@@ -3,20 +3,19 @@
   <div>
     <v-app-bar color="blue" dark>
       <div>
-        <router-link to="home" class="link">＜戻る</router-link>
+        <span @click="back" style="cursor: pinter;">＜戻る</span>
       </div>
       <v-spacer></v-spacer>
-      <v-toolbar-title class="white--text title">タイトルが入る（仮）</v-toolbar-title>
+      <v-toolbar-title id="header" class="white--text title">{{pageTitle}}</v-toolbar-title>
 
       <v-spacer></v-spacer>
 
       <v-btn icon>
-        <v-icon>mdi-account-cog</v-icon>
+        <v-icon @click="logout" style="cursor: pointer;">mdi-account-cog</v-icon>
       </v-btn>
 
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
 
-      <span @click="logout" style="cursor: pointer;">ログアウト</span>
 
       <!--<v-menu left bottom>
                 <template v-slot:activator="{ on, attrs }">
@@ -211,7 +210,11 @@ export default {
   },
   computed: {
     //ログインしているユーザーの情報を取得：stateを参照
-    ...mapState("auth", ["loginUser"])
+    ...mapState("auth", ["loginUser"]),
+    ...mapGetters({
+      pageTitle:'common/pageTitle',
+    }),
+
   },
   methods: {
     //ログインしているユーザーの情報を取得：Actionsを参照
@@ -224,7 +227,10 @@ export default {
           location.href = "/";
         })
         .catch(err => console.log(err));
-    }
+    },
+    back(){
+        this.$router.back()
+    },
   }
 };
 </script>
