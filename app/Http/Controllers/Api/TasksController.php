@@ -15,20 +15,19 @@ use Illuminate\Support\Arr;
     class TasksController extends Controller
     {
       // 新規スケジュール登録 (スタッフ)
-    public function addTasks(Request $treatmentSchedule) 
+    public function addTasks(Request $request,$shcedule_id) 
     {
-      $schedules = new Task;
-      $user = Auth::id();
-      $scheduleId = Schedule::orderBy('created_at', 'desc')
-      ->where('user_id',$user)
-      ->first()
-      ->id;
-      $schedules->schedule_id = $scheduleId;
-      $schedules->treatment_id = $treatmentSchedule->treatment_id;
-      $schedules->patient_id = $request->patient_id;
-      $schedules->start_date = $request->start_date;
-      $schedules->save();
-      return $schedules;
+      // $user = Auth::id();
+      foreach($request->all() as $val){
+        $task = new Task;
+        $task->schedule_id = $shcedule_id;
+        $task->treatment_id = $val['treatment_id'];
+        $task->patient_id = $val['patient_id'];
+        $task->start_date = $val['start_date'];
+        $task->save();
+      }
+
+      return $request->all();
     }
 
     // 自分のスケジュール取得（スタッフ）

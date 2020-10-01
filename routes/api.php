@@ -100,7 +100,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
   // -----task_table_API-----
   // 看護師によるタスクデータの登録
-  Route::post('/tasks/post','Api\TasksController@addtasks'); 
+  Route::post('/tasks/post/{schedule_id}','Api\TasksController@addtasks'); 
   
   // 登録タスク取得  !済！
   Route::get('/tasks/get/all/{schedule_id}','Api\TasksController@getTasks');
