@@ -9,6 +9,7 @@ use DB;
 use App\TeamUser;
 use App\Team;
 use App\User;
+use App\Schedule;
 use Illuminate\Support\Arr;
     
     class TeamUsersController extends Controller
@@ -32,13 +33,12 @@ use Illuminate\Support\Arr;
       // チームメンバー表示
       public function getTeamUsers($team_id)
         { 
-          $user_id = Auth::id();
           // ログインユーザーのチームとteam_usersを取得
           $teams = Team::with(['team_users'])
           ->where('id', $team_id)
           ->get();
 
-          // // そのチームに所属するuser情報を取得
+          // そのチームに所属するuser情報を取得
           $allUsers = $teams->pluck('team_users');
           $users = Arr::flatten($allUsers);
 
@@ -49,6 +49,11 @@ use Illuminate\Support\Arr;
             array_push($users_id,$val->user_id);
           }
           $staffs = User::find($users_id);
+          // 最新のスケジュールを格納
+          foreach($staffs as $val){
+            $schedule = Schedule::where('user_id',$val['id'])->orderBy('id', 'desc')->first();
+            $val['schedule'] = $schedule;
+          }
           return $staffs;
         }
         

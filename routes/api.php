@@ -106,7 +106,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
   Route::get('/tasks/get/all/{schedule_id}','Api\TasksController@getTasks');
 
   // チームのタスク表示  !済！
-  Route::get('/tasks/get/team','Api\TasksController@getTeamTasks');
+  Route::get('/tasks/get/team/{team_id}','Api\TasksController@getTeamTasks');
 
   // 患者のタスク取得
   Route::get('/tasts/get/patients','Api\TasksController@getPatientsSchecules');
@@ -117,7 +117,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
    // スケジュール更新<スタッフ>
   Route::post('/tasks/update/{task_id}','Api\TasksController@updateSchedule');
    // スケジュール更新<リーダー>
-  Route::post('/tasks/update/leader/{schedule}','Api\TasksController@updateLeaderSchedule');
+  Route::post('/tasks/update/leader/{schedule_id}','Api\TasksController@updateLeaderSchedule');
 
 
 

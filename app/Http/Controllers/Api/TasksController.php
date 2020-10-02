@@ -9,6 +9,7 @@ use DB;
 use App\Schedule;
 use App\Task;
 use App\Team;
+use App\TeamUser;
 use App\User;
 use Illuminate\Support\Arr;
     
@@ -42,25 +43,29 @@ use Illuminate\Support\Arr;
       }
 
       // チームのスケジュール取得
-      public function getTeamTasks()
+      public function getTeamTasks($team_id)
       { 
         $user_id = Auth::id();
           // ログインユーザーのチームとteam_usersを取得
-          $team = Team::with(['team_users'])
-          ->orderBy('created_at', 'desc')
-          ->where('user_id', $user_id)
-          ->first();
-
-          // そのチームに所属するuserのuser_id取得
-          $userIds = $team->team_users->pluck('user_id');
-          
-          // user_idからshcedule_id取得
-          $scheduleId = Schedule::whereIn('user_id',$userIds)
+          $team = TeamUser::where('team_id', $team_id)
           ->get();
 
+          // そのチームに所属するuserのuser_id取得
+          $userIds = $team->pluck('user_id');
+
+          // user_idからshcedule_id取得 < 最新のschedule_id取得
+          $schedules = [];
+          foreach($userIds as $val){
+          $shcedule = Schedule::where('user_id',$val)
+                        ->orderBy('id','desc')
+                        ->first()
+                        ->id;
+            array_push($schedules,$shcedule);
+          } 
           // schedule_idに紐づいてるtreatmentとpatient情報を取得
           $all = Task::with('treatment','patient')
-          ->whereIn('schedule_id',$scheduleId)
+          ->whereIn('schedule_id',$schedules)
+          ->with('schedule')
           ->get();
           return $all;
       }
@@ -104,15 +109,15 @@ use Illuminate\Support\Arr;
     }
   
     // スケジュール編集<リーダー>
-    public function updateLeaderSchedule(Request $request ,$schedule) 
+    public function updateLeaderSchedule(Request $request ,$task_id) 
     { 
-      $schedules = Schedule::find($schedule);
-      $schedules->user_id =  $request->user_id;
-      $schedules->patient_id = $request->patient_id;
-      $schedules->treatment_id = $request->treatment_id;
-      $schedules->start_date = $request->start_date;
-      $schedules->save();
-      return $schedules;
+      $task = Task::find($task_id);
+      $task->schedule_id = $request->schedule_id;
+      $task->patient_id = $request->patient_id;
+      $task->treatment_id = $request->treatment_id;
+      $task->start_date = $request->start_date;
+      $task->save();
+      return $task;
     }
 
 
