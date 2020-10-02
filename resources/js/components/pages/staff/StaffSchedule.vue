@@ -250,7 +250,7 @@ export default {
         // 【API】スケジュールを取得
         fetchSchedule: function() {
             axios
-                .get("/api/tasks/get/all/1")
+                .get(`/api/tasks/get/all/${this.$route.params.schedule_id}`)
                 .then(res => {
                     console.log("status:", res.status);
                     console.log("body:", res.data);

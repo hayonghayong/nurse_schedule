@@ -1,6 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import store from './store';
+import store from "./store";
 
 Vue.use(VueRouter);
 
@@ -13,6 +13,7 @@ import RegistSchedule from "./components/pages/staff/RegistSchedule.vue";
 import RegistTreatmentSchedule from "./components/pages/staff/RegistTreatmentSchedule.vue";
 import ScheduleDetail from "./components/pages/staff/ScheduleDetail.vue";
 import StaffSchedule from "./components/pages/staff/StaffSchedule.vue";
+import PatientSchedule from "./components/pages/staff/PatientSchedule.vue";
 
 // リーダーページ
 import SelectStaff from "./components/pages/leader/SelectStaff.vue";
@@ -30,7 +31,7 @@ import UpdateUsersPatients from "./components/pages/leader/UpdateUsersPatients.v
 
 // ▼ルーティング１１
 const routes = [
-    // スタッフページ：6
+    // スタッフページ：7
     {
         path: "/",
         component: SelectRole,
@@ -64,6 +65,11 @@ const routes = [
         path: "/staff/staff-schedule/:schedule_id",
         component: StaffSchedule,
         name: "StaffSchedule"
+    },
+    {
+        path: "/staff/patient-schedule/:schedule_id",
+        component: PatientSchedule,
+        name: "PatientSchedule"
     },
 
     // リーダーページ：10
@@ -135,10 +141,10 @@ const router = new VueRouter({
 // VueRouterインスタンスを作成してエクスポート
 export default router;
 
-router.afterEach((to,from) =>{
+router.afterEach((to, from) => {
     // console.log('呼ばれたよ!')
     // console.log(to.meta.title);
     if (to.meta && to.meta.title) {
-        store.dispatch('common/changePage', to.meta.title)
-      }
-  })
+        store.dispatch("common/changePage", to.meta.title);
+    }
+});

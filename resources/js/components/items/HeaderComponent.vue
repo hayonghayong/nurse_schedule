@@ -75,6 +75,13 @@
                             >
                         </v-list-item>
                     </router-link>
+                    <router-link :to="{ name: 'PatientSchedule' }">
+                        <v-list-item>
+                            <v-list-item-title
+                                >【スタッフ】患者ごとのスケジュール</v-list-item-title
+                            >
+                        </v-list-item>
+                    </router-link>
                     リーダーページ
                     <router-link :to="{ name: 'SelectStaff' }">
                         <v-list-item>
