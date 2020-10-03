@@ -16,7 +16,6 @@
 
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
 
-
       <!--<v-menu left bottom>
                 <template v-slot:activator="{ on, attrs }">
                     <v-btn icon v-bind="attrs" v-on="on">
@@ -54,146 +53,91 @@
               <v-list-item-title>【スタッフ】処置スケジュール登録</v-list-item-title>
             </v-list-item>
           </router-link>
-                    <router-link :to="{ name: 'RegistSchedule' }">
-                        <v-list-item>
-                            <v-list-item-title
-                                >【スタッフ】処置スケジュール調整</v-list-item-title
-                            >
-                        </v-list-item>
-                    </router-link>
-                    <router-link :to="{ name: 'StaffSchedule' }">
-                        <v-list-item>
-                            <v-list-item-title
-                                >【スタッフ】スケジュール一覧</v-list-item-title
-                            >
-                        </v-list-item>
-                    </router-link>
-                    <router-link :to="{ name: 'ScheduleDetail' }">
-                        <v-list-item>
-                            <v-list-item-title
-                                >【スタッフ】スケジュール詳細</v-list-item-title
-                            >
-                        </v-list-item>
-                    </router-link>
-                    <router-link :to="{ name: 'PatientSchedule' }">
-                        <v-list-item>
-                            <v-list-item-title
-                                >【スタッフ】患者ごとのスケジュール</v-list-item-title
-                            >
-                        </v-list-item>
-                    </router-link>
-                    リーダーページ
-                    <router-link :to="{ name: 'SelectStaff' }">
-                        <v-list-item>
-                            <v-list-item-title
-                                >【リーダー】スタッフ選択</v-list-item-title
-                            >
-                        </v-list-item>
-                    </router-link>
-                    <router-link :to="{ name: 'ScheduleList' }">
-                        <v-list-item>
-                            <v-list-item-title
-                                >【リーダー】スケジュール一覧</v-list-item-title
-                            >
-                        </v-list-item>
-                    </router-link>
-                    <router-link :to="{ name: 'StaffScheduleDetail' }">
-                        <v-list-item>
-                            <v-list-item-title
-                                >【リーダー】スケジュール詳細</v-list-item-title
-                            >
-                        </v-list-item>
-                    </router-link>
-                    <router-link :to="{ name: 'EditStaffSchedule' }">
-                        <v-list-item>
-                            <v-list-item-title
-                                >【リーダー】スケジュール編集</v-list-item-title
-                            >
-                        </v-list-item>
-                    </router-link>
-                    <router-link :to="{ name: 'PatientsList' }">
-                        <v-list-item>
-                            <v-list-item-title
-                                >【リーダー】患者一覧</v-list-item-title
-                            >
-                        </v-list-item>
-                    </router-link>
-                    <router-link :to="{ name: 'RegistPatient' }">
-                        <v-list-item>
-                            <v-list-item-title
-                                >【リーダー】患者の登録</v-list-item-title
-                            >
-                        </v-list-item>
-                    </router-link>
-                    <router-link :to="{ name: 'EditPatient' }">
-                        <v-list-item>
-                            <v-list-item-title
-                                >【リーダー】患者の編集</v-list-item-title
-                            >
-                        </v-list-item>
-                    </router-link>
-                    <router-link :to="{ name: 'EditTreatment' }">
-                        <v-list-item>
-                            <v-list-item-title
-                                >【リーダー】処置の編集</v-list-item-title
-                            >
-                        </v-list-item>
-                    </router-link>
-                    <router-link :to="{ name: 'TreatmentList' }">
-                        <v-list-item>
-                            <v-list-item-title
-                                >【リーダー】処置一覧</v-list-item-title
-                            >
-                        </v-list-item>
-                    </router-link>
-                    <router-link :to="{ name: 'RegistTreatment' }">
-                        <v-list-item>
-                            <v-list-item-title
-                                >【リーダー】処置の登録</v-list-item-title
-                            >
-                        </v-list-item>
-                    </router-link>
-                    <router-link :to="{ name: 'UpdateUsersPatients' }">
-                        <v-list-item>
-                            <v-list-item-title
-                                >【リーダー】担当患者更新</v-list-item-title
-                            >
-                        </v-list-item>
-                    </router-link>
-                    管理者ページ
-                    <router-link :to="{ name: 'Setting' }">
-                        <v-list-item>
-                            <v-list-item-title
-                                >【管理者】設定</v-list-item-title
-                            >
-                        </v-list-item>
-                    </router-link>
-                    <router-link :to="{ name: 'StaffList' }">
-                        <v-list-item>
-                            <v-list-item-title
-                                >【管理者】スタッフ一覧</v-list-item-title
-                            >
-                        </v-list-item>
-                    </router-link>
-                    <router-link :to="{ name: 'RegistStaff' }">
-                        <v-list-item>
-                            <v-list-item-title
-                                >【管理者】スタッフ登録</v-list-item-title
-                            >
-                        </v-list-item>
-                    </router-link>
-                    <router-link :to="{ name: 'EditStaff' }">
-                        <v-list-item>
-                            <v-list-item-title
-                                >【管理者】スタッフ編集</v-list-item-title
-                            >
-                        </v-list-item>
-                    </router-link>
-                </v-list-item-group>
-            </v-list>
-        </v-navigation-drawer>
-        <!-- ▲仮ルーティングナビゲーション -->
-    </div>
+          <router-link :to="{ name: 'RegistSchedule' }">
+            <v-list-item>
+              <v-list-item-title>【スタッフ】処置スケジュール調整</v-list-item-title>
+            </v-list-item>
+          </router-link>
+          <router-link :to="{ name: 'StaffSchedule' }">
+            <v-list-item>
+              <v-list-item-title>【スタッフ】スケジュール一覧</v-list-item-title>
+            </v-list-item>
+          </router-link>
+          <router-link :to="{ name: 'PatientSchedule' }">
+            <v-list-item>
+              <v-list-item-title>【スタッフ】患者ごとのスケジュール</v-list-item-title>
+            </v-list-item>
+          </router-link>リーダーページ
+          <router-link :to="{ name: 'SelectStaff' }">
+            <v-list-item>
+              <v-list-item-title>【リーダー】スタッフ選択</v-list-item-title>
+            </v-list-item>
+          </router-link>
+          <router-link :to="{ name: 'ScheduleList' }">
+            <v-list-item>
+              <v-list-item-title>【リーダー】スケジュール一覧</v-list-item-title>
+            </v-list-item>
+          </router-link>
+          <router-link :to="{ name: 'PatientsList' }">
+            <v-list-item>
+              <v-list-item-title>【リーダー】患者一覧</v-list-item-title>
+            </v-list-item>
+          </router-link>
+          <router-link :to="{ name: 'RegistPatient' }">
+            <v-list-item>
+              <v-list-item-title>【リーダー】患者の登録</v-list-item-title>
+            </v-list-item>
+          </router-link>
+          <router-link :to="{ name: 'EditPatient' }">
+            <v-list-item>
+              <v-list-item-title>【リーダー】患者の編集</v-list-item-title>
+            </v-list-item>
+          </router-link>
+          <router-link :to="{ name: 'EditTreatment' }">
+            <v-list-item>
+              <v-list-item-title>【リーダー】処置の編集</v-list-item-title>
+            </v-list-item>
+          </router-link>
+          <router-link :to="{ name: 'TreatmentList' }">
+            <v-list-item>
+              <v-list-item-title>【リーダー】処置一覧</v-list-item-title>
+            </v-list-item>
+          </router-link>
+          <router-link :to="{ name: 'RegistTreatment' }">
+            <v-list-item>
+              <v-list-item-title>【リーダー】処置の登録</v-list-item-title>
+            </v-list-item>
+          </router-link>
+          <router-link :to="{ name: 'UpdateUsersPatients' }">
+            <v-list-item>
+              <v-list-item-title>【リーダー】担当患者更新</v-list-item-title>
+            </v-list-item>
+          </router-link>管理者ページ
+          <router-link :to="{ name: 'Setting' }">
+            <v-list-item>
+              <v-list-item-title>【管理者】設定</v-list-item-title>
+            </v-list-item>
+          </router-link>
+          <router-link :to="{ name: 'StaffList' }">
+            <v-list-item>
+              <v-list-item-title>【管理者】スタッフ一覧</v-list-item-title>
+            </v-list-item>
+          </router-link>
+          <router-link :to="{ name: 'RegistStaff' }">
+            <v-list-item>
+              <v-list-item-title>【管理者】スタッフ登録</v-list-item-title>
+            </v-list-item>
+          </router-link>
+          <router-link :to="{ name: 'EditStaff' }">
+            <v-list-item>
+              <v-list-item-title>【管理者】スタッフ編集</v-list-item-title>
+            </v-list-item>
+          </router-link>
+        </v-list-item-group>
+      </v-list>
+    </v-navigation-drawer>
+    <!-- ▲仮ルーティングナビゲーション -->
+  </div>
 </template>
 <script>
 import { mapActions, mapGetters, mapState } from "vuex"; //vuexで使用
@@ -219,9 +163,8 @@ export default {
     //ログインしているユーザーの情報を取得：stateを参照
     ...mapState("auth", ["loginUser"]),
     ...mapGetters({
-      pageTitle:'common/pageTitle',
-    }),
-
+      pageTitle: "common/pageTitle"
+    })
   },
   methods: {
     //ログインしているユーザーの情報を取得：Actionsを参照
@@ -235,9 +178,9 @@ export default {
         })
         .catch(err => console.log(err));
     },
-    back(){
-        this.$router.back()
-    },
+    back() {
+      this.$router.back();
+    }
   }
 };
 </script>

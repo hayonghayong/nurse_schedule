@@ -11,15 +11,12 @@ import SelectRole from "./components/pages/staff/SelectRole.vue";
 import SelectPatients from "./components/pages/staff/SelectPatients.vue";
 import RegistSchedule from "./components/pages/staff/RegistSchedule.vue";
 import RegistTreatmentSchedule from "./components/pages/staff/RegistTreatmentSchedule.vue";
-import ScheduleDetail from "./components/pages/staff/ScheduleDetail.vue";
 import StaffSchedule from "./components/pages/staff/StaffSchedule.vue";
 import PatientSchedule from "./components/pages/staff/PatientSchedule.vue";
 
 // リーダーページ
 import SelectStaff from "./components/pages/leader/SelectStaff.vue";
 import ScheduleList from "./components/pages/leader/ScheduleList.vue";
-import StaffScheduleDetail from "./components/pages/leader/StaffScheduleDetail.vue";
-import EditStaffSchedule from "./components/pages/leader/EditStaffSchedule.vue";
 import PatientsList from "./components/pages/leader/PatientsList.vue";
 import EditPatient from "./components/pages/leader/EditPatient.vue";
 import RegistPatient from "./components/pages/leader/RegistPatient.vue";
@@ -57,11 +54,6 @@ const routes = [
         meta: { title: "スケジュール登録" }
     },
     {
-        path: "/staff/schedule-detail/:schedule_id",
-        component: ScheduleDetail,
-        name: "ScheduleDetail"
-    },
-    {
         path: "/staff/staff-schedule/:schedule_id",
         component: StaffSchedule,
         name: "StaffSchedule"
@@ -82,17 +74,6 @@ const routes = [
         path: "/leader/schedule-list/:team_id",
         component: ScheduleList,
         name: "ScheduleList"
-    },
-
-    {
-        path: "/leader/staff-schedule-detail",
-        component: StaffScheduleDetail,
-        name: "StaffScheduleDetail"
-    },
-    {
-        path: "/leader/edit-staff-schedule",
-        component: EditStaffSchedule,
-        name: "EditStaffSchedule"
     },
     {
         path: "/leader/patients-list",
