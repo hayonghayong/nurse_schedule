@@ -30,6 +30,17 @@ use Illuminate\Support\Arr;
 
       return $request->all();
     }
+      // 新規スケジュール登録 (リーダー)
+    public function addLeaderTask(Request $request) 
+    {
+      // $user = Auth::id();
+      $task = new Task;
+      $task->schedule_id = $request->schedule_id;
+      $task->patient_id = $request->patient_id;
+      $task->treatment_id = $request->treatment_id;
+      $task->start_date = $request->start_date;
+      $task->save();
+    }
 
     // 自分のスケジュール取得（スタッフ）
     public function getTasks($schedule_id)
