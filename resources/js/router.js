@@ -45,70 +45,81 @@ const routes = [
         path: "/staff/regist-treatment-schedule/:schedule_id",
         component: RegistTreatmentSchedule,
         name: "RegistTreatmentSchedule",
-        meta: { title: "処置設定" }
+        meta: { title: "処置選択" }
     },
     {
         path: "/staff/regist-schedule/:schedule_id",
         component: RegistSchedule,
         name: "RegistSchedule",
-        meta: { title: "スケジュール登録" }
+        meta: { title: "スケジュール調整" }
     },
     {
         path: "/staff/staff-schedule/:schedule_id",
         component: StaffSchedule,
-        name: "StaffSchedule"
+        name: "StaffSchedule",
+        meta: { title: "Myスケジュール" }
     },
     {
         path: "/staff/patient-schedule/:schedule_id",
         component: PatientSchedule,
-        name: "PatientSchedule"
+        name: "PatientSchedule",
+        meta: { title: "患者別スケジュール" }
     },
 
     // リーダーページ：10
     {
         path: "/leader/select-staff/:team_id",
         component: SelectStaff,
-        name: "SelectStaff"
+        name: "SelectStaff",
+        meta: { title: "スタッフ選択" }
     },
     {
         path: "/leader/schedule-list/:team_id",
         component: ScheduleList,
-        name: "ScheduleList"
+        name: "ScheduleList",
+        meta: { title: "スタッフスケジュール" }
     },
     {
         path: "/leader/patients-list",
         component: PatientsList,
-        name: "PatientsList"
+        name: "PatientsList",
+        meta: { title: "患者一覧" }
     },
     {
         path: "/leader/regist-patient",
         component: RegistPatient,
-        name: "RegistPatient"
+        name: "RegistPatient",
+        meta: { title: "患者登録" }
     },
     {
         path: "/leader/edit-patient/:patientId",
         component: EditPatient,
-        name: "EditPatient"
+        name: "EditPatient",
+        meta: { title: "患者詳細情報" }
     },
     {
         path: "/leader/edit-treatment/:treatmentId",
         component: EditTreatment,
-        name: "EditTreatment"
+        name: "EditTreatment",
+        meta: { title: "処置編集" }
     },
     {
         path: "/leader/regist-treatment",
         component: RegistTreatment,
-        name: "RegistTreatment"
+        name: "RegistTreatment",
+        meta: { title: "処置登録" }
     },
     {
         path: "/leader/treatment-list",
         component: TreatmentList,
-        name: "TreatmentList"
+        name: "TreatmentList",
+        meta: { title: "処置一覧" }
     },
     {
         path: "/staff/update-users-patients/:team_id",
         component: UpdateUsersPatients,
-        name: "UpdateUsersPatients"
+        name: "UpdateUsersPatients",
+        meta: { title: "担当患者引継ぎ" }
     }
 ];
 // ▲ルーティング

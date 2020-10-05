@@ -219,7 +219,7 @@ export default {
     box-shadow: none;
 }
 .v-stepper--alt-labels .v-stepper__header .v-divider {
-    margin: 22px -80px 0;
+    margin: 22px -25px 0;
 }
 .v-divider {
     max-width: 90px;
@@ -230,4 +230,8 @@ export default {
 .v-stepper--alt-labels .v-stepper__step {
     flex-basis: 100px;
 }
+#app > div > main > div > div > div.v-stepper.v-stepper--vertical.v-stepper--alt-labels.theme--light > div > div.v-stepper__step.v-stepper__step--active > span{
+    margin-right: 0px;
+}
 </style>
+

@@ -1,22 +1,21 @@
 <template>
 <!-- 仮フッター -->
     <v-bottom-navigation
-    :value="activeBtn"
     grow
-    color="teal"
+    color="blue lighten-1"
     fixed
   >
-    <v-btn>
+    <v-btn :to="{ name: 'StaffSchedule' }">
       <span>スケジュール</span>
       <v-icon>mdi-history</v-icon>
     </v-btn>
 
-    <v-btn>
+    <v-btn :to="{ name: 'ScheduleDetail' }">
       <span>予定編集</span>
       <v-icon>mdi-pen</v-icon>
     </v-btn>
 
-    <v-btn>
+    <v-btn :to="{ name: 'SelectRole' }">
       <span>患者一覧</span>
       <v-icon>mdi-account-group</v-icon>
     </v-btn>
