@@ -6,11 +6,11 @@
 
         <v-divider></v-divider>
 
-        <v-stepper-step step="2">処置設定</v-stepper-step>
+        <v-stepper-step step="2">処置選択</v-stepper-step>
 
         <v-divider></v-divider>
 
-        <v-stepper-step step="3">スケジュール設定</v-stepper-step>
+        <v-stepper-step step="3">スケジュール調整</v-stepper-step>
       </v-stepper-header>
     </v-stepper>
     <div class="patient_wrap">

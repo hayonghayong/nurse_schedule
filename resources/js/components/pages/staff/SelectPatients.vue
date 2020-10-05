@@ -37,17 +37,17 @@
 
     <v-item-group multiple v-model="saveSelectedPatient">
         <v-container>
-            <v-stepper v-model="e1" :vertical="vertical" alt-labels>
+            <v-stepper value="1" alt-labels>
                 <v-stepper-header>
                     <v-stepper-step step="1">患者選択</v-stepper-step>
 
                     <v-divider></v-divider>
 
-                    <v-stepper-step step="2">処置設定</v-stepper-step>
+                    <v-stepper-step step="2">処置選択</v-stepper-step>
 
                     <v-divider></v-divider>
 
-                    <v-stepper-step step="3">スケジュール設定</v-stepper-step>
+                    <v-stepper-step step="3">スケジュール調整</v-stepper-step>
                 </v-stepper-header>
             </v-stepper>
 
