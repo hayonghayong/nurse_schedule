@@ -86,16 +86,5 @@ use App\Patient;
       return $patient;
     }
 
-  // 担当看護師変更
-   public function  updateUsersPatients(Request $request) 
-        {
-          $newUsersPatients = $request->id;
-          $newUsersPatients->users()->detach();
-          $newUsersPatients->userss()->attach($request->id); 
-          return $newUsersPatients;
-        }
-  
-  
-
 
   }

@@ -99,13 +99,6 @@ use App\Patient;
                         ->restore();
         }
 
-        // 特定のuserの担当患者取得
-        public function selectUsersPatients($user)
-        { 
-          $usersPatients = User::find($user)
-          ->patients;
-          return $usersPatients;
-        }
     }
     
     

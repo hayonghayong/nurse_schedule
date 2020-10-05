@@ -64,10 +64,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
   Route::get('/users_patients/get/all','Api\UsersPatientsController@getUsersPatients'); 
 
   // 特定のuserの担当患者取得
-  Route::get('/users_patients/get/{user}','Api\UsersController@selectUsersPatients');
+  Route::get('/users_patients/get/{user_id}','Api\UsersPatientsController@getSelectUsersPatients');
   
   // 担当患者更新
-  Route::post('/api/users_patients/update/{userPatients}','Api\PatientsController@updateUsersPatients'); 
+  Route::post('/users_patients/update','Api\UsersPatientsController@updateUsersPatients'); 
 
 
 

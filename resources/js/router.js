@@ -106,7 +106,7 @@ const routes = [
         name: "TreatmentList"
     },
     {
-        path: "/staff/update-users-patients",
+        path: "/staff/update-users-patients/:team_id",
         component: UpdateUsersPatients,
         name: "UpdateUsersPatients"
     }
