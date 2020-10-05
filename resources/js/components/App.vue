@@ -37,7 +37,9 @@ export default {
     font-size:8px;
 }
 .vue__time-picker input.display-time,.vue__time-picker{
-  width: 6em;
-}
+  width: 6em;}
 
+.v-application--is-ltr .v-stepper--vertical .v-stepper__step__step{
+    margin-right:0px;
+}
 </style>
