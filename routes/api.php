@@ -99,14 +99,12 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 
   // -----task_table_API-----
-    // リーダーによるタスクデータの登録
-    Route::post('/tasks/post/leader','Api\TasksController@addLeaderTask'); 
+    // タスクデータの登録
+    Route::post('/tasks/post/new','Api\TasksController@addNewTask'); 
     
-  // 看護師によるタスクデータの登録
-  Route::post('/tasks/post/{schedule_id}','Api\TasksController@addtasks'); 
-  
+  // 看護師による<複数>タスクデータの登録
+  Route::post('/tasks/post/{task_id}','Api\TasksController@addtasks'); 
 
-  
   // 登録タスク取得
   Route::get('/tasks/get/all/{schedule_id}','Api\TasksController@getTasks');
 

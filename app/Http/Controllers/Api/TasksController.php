@@ -17,7 +17,7 @@ use Illuminate\Support\Arr;
     
     class TasksController extends Controller
     {
-      // 新規スケジュール登録 (スタッフ)
+      // 新規<複数>スケジュール登録 (スタッフ)
     public function addTasks(Request $request,$shcedule_id) 
     {
       // $user = Auth::id();
@@ -29,11 +29,10 @@ use Illuminate\Support\Arr;
         $task->start_date = $val['start_date'];
         $task->save();
       }
-
       return $request->all();
     }
-      // 新規スケジュール登録 (リーダー)
-    public function addLeaderTask(Request $request) 
+      // 新規スケジュール登録 
+    public function addNewTask(Request $request) 
     {
       // $user = Auth::id();
       $task = new Task;
