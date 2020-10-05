@@ -1,20 +1,21 @@
 <template>
   <!-- 仮オブジェクト -->
-  <div>
-    <h1>【スタッフ】処置スケジュール登録-スケジュール調整</h1>
-    <v-stepper value="3">
-      <v-stepper-header>
-        <v-stepper-step step="1">Select campaign settings</v-stepper-step>
+          <v-container>
 
-        <v-divider></v-divider>
+            <v-stepper value="3" alt-labels>
+                <v-stepper-header>
+                    <v-stepper-step step="1" complete>患者選択</v-stepper-step>
 
-        <v-stepper-step step="2">Create an ad group</v-stepper-step>
+                    <v-divider></v-divider>
 
-        <v-divider></v-divider>
+                    <v-stepper-step step="2" complete>処置選択</v-stepper-step>
 
-        <v-stepper-step step="3">Create an ad</v-stepper-step>
-      </v-stepper-header>
-    </v-stepper>
+                    <v-divider></v-divider>
+
+                    <v-stepper-step step="3">スケジュール調整</v-stepper-step>
+                </v-stepper-header>
+            </v-stepper>
+
     <!-- <v-card>
           <ul>
                     <li v-for="schedule in schedules" v-bind:key="schedule.id">
@@ -57,6 +58,8 @@
       <v-col>
         <v-sheet height="600">
           <v-calendar
+            locale="ja-jp"
+            :day-format="timestamp => new Date(timestamp.date).getDate()"
             ref="calendar"
             v-model="focus"
             color="primary"
@@ -94,7 +97,8 @@
       </v-col>
     </v-row>
     <!-- ▲カレンダー ここまで -->
-  </div>
+ </v-container>
+
   <!-- ここまで -->
 </template>
 <script>
@@ -574,4 +578,31 @@ export default {
     display: block;
   }
 }
+
+.v-stepper {
+    box-shadow: none;
+}
+.v-stepper__header {
+    box-shadow: none;
+}
+.v-stepper--alt-labels .v-stepper__header .v-divider {
+    margin: 22px -25px 0;
+}
+.v-divider {
+    max-width: 90px;
+}
+.v-stepper__step {
+    padding: 10px;
+}
+.v-stepper--alt-labels .v-stepper__step {
+    flex-basis: 100px;
+}
+#app > div > main > div > div > div.v-stepper.v-stepper--vertical.v-stepper--alt-labels.theme--light > div > div.v-stepper__step.v-stepper__step--active > span{
+    margin-right: 0px;
+}
+
+.col{
+  padding:0px;
+}
+
 </style>
