@@ -293,8 +293,9 @@ export default {
         this.today + " " + setTime.HH + ":" + setTime.mm + ":00";
       this.registEvent.start_date = startTime;
       axios
-        .post(`/api/tasks/post/leader`, this.registEvent)
+        .post(`/api/tasks/post/new`, this.registEvent)
         .then(res => {
+          this.registOpen = false;
           this.fetchSchedule();
         })
         .catch(err => {
@@ -411,7 +412,7 @@ export default {
 
         this.dragTime = mouse - start;
       } else {
-        // 👷‍♂️イベント追加処理
+        // イベント追加処理
         tms.start = this.roundTime(mouse);
         this.showRegistEvent(tms);
         this.createStart = this.roundTime(mouse);

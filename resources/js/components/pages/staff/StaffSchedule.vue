@@ -137,6 +137,51 @@
       </v-card-actions>
     </v-card>
     <!-- クリック時に開く詳細画面 ここまで-->
+    <!-- タスク作成時に開く詳細画面 -->
+    <v-card v-if="registOpen" min-width="350px" flat class="detail-schedule">
+      <v-card-text>
+        <p>患者</p>
+        <div class="cp_ipselect cp_sl02">
+          <select v-model="registEvent.patient_id">
+            <option disabled value>選択してください</option>
+            <option
+              v-for="patient in patients"
+              :value="patient.id"
+              :key="patient.id"
+            >{{ patient.name }}</option>
+          </select>
+        </div>
+        <p>処置</p>
+        <div class="cp_ipselect cp_sl02">
+          <select v-model="registEvent.treatment_id">
+            <option disabled value>選択してください</option>
+            <option
+              v-for="treatment in treatments"
+              :value="treatment.id"
+              :key="treatment.id"
+            >{{ treatment.name }}</option>
+          </select>
+        </div>
+        <p>時間</p>
+        <vue-timepicker
+          :minute-interval="10"
+          v-model="registEvent.start_time"
+          id="start_time"
+          name="startTime"
+          placeholder="開始時間"
+          hour-label="時"
+          minute-label="分"
+          input-class="form-control"
+        ></vue-timepicker>
+      </v-card-text>
+      <v-card-actions>
+        <v-btn @click="registTask()">追加</v-btn>
+      </v-card-actions>
+      <v-card-actions>
+        <v-btn text color="secondary" @click="registOpen = false">閉じる</v-btn>
+      </v-card-actions>
+    </v-card>
+    <!-- タスク作成時に開く詳細画面 ここまで-->
   </div>
   <!-- ここまで -->
 </template>
@@ -157,6 +202,8 @@ export default {
     schedules: [],
     postScheduleData: "", //postするスケジュールデータを格納
     today: "",
+    treatments: "",
+    patients: "",
     // ▼カレンダー関連
     //   nowライン
     value: "",
@@ -184,7 +231,11 @@ export default {
     selectedEvent: {},
     selectedElement: null,
     selectedOpen: false,
-    timepicker_show: false
+    timepicker_show: false,
+    // スケジュール新規作成
+    registEvent: {},
+    registElement: null,
+    registOpen: false
   }),
   computed: {
     cal() {
@@ -216,6 +267,28 @@ export default {
           console.log("err:", err);
         });
     },
+    // 【API】処置取得
+    fetchTreatment: function() {
+      axios
+        .get("/api/treatments/get/all")
+        .then(res => {
+          this.treatments = res.data;
+        })
+        .catch(err => {
+          console.log("err:", err);
+        });
+    },
+    // 【API】患者取得
+    fetchPatients: function() {
+      axios
+        .get("/api/patients/get/all")
+        .then(res => {
+          this.patients = res.data;
+        })
+        .catch(err => {
+          console.log("err:", err);
+        });
+    },
     // 【API】スケジュール登録更新
     updateSchedule: function() {
       this.postScheduleData = this.selectedEvent;
@@ -235,6 +308,25 @@ export default {
         .post("/api/tasks/update/" + schedule_id, this.postScheduleData)
         .then(res => {
           // 描画し直し
+          this.fetchSchedule();
+        })
+        .catch(err => {
+          console.log("err:", err.response.data);
+        });
+    },
+    // 【API】新規タスク登録
+    registTask: function() {
+      // schedule_idを格納
+      this.registEvent.schedule_id = this.$route.params.schedule_id;
+      //   時刻をDB登録用に整形
+      const setTime = this.registEvent.start_time;
+      const startTime =
+        this.today + " " + setTime.HH + ":" + setTime.mm + ":00";
+      this.registEvent.start_date = startTime;
+      axios
+        .post(`/api/tasks/post/new`, this.registEvent)
+        .then(res => {
+          this.registOpen = false;
           this.fetchSchedule();
         })
         .catch(err => {
@@ -354,6 +446,10 @@ export default {
 
         this.dragTime = mouse - start;
       } else {
+        // 👷‍♂️イベント追加処理
+        tms.start = this.roundTime(mouse);
+        this.showRegistEvent(tms);
+        this.createStart = this.roundTime(mouse);
         // イベント追加
         // this.createStart = this.roundTime(mouse);
         // this.createEvent = {
@@ -411,8 +507,7 @@ export default {
         mm: minutes
       };
       // 更新
-      this.updateSchedule();
-
+      if (this.selectedEvent.id) this.updateSchedule();
       // 初期化
       this.dragTime = null;
       this.dragEvent = null;
@@ -486,7 +581,7 @@ export default {
       axios
         .post(`/api/tasks/end_flg/finished/${task_id}`)
         .then(res => {
-            this.selectedEvent.end_flg = 1;
+          this.selectedEvent.end_flg = 1;
           // 描画し直し
           this.fetchSchedule();
         })
@@ -499,19 +594,50 @@ export default {
       axios
         .post(`/api/tasks/end_flg/unfinished/${task_id}`)
         .then(res => {
-            this.selectedEvent.end_flg = 0;
+          this.selectedEvent.end_flg = 0;
           // 描画し直し
           this.fetchSchedule();
         })
         .catch(err => {
           console.log("err:", err.response.data);
         });
-    }
+    },
     // ------------ クリックしたときの詳細画面　ここまで ---------- //
+    // ------------ タスク作成時の詳細画面 ---------- //
+    showRegistEvent(event) {
+      const open = () => {
+        // 時刻を整形
+        const update_time = new Date(event.start);
+        const hour = update_time
+          .getHours()
+          .toString()
+          .padStart(2, "0");
+        const minutes = update_time
+          .getMinutes()
+          .toString()
+          .padStart(2, "0");
+        this.registEvent.start_time = {
+          HH: hour,
+          mm: minutes
+        };
+        // this.registElement = nativeEvent.target;
+        setTimeout(() => (this.registOpen = true), 10);
+      };
+
+      if (this.registOpen) {
+        this.registOpen = false;
+        setTimeout(open, 10);
+      } else {
+        open();
+      }
+    }
+    // ------------ タスク作成時の詳細画面 ここまで ---------- //
   },
   created() {
     this.fetchSchedule();
     this.setDatetime();
+    this.fetchTreatment();
+    this.fetchPatients();
   }
 };
 </script>
@@ -604,11 +730,68 @@ body {
   left: 0;
   right: 0;
   width: 100%;
-  height: 250px;
+  height: 400px;
   z-index: 5;
   background: #fff;
   animation-name: slideup;
   animation-duration: 0.3s;
 }
 /* スケジュール詳細のスタイル　ここまで */
+
+/* スケジュール登録のスタイル */
+.cp_ipselect {
+  overflow: hidden;
+  width: 70%;
+  margin: 1em;
+}
+.cp_ipselect select {
+  width: 100%;
+  padding-right: 1em;
+  cursor: pointer;
+  text-indent: 0.01px;
+  text-overflow: ellipsis;
+  border: none;
+  outline: none;
+  background: transparent;
+  background-image: none;
+  box-shadow: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+.cp_ipselect select::-ms-expand {
+  display: none;
+}
+.cp_ipselect.cp_sl02 {
+  position: relative;
+  border: 1px solid #bbbbbb;
+  border-radius: 2px;
+  background: #ffffff;
+}
+.cp_ipselect.cp_sl02::before {
+  position: absolute;
+  top: 0.8em;
+  right: 0.9em;
+  width: 0;
+  height: 0;
+  padding: 0;
+  content: "";
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid #666666;
+  pointer-events: none;
+}
+.cp_ipselect.cp_sl02:after {
+  position: absolute;
+  top: 0;
+  right: 2.5em;
+  bottom: 0;
+  width: 1px;
+  content: "";
+  border-left: 1px solid #bbbbbb;
+}
+.cp_ipselect.cp_sl02 select {
+  padding: 8px 38px 8px 8px;
+  color: #666666;
+}
+/* スケジュール登録のスタイル ここまで */
 </style>
