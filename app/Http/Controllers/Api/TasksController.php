@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 use Auth;
 use Validate;
 use DB;
@@ -12,6 +13,7 @@ use App\Team;
 use App\TeamUser;
 use App\User;
 use Illuminate\Support\Arr;
+
     
     class TasksController extends Controller
     {
@@ -130,7 +132,26 @@ use Illuminate\Support\Arr;
       $task->save();
       return $task;
     }
+    // タスク完了へ変更
+    public function updateEndFlgFinished($task_id) 
+    { 
+      // $datetime = Carbon::now();
+      $task = Task::find($task_id);
+      $task->end_flg =1;
+      $task->end_time =Carbon::now();
+      $task->save();
+      return $task;
+    }
+    // タスク未完了へ変更
+    public function updateEndFlgUnfinished($task_id) 
+    { 
+      $task = Task::find($task_id);
+      $task->end_flg =0;
+      $task->end_time =null;
+      $task->save();
+      return $task;
+    }
 
-
+    // 
     }
     

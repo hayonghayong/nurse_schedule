@@ -107,22 +107,28 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
   
 
   
-  // 登録タスク取得  !済！
+  // 登録タスク取得
   Route::get('/tasks/get/all/{schedule_id}','Api\TasksController@getTasks');
 
-  // チームのタスク表示  !済！
+  // チームのタスク表示
   Route::get('/tasks/get/team/{team_id}','Api\TasksController@getTeamTasks');
 
   // 患者のタスク取得
   Route::get('/tasts/get/patients','Api\TasksController@getPatientsSchecules');
 
   // 更新するタスク取得 
-  Route::get('/tasks/get/{schedule}','Api\TasksController@editSchedule');
+  Route::get('/tasks/get/{task_id}','Api\TasksController@editSchedule');
 
    // スケジュール更新<スタッフ>
   Route::post('/tasks/update/{task_id}','Api\TasksController@updateSchedule');
    // スケジュール更新<リーダー>
   Route::post('/tasks/update/leader/{schedule_id}','Api\TasksController@updateLeaderSchedule');
+
+  // タスク完了に変更
+  Route::post('/tasks/end_flg/finished/{task_id}','Api\TasksController@updateEndFlgFinished');
+  // タスク未完了に変更
+  Route::post('/tasks/end_flg/unfinished/{task_id}','Api\TasksController@updateEndFlgUnfinished');
+
 
 
 

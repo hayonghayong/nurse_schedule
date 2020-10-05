@@ -18,7 +18,7 @@
                     $table->unsignedInteger('treatment_id');
                     $table->unsignedInteger('patient_id');
                     $table->dateTime('start_date')->nullable();
-                    $table->char('end_flg',1)->nullable();
+                    $table->char('end_flg',1)->default(0);
                     $table->dateTime('end_time')->nullable();
                     $table->timestamps();
                     $table->softDeletes();
