@@ -9,6 +9,9 @@
         <!-- フッターコンポーネント読み込み -->
         <footer-component v-if="$route.name !== 'SelectRole' && $route.name !== 'SelectStaff' && $route.name !== 'SelectPatients' 
                              && $route.name !== 'RegistSchedule' && $route.name !== 'RegistTreatmentSchedule'"></footer-component>
+        <leader-footer-component v-if="$route.name !== 'SelectRole' && $route.name !== 'SelectStaff' && $route.name !== 'SelectPatients' 
+                             && $route.name !== 'RegistSchedule' && $route.name !== 'RegistTreatmentSchedule' && $route.name !== 'StaffSchedule'
+                              && $route.name !== 'PatientSchedule' && $route.name !== 'SelectStaff'"></leader-footer-component>
 
     </v-app>
 </template>
@@ -16,12 +19,15 @@
 <script>
 import HeaderComponent from "./items/HeaderComponent.vue";
 import FooterComponent from "./items/FooterComponent.vue";
+import LeaderFooterComponent from "./items/LeaderFooterComponent.vue";
+
 
 // 全ページ共通のコンポーネント読み込み
 export default {
     components: {
         HeaderComponent,
-        FooterComponent
+        FooterComponent,
+        LeaderFooterComponent
     }
 };
 </script>
