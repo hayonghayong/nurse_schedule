@@ -1,20 +1,19 @@
 <template>
   <!-- 仮オブジェクト -->
-          <v-container>
+  <v-container>
+    <v-stepper value="3" alt-labels>
+      <v-stepper-header>
+        <v-stepper-step step="1" complete color="#5e9ce6">患者選択</v-stepper-step>
 
-            <v-stepper value="3" alt-labels>
-                <v-stepper-header>
-                    <v-stepper-step step="1" complete color="#5e9ce6">患者選択</v-stepper-step>
+        <v-divider></v-divider>
 
-                    <v-divider></v-divider>
+        <v-stepper-step step="2" complete color="#5e9ce6">処置選択</v-stepper-step>
 
-                    <v-stepper-step step="2" complete color="#5e9ce6">処置選択</v-stepper-step>
+        <v-divider></v-divider>
 
-                    <v-divider></v-divider>
-
-                    <v-stepper-step step="3" color="#5e9ce6">スケジュール調整</v-stepper-step>
-                </v-stepper-header>
-            </v-stepper>
+        <v-stepper-step step="3" color="#5e9ce6">スケジュール調整</v-stepper-step>
+      </v-stepper-header>
+    </v-stepper>
 
     <!-- <v-card>
           <ul>
@@ -97,7 +96,7 @@
       </v-col>
     </v-row>
     <!-- ▲カレンダー ここまで -->
- </v-container>
+  </v-container>
 
   <!-- ここまで -->
 </template>
@@ -130,7 +129,6 @@ export default {
     //   イベントで使用するデータ
     focus: "",
     events: [], //ここを表示
-    colors: ["blue"], // テスト用
     // スケジュール詳細
     selectedEvent: {},
     selectedElement: null,
@@ -201,7 +199,7 @@ export default {
       axios
         .post("/api/tasks/update/" + task_id, this.postScheduleData)
         .then(res => {
-            this.fetchTasks();
+          this.fetchTasks();
         })
         .catch(err => {
           console.log(err.response.data);
@@ -273,13 +271,13 @@ export default {
           treatment_id: this.schedules[i].treatment_id, //処置id,
           required_time: requiredTime,
           start_date: startdate,
+          color: this.schedules[i].treatment.color_code,
           name:
             this.schedules[i].patient.name +
             " / " +
             this.schedules[i].treatment.name, // 処置の名前
           start: startdate, // 開始時刻
           end: endTime, // 終了時刻
-          color: this.colors[0], //デフォルトのカラー
           timed: timed,
           room: this.schedules[i].patient.room,
           treatment: this.schedules[i].treatment.name,
@@ -328,8 +326,6 @@ export default {
         this.selectedEvent.start = today.getTime();
         // 時刻を整形
         const update_time = new Date(this.selectedEvent.start);
-        console.log(this.selectedEvent.start)
-        console.log(update_time)
         const hour = update_time
           .getHours()
           .toString()
@@ -342,7 +338,6 @@ export default {
           HH: hour,
           mm: minutes
         };
-        console.log(this.selectedEvent);
         this.updateSchedule();
       }
     },
@@ -580,29 +575,36 @@ export default {
 }
 
 .v-stepper {
-    box-shadow: none;
+  box-shadow: none;
 }
 .v-stepper__header {
-    box-shadow: none;
+  box-shadow: none;
 }
 .v-stepper--alt-labels .v-stepper__header .v-divider {
-    margin: 22px -25px 0;
+  margin: 22px -25px 0;
 }
 .v-divider {
-    max-width: 90px;
+  max-width: 90px;
 }
 .v-stepper__step {
-    padding: 10px;
+  padding: 10px;
 }
 .v-stepper--alt-labels .v-stepper__step {
-    flex-basis: 100px;
+  flex-basis: 100px;
 }
-#app > div > main > div > div > div.v-stepper.v-stepper--vertical.v-stepper--alt-labels.theme--light > div > div.v-stepper__step.v-stepper__step--active > span{
-    margin-right: 0px;
+#app
+  > div
+  > main
+  > div
+  > div
+  > div.v-stepper.v-stepper--vertical.v-stepper--alt-labels.theme--light
+  > div
+  > div.v-stepper__step.v-stepper__step--active
+  > span {
+  margin-right: 0px;
 }
 
-.col{
-  padding:0px;
+.col {
+  padding: 0px;
 }
-
 </style>

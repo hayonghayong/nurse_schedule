@@ -2,24 +2,6 @@
   <div>
     <v-row class="fill-height">
       <v-col>
-        <!--<v-sheet height="64">
-          <v-toolbar flat color="white">
-            <v-btn outlined class="mr-4" color="grey darken-2" @click="setToday">Today</v-btn>
-            <v-btn fab text small color="grey darken-2" @click="prev">
-              <v-icon small>mdi-chevron-left</v-icon>
-            </v-btn>
-            <v-btn fab text small color="grey darken-2" @click="next">
-              <v-icon small>mdi-chevron-right</v-icon>
-            </v-btn>
-            <v-toolbar-title v-if="$refs.calendar">
-              {{
-              $refs.calendar.title
-              }}
-            </v-toolbar-title>
-            <v-spacer></v-spacer>
-          </v-toolbar>
-        </v-sheet>
-        -->
         <v-sheet height="700">
           <v-calendar
             locale="ja-jp"
@@ -27,8 +9,8 @@
             ref="calendar"
             v-model="focus"
             color="primary"
-            :events="events"
             :event-color="getEventColor"
+            :events="events"
             :event-ripple="false"
             interval-height="80px"
             type="day"
@@ -221,15 +203,6 @@ export default {
     // スケジュールを格納
     events: [], //ここを表示
     focus: "",
-    colors: [
-      "blue",
-      "indigo",
-      "deep-purple",
-      "cyan",
-      "green",
-      "orange",
-      "grey darken-1"
-    ],
     // スケジュール詳細
     selectedEvent: {},
     selectedElement: null,
@@ -402,7 +375,8 @@ export default {
         const endFlagData = "";
         // 完了しているかでタスクの色を変更
         if (endFlag == 0) {
-          endFlagData = "blue";
+          console.log(this.schedules[i].treatment.color_code);
+          endFlagData = this.schedules[i].treatment.color_code;
         } else if (endFlag == 1) {
           endFlagData = "grey darken-1";
         }
@@ -797,8 +771,7 @@ body {
   color: #666666;
 }
 /* スケジュール登録のスタイル ここまで */
-#app > div > main > div > div > .col{
-  padding:0px;
+#app > div > main > div > div > .col {
+  padding: 0px;
 }
-
 </style>
