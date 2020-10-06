@@ -4,15 +4,15 @@
 
             <v-stepper value="3" alt-labels>
                 <v-stepper-header>
-                    <v-stepper-step step="1" complete>患者選択</v-stepper-step>
+                    <v-stepper-step step="1" complete color="#5e9ce6">患者選択</v-stepper-step>
 
                     <v-divider></v-divider>
 
-                    <v-stepper-step step="2" complete>処置選択</v-stepper-step>
+                    <v-stepper-step step="2" complete color="#5e9ce6">処置選択</v-stepper-step>
 
                     <v-divider></v-divider>
 
-                    <v-stepper-step step="3">スケジュール調整</v-stepper-step>
+                    <v-stepper-step step="3" color="#5e9ce6">スケジュール調整</v-stepper-step>
                 </v-stepper-header>
             </v-stepper>
 

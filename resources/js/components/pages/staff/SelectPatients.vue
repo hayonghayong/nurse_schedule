@@ -39,7 +39,7 @@
         <v-container>
             <v-stepper value="1" alt-labels>
                 <v-stepper-header>
-                    <v-stepper-step step="1">患者選択</v-stepper-step>
+                    <v-stepper-step step="1" color="#5e9ce6">患者選択</v-stepper-step>
 
                     <v-divider></v-divider>
 

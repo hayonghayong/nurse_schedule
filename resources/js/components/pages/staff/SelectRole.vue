@@ -1,9 +1,9 @@
 <template>
   <!-- 仮オブジェクト -->
-  <div>
+  <div　ontouchstart=””>
     <v-app-bar flat color="white" fixed light>
       <!--ここにログアウト付けたかった -->
-      <router-link :to="{ name: 'SelectStaff' }" style="text-decoration: none;">＜ 戻る</router-link>
+      <span @click="logout" style="cursor: pinter; color:#2196F3;" >＜ 戻る</span>
     </v-app-bar>
 
     <div class="message">
@@ -36,7 +36,6 @@
         width="260"
         class="button"
         color="#ff8000"
-        @click="postSchedule()"
       >スタッフ</v-btn>
     </div>
     <!-- ▲スタッフボタンここまで -->
@@ -99,6 +98,15 @@ export default {
         .catch(err => {
           console.log(err.response.data);
         });
+    },
+    //ログアウト
+    logout: function() {
+      axios
+        .post("/logout")
+        .then(res => {
+          location.href = "/";
+        })
+        .catch(err => console.log(err));
     }
   }
 };

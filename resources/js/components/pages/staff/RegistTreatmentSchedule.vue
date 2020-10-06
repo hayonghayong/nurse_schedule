@@ -2,11 +2,11 @@
   <v-container>
     <v-stepper value="2" alt-labels>
       <v-stepper-header>
-        <v-stepper-step step="1" complete>患者選択</v-stepper-step>
+        <v-stepper-step step="1" complete color="#5e9ce6">患者選択</v-stepper-step>
 
         <v-divider></v-divider>
 
-        <v-stepper-step step="2">処置選択</v-stepper-step>
+        <v-stepper-step step="2" color="#5e9ce6">処置選択</v-stepper-step>
 
         <v-divider></v-divider>
 
@@ -23,7 +23,7 @@
         <span v-else-if="usersPatients[setTreatmentPage].sex == 2">女性</span>
         <BirthdayMomentJS :time="usersPatients[setTreatmentPage].birthday" />
       </li>
-      {{ setTreatmentPage + 1 }}/{{ usersPatientsLength + 1 }}人
+      {{ setTreatmentPage + 1 }}/{{ usersPatientsLength }}人
     </div>
     <p class="center">今日行う処置を選択してください</p>
 
@@ -95,7 +95,7 @@
       </tbody>
     </table>
     <v-btn
-      class="mx-auto my-4 px-12 py-4 submit_btn"
+      class="mx-auto my-5 px-12 py-5 submit_btn"
       rounded
       dark
       color="#62ABF8"
@@ -354,6 +354,7 @@ export default {
 }
 .v-stepper__step {
   padding: 10px;
+  
 }
 .v-stepper--alt-labels .v-stepper__step {
   flex-basis: 100px;

@@ -3,20 +3,15 @@
     <v-bottom-navigation
     grow
     color="blue lighten-1"
-    fixed
+    fixed absolute
   >
     <v-btn :to="{ name: 'StaffSchedule' }">
       <span>スケジュール</span>
       <v-icon>mdi-history</v-icon>
     </v-btn>
 
-    <v-btn :to="{ name: 'ScheduleDetail' }">
-      <span>予定編集</span>
-      <v-icon>mdi-pen</v-icon>
-    </v-btn>
-
-    <v-btn :to="{ name: 'SelectRole' }">
-      <span>患者一覧</span>
+    <v-btn :to="{ name: 'PatientSchedule' }">
+      <span>患者別スケジュール</span>
       <v-icon>mdi-account-group</v-icon>
     </v-btn>
   </v-bottom-navigation>
@@ -33,5 +28,4 @@ export default {
 
 <style lang="scss" scoped>
 /* スコープ付きのスタイル */
-
 </style>
