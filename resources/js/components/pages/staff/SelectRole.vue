@@ -1,6 +1,6 @@
 <template>
   <!-- 仮オブジェクト -->
-  <div　ontouchstart=””>
+  <div>
     <v-app-bar flat color="white" fixed light>
       <!--ここにログアウト付けたかった -->
       <span @click="logout" style="cursor: pinter; color:#2196F3;" >＜ 戻る</span>
@@ -36,6 +36,7 @@
         width="260"
         class="button"
         color="#ff8000"
+        @click="postSchedule()"
       >スタッフ</v-btn>
     </div>
     <!-- ▲スタッフボタンここまで -->
