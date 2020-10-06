@@ -171,8 +171,6 @@ export default {
     //   イベントで使用するデータ
     focus: "",
     events: [], //ここを表示
-    colors: ["blue"], // テスト用
-    names: ["テスト", "テスト2"], // スケジュールの名前
     categories: [], //患者の名前
     // スケジュール詳細
     selectedEvent: {},
@@ -365,7 +363,7 @@ export default {
             this.schedules[i].treatment.name, // 処置の名前
           start: startdate, // 開始時刻
           end: endTime, // 終了時刻
-          color: this.colors[0], //デフォルトのカラー
+          color: this.schedules[i].treatment.color_code, //カラー
           timed: true,
           room: this.schedules[i].patient.room,
           treatment: this.schedules[i].treatment.name,

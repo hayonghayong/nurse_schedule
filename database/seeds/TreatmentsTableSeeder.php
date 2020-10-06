@@ -18,6 +18,7 @@ use Illuminate\Database\Seeder;
                 "ward_id" => 1,
                 "name" => '点滴',
                 "time_required" => 10,
+                "color_code" =>"#E53935",
                 "required_flg" => 0,
                 "created_at" => $faker->dateTime("now"),
                 "updated_at" => $faker->dateTime("now")
@@ -27,6 +28,7 @@ use Illuminate\Database\Seeder;
                 "ward_id" => 1,
                 "name" => 'オペ出し',
                 "time_required" => 20,
+                "color_code" =>"#3F51B5",
                 "required_flg" => 1,
                 "created_at" => $faker->dateTime("now"),
                 "updated_at" => $faker->dateTime("now")
@@ -36,6 +38,7 @@ use Illuminate\Database\Seeder;
                 "ward_id" => 1,
                 "name" => 'バイタル測定',
                 "time_required" => 5,
+                "color_code" =>"#43A047",
                 "required_flg" => 0,
                 "created_at" => $faker->dateTime("now"),
                 "updated_at" => $faker->dateTime("now")
@@ -45,6 +48,7 @@ use Illuminate\Database\Seeder;
                 "ward_id" => 2,
                 "name" => '点滴',
                 "time_required" => 10,
+                "color_code" =>"#3F51B5",
                 "required_flg" => 0,
                 "created_at" => $faker->dateTime("now"),
                 "updated_at" => $faker->dateTime("now")
@@ -54,6 +58,7 @@ use Illuminate\Database\Seeder;
                 "ward_id" => 2,
                 "name" => '内服',
                 "time_required" => 20,
+                "color_code" =>"#E53935",
                 "required_flg" => 1,
                 "created_at" => $faker->dateTime("now"),
                 "updated_at" => $faker->dateTime("now")
@@ -64,6 +69,7 @@ use Illuminate\Database\Seeder;
                 "name" => '食事補助',
                 "time_required" => 5,
                 "required_flg" => 0,
+                "color_code" =>"#43A047",
                 "created_at" => $faker->dateTime("now"),
                 "updated_at" => $faker->dateTime("now")
             ]);
@@ -72,6 +78,7 @@ use Illuminate\Database\Seeder;
                 "ward_id" => 3,
                 "name" => '点滴',
                 "time_required" => 10,
+                "color_code" =>"#3F51B5",
                 "required_flg" => 0,
                 "created_at" => $faker->dateTime("now"),
                 "updated_at" => $faker->dateTime("now")
@@ -82,6 +89,7 @@ use Illuminate\Database\Seeder;
                 "name" => 'バイタル測定',
                 "time_required" => 20,
                 "required_flg" => 1,
+                "color_code" =>"#43A047",
                 "created_at" => $faker->dateTime("now"),
                 "updated_at" => $faker->dateTime("now")
             ]);
@@ -91,6 +99,7 @@ use Illuminate\Database\Seeder;
                 "name" => '食事補助',
                 "time_required" => 15,
                 "required_flg" => 0,
+                "color_code" =>"#43A047",
                 "created_at" => $faker->dateTime("now"),
                 "updated_at" => $faker->dateTime("now")
             ]);
@@ -99,6 +108,7 @@ use Illuminate\Database\Seeder;
                 "ward_id" => 4,
                 "name" => '点滴',
                 "time_required" => 10,
+                "color_code" =>"#E53935",
                 "required_flg" => 0,
                 "created_at" => $faker->dateTime("now"),
                 "updated_at" => $faker->dateTime("now")
@@ -109,6 +119,7 @@ use Illuminate\Database\Seeder;
                 "name" => '内服',
                 "time_required" => 20,
                 "required_flg" => 1,
+                "color_code" =>"#43A047",
                 "created_at" => $faker->dateTime("now"),
                 "updated_at" => $faker->dateTime("now")
             ]);
@@ -118,6 +129,7 @@ use Illuminate\Database\Seeder;
                 "name" => '食事補助',
                 "time_required" => 5,
                 "required_flg" => 0,
+                "color_code" =>"#3F51B5",
                 "created_at" => $faker->dateTime("now"),
                 "updated_at" => $faker->dateTime("now")
             ]);
