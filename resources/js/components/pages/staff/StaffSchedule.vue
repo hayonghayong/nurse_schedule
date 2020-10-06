@@ -2,7 +2,7 @@
   <div>
     <v-row class="fill-height">
       <v-col>
-        <v-sheet height="64">
+        <!--<v-sheet height="64">
           <v-toolbar flat color="white">
             <v-btn outlined class="mr-4" color="grey darken-2" @click="setToday">Today</v-btn>
             <v-btn fab text small color="grey darken-2" @click="prev">
@@ -19,8 +19,11 @@
             <v-spacer></v-spacer>
           </v-toolbar>
         </v-sheet>
+        -->
         <v-sheet height="700">
           <v-calendar
+            locale="ja-jp"
+            :day-format="timestamp => new Date(timestamp.date).getDate()"
             ref="calendar"
             v-model="focus"
             color="primary"
@@ -726,7 +729,7 @@ body {
 
 .detail-schedule {
   position: fixed;
-  bottom: 56px;
+  bottom: 30px;
   left: 0;
   right: 0;
   width: 100%;
@@ -794,4 +797,8 @@ body {
   color: #666666;
 }
 /* スケジュール登録のスタイル ここまで */
+#app > div > main > div > div > .col{
+  padding:0px;
+}
+
 </style>

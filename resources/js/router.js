@@ -57,7 +57,7 @@ const routes = [
         path: "/staff/staff-schedule/:schedule_id",
         component: StaffSchedule,
         name: "StaffSchedule",
-        meta: { title: "Myスケジュール" }
+        meta: { title: "スケジュール" }
     },
     {
         path: "/staff/patient-schedule/:schedule_id",

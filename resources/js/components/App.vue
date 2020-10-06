@@ -8,7 +8,7 @@
         </main>
         <!-- フッターコンポーネント読み込み -->
         <footer-component v-if="$route.name !== 'SelectRole' && $route.name !== 'SelectStaff' && $route.name !== 'SelectPatients' 
-                             && $route.name !== 'RegistSchedule'"></footer-component>
+                             && $route.name !== 'RegistSchedule' && $route.name !== 'RegistTreatmentSchedule'"></footer-component>
 
     </v-app>
 </template>
