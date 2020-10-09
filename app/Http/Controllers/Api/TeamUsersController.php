@@ -15,9 +15,14 @@ use Illuminate\Support\Arr;
     class TeamUsersController extends Controller
     {
       // チームメンバー登録
-      public function addTeamUser(Request $request) 
+      public function addTeamUser(Request $request,$team_id) 
         {
           $leader_id = Auth::id();
+          // 既に登録されている場合は削除して登録し直す
+          $pre_TeamUsers = TeamUser::where('team_id',$team_id)->get();
+          if($pre_TeamUsers){
+            TeamUser::where('team_id',$team_id)->delete();
+          }
           // 配列処理
           foreach($request->id as $val)
           {

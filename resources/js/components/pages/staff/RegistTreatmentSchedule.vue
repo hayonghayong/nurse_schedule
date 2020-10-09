@@ -162,7 +162,7 @@ export default {
   methods: {
     fetchPatients: function() {
       axios
-        .get("/api/users_patients/get/all")
+        .get(`/api/users_patients/get/all/${this.$route.params.schedule_id}`)
         .then(res => {
           // console.log("status:", res.status);
           // console.log("body:", res.data);
