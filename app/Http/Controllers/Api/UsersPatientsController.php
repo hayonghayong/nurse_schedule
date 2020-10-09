@@ -14,33 +14,38 @@ use App\Task;
     class UsersPatientsController extends Controller
     {
 
-
     // 担当患者登録
-        public function addUsersPatients(Request $request) 
+        public function addUsersPatients(Request $request,$schedule_id) 
         {
           $user = Auth::id();
           $ids = $request->id;
+          // 既に登録されている場合は削除して登録し直す
+          $pre_UsersPatients = UsersPatient::where('schedule_id',$schedule_id)->get();
+          if($pre_UsersPatients){
+            UsersPatient::where('schedule_id',$schedule_id)->delete();
+          }
           foreach ($ids as $val) {
           $usersPatients = new UsersPatient;
-          $usersPatients->schedule_id =Schedule::orderBy('created_at', 'desc')
-          ->where('user_id',$user)
-          ->first()
-          ->id;
+          $usersPatients->schedule_id = $schedule_id;
+          // Schedule::orderBy('created_at', 'desc')
+          // ->where('user_id',$user)
+          // ->first()
+          // ->id;
           $usersPatients->patient_id = $val;
           $usersPatients->save();
           }
         }
     
      // ログイン中の担当患者取得
-        public function getUsersPatients()
+        public function getUsersPatients($schedule_id)
         { 
           $user = Auth::id();
-          $scheduleId = Schedule::orderBy('created_at', 'desc')
-          ->where('user_id',$user)
-          ->first()
-          ->id;
+          // $scheduleId = Schedule::orderBy('created_at', 'desc')
+          // ->where('user_id',$user)
+          // ->first()
+          // ->id;
           $allusersPatients = UsersPatient::with('patient')
-          ->where('schedule_id',$scheduleId)
+          ->where('schedule_id',$schedule_id)
           ->get();
           $usersPatients = $allusersPatients->pluck('patient');
           return $usersPatients;

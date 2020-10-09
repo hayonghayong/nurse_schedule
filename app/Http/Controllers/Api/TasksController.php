@@ -68,12 +68,11 @@ use Illuminate\Support\Arr;
           // user_idからshcedule_id取得 < 最新のschedule_id取得
           $schedules = [];
           foreach($userIds as $val){
-          $shcedule = Schedule::where('user_id',$val)
-                        ->orderBy('id','desc')
-                        ->first()
-                        ->id;
-            array_push($schedules,$shcedule);
-          } 
+              $shcedule = Schedule::where('user_id',$val)
+                            ->orderBy('id','desc')
+                            ->first();
+                array_push($schedules,optional($shcedule)->id);
+          }
           // schedule_idに紐づいてるtreatmentとpatient情報を取得
           $all = Task::with('treatment','patient')
           ->whereIn('schedule_id',$schedules)

@@ -1,29 +1,9 @@
 <template>
-  <!-- <v-card>
-        <v-list-item>
-            <v-list-item-content>
-                <v-list-item-title>【リーダー】スタッフ一覧</v-list-item-title>
-                <ul>
-                    <li v-for="staff in staffs" v-bind:key="staff.id">
-                        {{ staff.name }}
-                    </li>
-                </ul>
-
-                <v-text-field v-model="staffs.id"></v-text-field>
-                <v-btn
-                    class="ma-2"
-                    outlined
-                    color="pink lighten-1"
-                    @click="select(staffs.id)"
-                >
-                    決定
-                </v-btn>
-            </v-list-item-content>
-        </v-list-item>
-  </v-card>-->
   <v-item-group multiple v-model="saveSelecyedStaff">
     <v-container>
-      <v-list-item-title class="center">本日のチームスタッフを全て選択してください</v-list-item-title>
+      <v-list-item-title class="center"
+        >本日のチームスタッフを全て選択してください</v-list-item-title
+      >
       <v-row>
         <v-col v-for="staff in staffs" :key="staff.id" cols="6">
           <v-item v-slot:default="{ active, toggle }" :value="staff.id">
@@ -38,9 +18,8 @@
               >
                 <v-card-text>
                   <div>〇〇科 {{ staff.id }}</div>
-                  <p class="name">{{staff.name}} Ns</p>
+                  <p class="name">{{ staff.name }} Ns</p>
                 </v-card-text>
-
                 <v-scroll-y-transition>
                   <div v-if="active" class="display-3 flex-grow-1"></div>
                 </v-scroll-y-transition>
@@ -49,8 +28,6 @@
           </v-item>
         </v-col>
       </v-row>
-
-      {{saveSelecyedStaff}}
       <v-footer fixed class="font-weight-medium footer">
         <v-btn
           class="mx-auto my-2 px-12 py-4 submit_btn"
@@ -61,7 +38,8 @@
           width="220"
           type="submit"
           @click="pushSelectedData()"
-        >決定</v-btn>
+          >決定</v-btn
+        >
       </v-footer>
     </v-container>
   </v-item-group>
@@ -72,42 +50,59 @@ export default {
   components: {},
   data: () => ({
     staffs: [],
-    saveSelecyedStaff: []
+    saveSelecyedStaff: [],
   }),
   methods: {
-    fetchStaff: function() {
+    // 【API】全スタッフ取得
+    fetchStaff: function () {
       axios
         .get("/api/users/get/all")
-        .then(res => {
+        .then((res) => {
           this.staffs = res.data;
         })
-        .catch(err => {
+        .catch((err) => {
           console.log("err:", err);
         });
     },
-    pushSelectedData: function() {
+    // 【API】チームスタッフ取得
+    fetchTeamStaff: function () {
       axios
-        .post("/api/team_users/add/", {
-          id: this.saveSelecyedStaff
+        .get("/api/team_users/get/all/" + this.$route.params.team_id)
+        .then((res) => {
+          console.log(res.data);
+          res.data.forEach((el) => {
+            this.saveSelecyedStaff.push(el.id);
+          });
         })
-        .then(res => {
+        .catch((err) => {
+          console.log(err.response.data);
+        });
+    },
+    // 【API】スタッフ登録
+    pushSelectedData: function () {
+      axios
+        .post(`/api/team_users/add/${this.$route.params.team_id}`, {
+          id: this.saveSelecyedStaff,
+        })
+        .then((res) => {
           this.staffs = res.data;
           // ページ遷移
           this.$router.push({
             name: "ScheduleList",
-            params:{
-              team_id:this.$route.params.team_id
-            }
+            params: {
+              team_id: this.$route.params.team_id,
+            },
           });
         })
-        .catch(err => {
-          console.log(err.response.data)
+        .catch((err) => {
+          console.log(err.response.data);
         });
-    }
+    },
   },
   created() {
     this.fetchStaff();
-  }
+    this.fetchTeamStaff();
+  },
 };
 </script>
 

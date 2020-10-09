@@ -58,10 +58,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
   // -----users_patients_tabel API -----
   // 担当患者登録
-  Route::post('/users_patients/add','Api\UsersPatientsController@addUsersPatients'); 
+  Route::post('/users_patients/add/{schedule_id}','Api\UsersPatientsController@addUsersPatients'); 
 
   // 担当患者取得
-  Route::get('/users_patients/get/all','Api\UsersPatientsController@getUsersPatients'); 
+  Route::get('/users_patients/get/all/{schedule_id}','Api\UsersPatientsController@getUsersPatients'); 
 
   // 特定のuserの担当患者取得
   Route::get('/users_patients/get/{user_id}','Api\UsersPatientsController@getSelectUsersPatients');
@@ -91,7 +91,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
   // -----team_users_table API-----
   // チームメンバー登録  !済！
-  Route::post('/team_users/add','Api\TeamUsersController@addTeamUser'); 
+  Route::post('/team_users/add/{team_id}','Api\TeamUsersController@addTeamUser'); 
 
   // チームメンバー取得  !済！
   Route::get('/team_users/get/all/{team_id}','Api\TeamUsersController@getTeamUsers'); 

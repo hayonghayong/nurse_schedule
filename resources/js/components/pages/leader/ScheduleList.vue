@@ -5,7 +5,9 @@
       <v-col>
         <v-sheet height="64">
           <v-toolbar flat color="white">
-            <v-btn outlined class="mr-4" color="grey darken-2" @click="setToday">Today</v-btn>
+            <v-btn outlined class="mr-4" color="grey darken-2" @click="setToday"
+              >Today</v-btn
+            >
             <v-btn fab text small color="grey darken-2" @click="prev">
               <v-icon small>mdi-chevron-left</v-icon>
             </v-btn>
@@ -13,9 +15,7 @@
               <v-icon small>mdi-chevron-right</v-icon>
             </v-btn>
             <v-toolbar-title v-if="$refs.calendar">
-              {{
-              $refs.calendar.title
-              }}
+              {{ $refs.calendar.title }}
             </v-toolbar-title>
             <v-spacer></v-spacer>
           </v-toolbar>
@@ -51,7 +51,7 @@
             </template>
             <!-- nowライン設定ここまで -->
             <!-- ドラック&ドロップ設定 -->
-            <template #event="{ event, timed,eventSummary}">
+            <template #event="{ event, timed, eventSummary }">
               <div class="v-event-draggable" v-html="eventSummary()"></div>
               <!-- <div
                                 v-if="timed"
@@ -85,7 +85,9 @@
         <v-btn @click="updateSchedule()">変更</v-btn>
       </v-card-text>
       <v-card-actions>
-        <v-btn text color="secondary" @click="selectedOpen = false">閉じる</v-btn>
+        <v-btn text color="secondary" @click="selectedOpen = false"
+          >閉じる</v-btn
+        >
       </v-card-actions>
     </v-card>
     <!-- タスククリック時に開く詳細画面 ここまで-->
@@ -103,7 +105,9 @@
               v-for="patient in patients"
               :value="patient.id"
               :key="patient.id"
-            >{{ patient.name }}</option>
+            >
+              {{ patient.name }}
+            </option>
           </select>
         </div>
         <p>処置</p>
@@ -114,7 +118,9 @@
               v-for="treatment in treatments"
               :value="treatment.id"
               :key="treatment.id"
-            >{{ treatment.name }}</option>
+            >
+              {{ treatment.name }}
+            </option>
           </select>
         </div>
         <p>時間</p>
@@ -149,7 +155,7 @@ import "vue2-timepicker/dist/VueTimepicker.css";
 export default {
   components: {
     MomentJs,
-    "vue-timepicker": VueTimepicker
+    "vue-timepicker": VueTimepicker,
   },
   data: () => ({
     staffs: [],
@@ -179,7 +185,7 @@ export default {
     // スケジュール新規作成
     registEvent: {},
     registElement: null,
-    registOpen: false
+    registOpen: false,
   }),
   created() {
     this.fetchStaff();
@@ -194,7 +200,7 @@ export default {
     },
     nowY() {
       return this.cal ? this.cal.timeToY(this.cal.times.now) + "px" : "-10px";
-    }
+    },
   },
   mounted() {
     this.setToday();
@@ -207,33 +213,34 @@ export default {
   },
   methods: {
     // 【API】スタッフを取得
-    fetchStaff: function() {
+    fetchStaff: function () {
       axios
         .get("/api/team_users/get/all/" + this.$route.params.team_id)
-        .then(res => {
+        .then((res) => {
           this.staffs = res.data;
           //   カレンダー表記用の配列に格納
-          this.categories = this.staffs.map(el => el.name);
+          this.categories = this.staffs.map((el) => el.name);
         })
-        .catch(err => {
+        .catch((err) => {
           console.log(err.response.data);
         });
     },
     // 【API】スケジュールを取得
-    fetchSchedule: function() {
+    fetchSchedule: function () {
       axios
         .get(`/api/tasks/get/team/${this.$route.params.team_id}`)
-        .then(res => {
+        .then((res) => {
           this.schedules = res.data;
+          console.log(res.data);
           //  イベントを取得
           this.fetchEvents();
         })
-        .catch(err => {
+        .catch((err) => {
           console.log("err:", err.response.data);
         });
     },
     // 【API】スケジュール登録更新
-    updateSchedule: function() {
+    updateSchedule: function () {
       this.postScheduleData = this.selectedEvent;
       // 時刻の整形
       const setTime = this.postScheduleData.update_time;
@@ -248,40 +255,40 @@ export default {
       const task_id = this.postScheduleData.task_id;
       axios
         .post(`/api/tasks/update/leader/${task_id}`, this.postScheduleData)
-        .then(res => {
+        .then((res) => {
           // 描画し直し
           this.fetchSchedule();
         })
-        .catch(err => {
+        .catch((err) => {
           console.log("err:", err.response.data);
         });
     },
     // 【API】処置取得
-    fetchTreatment: function() {
+    fetchTreatment: function () {
       axios
         .get("/api/treatments/get/all")
-        .then(res => {
+        .then((res) => {
           this.treatments = res.data;
         })
-        .catch(err => {
+        .catch((err) => {
           console.log("err:", err);
         });
     },
     // 【API】患者取得
-    fetchPatients: function() {
+    fetchPatients: function () {
       axios
         .get("/api/patients/get/all")
-        .then(res => {
+        .then((res) => {
           this.patients = res.data;
         })
-        .catch(err => {
+        .catch((err) => {
           console.log("err:", err);
         });
     },
     // 【API】新規タスク登録
-    registTask: function() {
+    registTask: function () {
       // schedule_idを取得して格納
-      const target = this.staffs.find(el => {
+      const target = this.staffs.find((el) => {
         return el.name === this.registEvent.category;
       });
       this.registEvent.schedule_id = target.schedule.id;
@@ -292,16 +299,16 @@ export default {
       this.registEvent.start_date = startTime;
       axios
         .post(`/api/tasks/post/new`, this.registEvent)
-        .then(res => {
+        .then((res) => {
           this.registOpen = false;
           this.fetchSchedule();
         })
-        .catch(err => {
+        .catch((err) => {
           console.log("err:", err.response.data);
         });
     },
     // DB保存用に日付を整形
-    setDatetime: function() {
+    setDatetime: function () {
       var today = new Date();
       var year = today.getFullYear();
       var month = today.getMonth() + 1;
@@ -367,7 +374,7 @@ export default {
           timed: true,
           room: this.schedules[i].patient.room,
           treatment: this.schedules[i].treatment.name,
-          patient: this.schedules[i].patient.name
+          patient: this.schedules[i].patient.name,
         });
       }
       this.events = events;
@@ -461,23 +468,17 @@ export default {
     endDrag() {
       // *スタッフ間を移動した場合に、postデータのschedule_idを変更
       if (this.selectedStaff !== this.dragEvent.category) {
-        const target = this.staffs.find(el => {
+        const target = this.staffs.find((el) => {
           return el.name === this.dragEvent.category;
         });
         this.selectedEvent.schedule_id = target.schedule.id;
       }
       const update_time = new Date(this.selectedEvent.start);
-      const hour = update_time
-        .getHours()
-        .toString()
-        .padStart(2, "0");
-      const minutes = update_time
-        .getMinutes()
-        .toString()
-        .padStart(2, "0");
+      const hour = update_time.getHours().toString().padStart(2, "0");
+      const minutes = update_time.getMinutes().toString().padStart(2, "0");
       this.selectedEvent.update_time = {
         HH: hour,
-        mm: minutes
+        mm: minutes,
       };
       // 更新
       this.updateSchedule();
@@ -556,17 +557,11 @@ export default {
         this.registEvent.category = event.category;
         // 時刻を整形
         const update_time = new Date(event.start);
-        const hour = update_time
-          .getHours()
-          .toString()
-          .padStart(2, "0");
-        const minutes = update_time
-          .getMinutes()
-          .toString()
-          .padStart(2, "0");
+        const hour = update_time.getHours().toString().padStart(2, "0");
+        const minutes = update_time.getMinutes().toString().padStart(2, "0");
         this.registEvent.start_time = {
           HH: hour,
-          mm: minutes
+          mm: minutes,
         };
         // this.registElement = nativeEvent.target;
         setTimeout(() => (this.registOpen = true), 10);
@@ -580,9 +575,9 @@ export default {
       }
 
       //   nativeEvent.stopPropagation();
-    }
+    },
     // ------------ タスク作成時の詳細画面 ここまで ---------- //
-  }
+  },
 };
 </script>
 
