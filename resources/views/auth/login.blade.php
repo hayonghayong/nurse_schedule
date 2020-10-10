@@ -2,12 +2,13 @@
 
 @section('content')
 <div class="container">
-    <a href="/admin/login">管理者ログインへ</a>
+    <div class="login_right">
+        <a href="/admin/login" class="login_link">管理者ログイン</a>
+    </div>
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header"><img class="logo" src="{{ asset('img/logo.png') }}" alt="logo"></div>
-
                 <div class="card-body">
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
@@ -65,6 +66,9 @@
                             </div>
                         </div>
                     </form>
+                </div>
+                <div class="privacy">
+                 <p><a  href="#">プライバシーポリシー</a> ・ <a href="#">利用規約</a></p>
                 </div>
             </div>
         </div>
