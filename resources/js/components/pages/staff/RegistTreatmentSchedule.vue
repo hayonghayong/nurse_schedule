@@ -18,12 +18,9 @@
         {{ usersPatients[setTreatmentPage].room }}号室
         {{ usersPatients[setTreatmentPage].name }}さん
         <span
-          v-if="usersPatients[setTreatmentPage].sex == 1"
-        >男性</span>
-        <span v-else-if="usersPatients[setTreatmentPage].sex == 2">女性</span>
-        <BirthdayMomentJS :time="usersPatients[setTreatmentPage].birthday" />
+          class="caption patient_caption"
+        >({{ setTreatmentPage + 1 }}/{{ usersPatientsLength }}人)</span>
       </li>
-      {{ setTreatmentPage + 1 }}/{{ usersPatientsLength }}人
     </div>
     <p class="center">今日行う処置を選択してください</p>
 
@@ -65,8 +62,11 @@
       </thead>
       <tbody v-if="setTreatmentsData.length > 0">
         <tr v-for="(setTreatment, index) in setTreatmentsData" :key="index">
-          <td class="treatment_name center">{{ setTreatment.treatment_name }}</td>
-          <td class="time_input">
+          <td
+            class="treatment_name center"
+            :class="setTreatment.treatment_class"
+          >{{ setTreatment.treatment_name }}</td>
+          <td class="time_input center">
             <vue-timepicker
               :minute-interval="10"
               v-model="treatmentTimes[index]"
@@ -80,28 +80,26 @@
             ></vue-timepicker>
           </td>
           <td class="button">
-            <v-btn
-              color="blue lighten-1"
-              depressed
-              fab
-              small
-              icon
-              @click="deleteTreatmentData(index)"
-            >
+            <v-btn color="lighten-1" depressed fab small icon @click="deleteTreatmentData(index)">
               <v-icon>mdi-trash-can</v-icon>
             </v-btn>
           </td>
         </tr>
       </tbody>
     </table>
-    <v-btn
-      class="mx-auto my-5 px-12 py-5 submit_btn"
-      rounded
-      dark
-      color="#62ABF8"
-      type="submit"
-      @click="setTreatmentsSchedule()"
-    >保存</v-btn>
+
+    <v-footer fixed class="font-weight-medium footer">
+      <v-btn
+        class="mx-auto my-2 px-12 py-4 submit_btn"
+        color="#62ABF8"
+        rounded
+        dark
+        depressed
+        width="220"
+        type="submit"
+        @click="setTreatmentsSchedule()"
+      >保存</v-btn>
+    </v-footer>
   </v-container>
 </template>
 <script>
@@ -177,7 +175,7 @@ export default {
       axios
         .get("/api/treatments/get/all")
         .then(res => {
-          // console.log("status:", res.status);
+          console.log("status:", res.status);
           console.log("body:", res.data);
           this.treatments = res.data;
         })
@@ -188,15 +186,23 @@ export default {
     // 処置を追加して入力欄を表示
     pushSettreatmentData: function() {
       const selectedTreatmentId = this.selectedTreatment;
-      const selectedTreatmentName = this.treatments.filter(function(
+      const selectedTreatmentObj = this.treatments.filter(function(
         item,
         index
       ) {
         if (item.id == selectedTreatmentId) return true;
       });
+      const required_flg = selectedTreatmentObj[0].required_flg;
+      let treatmentClass = "";
+      if (required_flg == 1) {
+        treatmentClass = "requiredTreatment";
+      } else {
+        treatmentClass = "notRequired";
+      }
       this.setTreatmentsData.push({
         treatment_id: selectedTreatmentId,
-        treatment_name: selectedTreatmentName[0].name,
+        treatment_name: selectedTreatmentObj[0].name,
+        treatment_class: treatmentClass,
         patient_id: this.usersPatients[this.setTreatmentPage].id,
         start_date: ""
       });
@@ -219,17 +225,17 @@ export default {
     },
     // 登録した処置をDBに保存
     setTreatmentsSchedule: function() {
-      console.log(this.setTreatmentsData);
       axios
         .post(
           `/api/tasks/post/${this.$route.params.schedule_id}`,
           this.setTreatmentsData
         )
         .then(res => {
-          console.log("status:", res.status);
-          console.log("body:", res.data);
+          // console.log("status:", res.status);
+          // console.log("body:", res.data);
           this.setTreatmentPage++;
           this.setTreatmentsData = [];
+          this.treatmentTimes = [];
           //全員分登録が完了したら...
           if (this.setTreatmentPage == this.usersPatientsLength) {
             const transitionDestinationObj = {
@@ -262,6 +268,10 @@ export default {
   text-align: center;
 }
 
+.patient_caption {
+  color: #000;
+}
+
 .select_wrap,
 .time_input {
   display: flex;
@@ -277,9 +287,14 @@ export default {
 .comment {
   width: 100%;
 }
+
 .treatment_name {
   background-color: #e6f4ff;
   color: #62abf8;
+}
+.requiredTreatment {
+  background-color: #f7dfc6;
+  color: #f7b063;
 }
 
 .cp_ipselect {
@@ -354,9 +369,17 @@ export default {
 }
 .v-stepper__step {
   padding: 10px;
-  
 }
 .v-stepper--alt-labels .v-stepper__step {
   flex-basis: 100px;
 }
+
+/* vue-timepicker　の選択時のカラーを変更 */
+.time_input >>> .vue__time-picker .dropdown ul li:not([disabled]).active,
+.time_input >>> .vue__time-picker .dropdown ul li:not([disabled]).active:focus,
+.time_input >>> .vue__time-picker .dropdown ul li:not([disabled]).active:hover {
+  background: #e6f4ff;
+  color: #000;
+}
+/* vue-timepicker　のさ選択時のカラーを変更 */
 </style>
