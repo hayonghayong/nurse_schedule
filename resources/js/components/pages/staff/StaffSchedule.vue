@@ -5,6 +5,7 @@
         <v-sheet height="700">
           <v-calendar
             locale="ja-jp"
+            hide-header
             :day-format="timestamp => new Date(timestamp.date).getDate()"
             ref="calendar"
             v-model="focus"
@@ -50,77 +51,80 @@
       </v-col>
     </v-row>
     <!-- クリック時に開く詳細画面 -->
-    <v-card v-if="selectedOpen" min-width="350px" flat class="detail-schedule">
-      <v-card-actions>
-        <v-btn text color="#62ABF8" class="mx-auto" @click="selectedOpen = false">
-          <v-icon class="ma-2 mdi-36px" color="#62ABF8">mdi-chevron-down</v-icon>
-        </v-btn>
-      </v-card-actions>
-      <v-card-text class="py-0 pl-8">
-        <div class="d-flex mb-2 body-1 font-weight-bold cardTextTime">
-          <MomentJsTime class="cardTextTime" :time="selectedEvent.start_date" />
-          <span class="cardTextTime">〜</span>
-        </div>
-        <p class="mb-2 body-1">
-          {{ selectedEvent.room }}号室 /
-          {{ selectedEvent.patient }}さん
-        </p>
-        <p class="mb-2 body-1">{{ selectedEvent.treatment }}</p>
-        <div v-if="timepicker_show == true" class="mb-2">
-          <span class="body-2 mr-4">変更後時間</span>
-          <vue-timepicker
-            v-if="(timepicker_show = true)"
-            :minute-interval="10"
-            v-model="selectedEvent.update_time"
-            id="start_time"
-            name="startTime"
-            placeholder="開始時間"
-            hour-label="時"
-            minute-label="分"
-            input-class="form-control"
-          ></vue-timepicker>
-        </div>
-      </v-card-text>
-      <v-card-actions class="flex-column">
-        <v-btn
-          v-if="
+    <transition name="selectedOpenSlide">
+      <v-card v-if="selectedOpen" min-width="350px" class="detail-schedule rounded-xl">
+        <v-card-actions>
+          <v-btn text color="#62ABF8" class="mx-auto" @click="selectedOpen = false">
+            <v-icon class="ma-2 mdi-36px" color="#62ABF8">mdi-chevron-down</v-icon>
+          </v-btn>
+        </v-card-actions>
+        <v-card-text class="py-0 pl-8">
+          <p class="subtitle-1">タスク詳細</p>
+          <div class="d-flex mb-2 body-1 font-weight-bold cardTextTime">
+            <MomentJsTime class="cardTextTime" :time="selectedEvent.start_date" />
+            <span class="cardTextTime">〜</span>
+          </div>
+          <p class="mb-2 body-1">
+            {{ selectedEvent.room }}号室 /
+            {{ selectedEvent.patient }}さん
+          </p>
+          <p class="mb-2 body-1">{{ selectedEvent.treatment }}</p>
+          <div v-if="timepicker_show == true" class="mb-2">
+            <span class="body-2 mr-4">変更後時間</span>
+            <vue-timepicker
+              v-if="(timepicker_show = true)"
+              :minute-interval="10"
+              v-model="selectedEvent.update_time"
+              id="start_time"
+              name="startTime"
+              placeholder="開始時間"
+              hour-label="時"
+              minute-label="分"
+              input-class="form-control"
+            ></vue-timepicker>
+          </div>
+        </v-card-text>
+        <v-card-actions class="flex-column">
+          <v-btn
+            v-if="
                         selectedEvent.end_flg == 0 &&
                             timepicker_show == false
                     "
-          rounded
-          dark
-          color="#EF9C38"
-          class="mx-auto px-6 mb-3"
-          @click="saveEndFlagFinished(selectedEvent.id)"
-        >処置完了</v-btn>
-        <v-btn
-          v-else-if="
+            rounded
+            dark
+            color="#EF9C38"
+            class="mx-auto px-6 mb-3"
+            @click="saveEndFlagFinished(selectedEvent.id)"
+          >処置完了</v-btn>
+          <v-btn
+            v-else-if="
                         selectedEvent.end_flg == 1 && timepicker_show == false
                     "
-          rounded
-          dark
-          color="#c3c3c3"
-          class="mx-auto px-6 mb-3"
-          @click="saveEndFlagUnfinished(selectedEvent.id)"
-        >未完了に変更</v-btn>
-        <v-btn
-          v-if="timepicker_show == false"
-          rounded
-          dark
-          color="#62ABF8"
-          class="mx-auto px-6"
-          @click="timepicker_show = true"
-        >時間変更</v-btn>
-        <v-btn
-          v-else
-          rounded
-          dark
-          color="#62ABF8"
-          class="mx-auto px-6"
-          @click="updateSchedule()"
-        >変更を保存</v-btn>
-      </v-card-actions>
-    </v-card>
+            rounded
+            dark
+            color="#c3c3c3"
+            class="mx-auto px-6 mb-3"
+            @click="saveEndFlagUnfinished(selectedEvent.id)"
+          >未完了に変更</v-btn>
+          <v-btn
+            v-if="timepicker_show == false"
+            rounded
+            dark
+            color="#62ABF8"
+            class="mx-auto px-6"
+            @click="timepicker_show = true"
+          >時間変更</v-btn>
+          <v-btn
+            v-else
+            rounded
+            dark
+            color="#62ABF8"
+            class="mx-auto px-6"
+            @click="updateSchedule()"
+          >変更を保存</v-btn>
+        </v-card-actions>
+      </v-card>
+    </transition>
     <!-- クリック時に開く詳細画面 ここまで-->
     <!-- タスク作成時に開く詳細画面 -->
     <v-card v-if="registOpen" min-width="350px" flat class="detail-schedule">
@@ -701,17 +705,34 @@ body {
   }
 }
 
+@keyframes slidedown {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(64px);
+  }
+}
+
 .detail-schedule {
   position: fixed;
-  bottom: 30px;
+  bottom: -20px;
   left: 0;
   right: 0;
   width: 100%;
-  height: 400px;
+  height: 350px;
   z-index: 5;
   background: #fff;
-  animation-name: slideup;
-  animation-duration: 0.3s;
+}
+
+.selectedOpenSlide-enter-active {
+  animation: slideup 0.3s;
+}
+
+.selectedOpenSlide-leave-to {
+  animation: slidedown 0.3s;
 }
 /* スケジュール詳細のスタイル　ここまで */
 

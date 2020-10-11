@@ -1,6 +1,21 @@
 <template>
   <v-item-group multiple v-model="saveSelectedPatient">
     <v-container>
+      <v-dialog v-model="errorDialog" max-width="350px" class="error_dialog">
+        <v-card>
+          <v-card-title class="headline lighten-2 text--secondary" color="#62ABF8" primary-title>エラー</v-card-title>
+          <v-card-text>
+            <p class="mb-0">
+              担当患者が選択されていません。
+              担当患者を選択の上、決定ボタンを押してください。
+            </p>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="#62ABF8" text @click="errorDialog = false">閉じる</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
       <v-stepper value="1" alt-labels>
         <v-stepper-header>
           <v-stepper-step step="1" color="#5e9ce6">患者選択</v-stepper-step>
@@ -15,38 +30,28 @@
         </v-stepper-header>
       </v-stepper>
 
-      <v-list-item-title class="center pt-0"
-        >本日の担当の患者さんを全て選択してください</v-list-item-title
-      >
+      <v-list-item-title class="center pt-0">本日の担当の患者さんを全て選択してください</v-list-item-title>
       <v-row>
         <v-col v-for="patient in patients" :key="patient.id" cols="6">
           <v-item v-slot:default="{ active, toggle }" :value="patient.id">
             <v-hover v-slot:default="{ hover }">
               <v-card
-                :color="active ? '#62ABF8' : ''"
+                :color="active ? '#c6def7' : ''"
                 class="d-flex align-center"
                 :class="{ 'on-hover': hover }"
                 outlined
-                height="230"
                 @click="toggle"
               >
                 <v-card-text>
-                  <p class="ma-0">{{ patient.room }}号室</p>
-                  <p class="ma-0">
-                    {{ patient.name }}さん
-                    <span v-if="patient.sex == 1" class="ml-2">男性</span>
-                    <span v-else-if="patient.sex == 2" class="ml-2">女性</span>
-                    <span v-else class="ml-2">性別未記入</span>
+                  <p class="ma-0 card_text">{{ patient.room }}号室</p>
+                  <p class="ma-0 card_text">{{ patient.name }}さん</p>
+                  <p class="ma-0 card_text">
+                    <span v-if="patient.sex == 1">男性</span>
+                    <span v-else-if="patient.sex == 2">女性</span>
+                    <span v-else>性別未記入</span>
+                    /
+                    <BirthDayMomentJs :time="patient.birthday"></BirthDayMomentJs>
                   </p>
-                  <BirthDayMomentJs :time="patient.birthday"></BirthDayMomentJs>
-                  <p class="ma-0">
-                    <span>入院日：</span>{{ patient.hospitalization_date }}
-                  </p>
-                  <p class="ma-0">
-                    <span>手術日：</span>{{ patient.surgery_date }}
-                  </p>
-                  <p class="ma-0">特記事項</p>
-                  <p class="ma-0">{{ patient.memo }}</p>
                 </v-card-text>
 
                 <v-scroll-y-transition>
@@ -59,6 +64,10 @@
       </v-row>
       <!-- フッター -->
       <v-footer fixed class="font-weight-medium footer">
+        <div>
+          <p class="mb-1 caption">現在、{{ saveSelectedPatient.length }}人選択中です。</p>
+        </div>
+
         <v-btn
           class="mx-auto my-2 px-12 py-4 submit_btn"
           color="#62ABF8"
@@ -67,9 +76,8 @@
           depressed
           width="220"
           type="submit"
-          @click="pushSelectedData()"
-          >決定</v-btn
-        >
+          @click="checkSelectedPatients()"
+        >決定</v-btn>
       </v-footer>
     </v-container>
   </v-item-group>
@@ -80,7 +88,7 @@ import BirthDayMomentJs from "../../items/BirthdayMomentJs";
 // Vue
 export default {
   components: {
-    BirthDayMomentJs,
+    BirthDayMomentJs
   },
   data: () => ({
     patients: [],
@@ -88,61 +96,70 @@ export default {
     usersPatients: [],
     vertical: true,
     e1: 1,
+    errorDialog: false
   }),
   methods: {
     // 【API】患者一覧取得
-    fetchPatients: function () {
+    fetchPatients: function() {
       axios
         .get("/api/patients/get/all")
-        .then((res) => {
+        .then(res => {
           this.patients = res.data;
         })
-        .catch((err) => {
+        .catch(err => {
           console.log("err:", err);
         });
     },
     // 【API】患者登録
-    pushSelectedData: function () {
-      console.log(this.saveSelectedPatient);
+    pushSelectedData: function() {
       axios
         .post(`/api/users_patients/add/${this.$route.params.schedule_id}`, {
-          id: this.saveSelectedPatient,
+          id: this.saveSelectedPatient
         })
-        .then((res) => {
+        .then(res => {
           this.usersPatients = res.data;
           const transitionDestinationObj = {
             name: "RegistTreatmentSchedule",
             params: {
-              schedule_id: this.$route.params.schedule_id,
-            },
+              schedule_id: this.$route.params.schedule_id
+            }
           };
           this.$router.push(transitionDestinationObj);
         })
-        .catch((err) => {
+        .catch(err => {
           console.log("err:", err.response.data);
         });
     },
     // 【API】担当患者取得
-    fetchUsersPatients: function () {
+    fetchUsersPatients: function() {
       axios
         .get(`/api/users_patients/get/all/${this.$route.params.schedule_id}`)
-        .then((res) => {
+        .then(res => {
           console.log("body:", res.data);
-          res.data.forEach((el) => {
+          res.data.forEach(el => {
             this.saveSelectedPatient.push(el.id);
           });
         })
-        .catch((err) => {
+        .catch(err => {
           console.log("err:", err);
         });
     },
+    // 担当患者のバリデーション
+    checkSelectedPatients: function() {
+      const selectedPatientslength = this.saveSelectedPatient.length;
+      if (selectedPatientslength == 0) {
+        this.errorDialog = true;
+      } else {
+        this.pushSelectedData();
+      }
+    }
   },
   computed: {},
 
   created() {
     this.fetchPatients();
     this.fetchUsersPatients();
-  },
+  }
 };
 </script>
 
@@ -150,6 +167,8 @@ export default {
 /* スコープ付きのスタイル */
 .footer {
   background: rgba(255, 0 0, 0.5);
+  display: flex;
+  flex-direction: column;
 }
 .name {
   font-size: 17px;
@@ -164,9 +183,14 @@ export default {
 }
 
 .v-card:not(.on-hover) {
-  opacity: 0.8;
   border: thin solid rgb(0, 0, 0, 0.12);
 }
+
+/* card 内のテキストを黒にする場合こちらのコメントアウトを解除 */
+/* .card_text {
+  color: #000;
+} */
+
 .v-stepper {
   box-shadow: none;
 }

@@ -3,7 +3,9 @@
   <div>
     <v-app-bar flat color="white" fixed light>
       <!--ここにログアウト付けたかった -->
-      <span @click="logout" style="cursor: pinter; color:#2196F3;" >＜ 戻る</span>
+      <span @click="logout" style="cursor: pinter; color:#2196F3;">
+        <span class="mdi mdi-chevron-left"></span> ログアウト
+      </span>
     </v-app-bar>
 
     <div class="message">
