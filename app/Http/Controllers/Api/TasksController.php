@@ -150,6 +150,5 @@ use Illuminate\Support\Arr;
       return $task;
     }
 
-    // 
     }
     
