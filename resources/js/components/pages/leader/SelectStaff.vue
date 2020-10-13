@@ -1,6 +1,22 @@
 <template>
   <v-item-group multiple v-model="saveSelecyedStaff">
     <v-container>
+      <v-dialog v-model="errorDialog" max-width="350px" class="error_dialog">
+        <v-card>
+          <v-card-title class="headline lighten-2 text--secondary" color="#62ABF8" primary-title>エラー</v-card-title>
+          <v-card-text>
+            <p class="mb-0">
+              担当患者が選択されていません。
+              担当患者を選択の上、決定ボタンを押してください。
+            </p>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="#62ABF8" text @click="errorDialog = false">閉じる</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+
       <v-list-item-title class="center"
         >本日のチームスタッフを全て選択してください</v-list-item-title
       >
@@ -9,16 +25,14 @@
           <v-item v-slot:default="{ active, toggle }" :value="staff.id">
             <v-hover v-slot:default="{ hover }">
               <v-card
-                :color="active ? '#62ABF8' : ''"
+                :color="active ? '#c6def7' : ''"
                 class="d-flex align-center"
                 :class="{ 'on-hover': hover }"
                 outlined
-                height="100"
                 @click="toggle"
               >
                 <v-card-text>
-                  <div>〇〇科 {{ staff.id }}</div>
-                  <p class="name">{{ staff.name }} Ns</p>
+                  <div class="name">{{ staff.name }}</div>
                 </v-card-text>
                 <v-scroll-y-transition>
                   <div v-if="active" class="display-3 flex-grow-1"></div>
@@ -29,6 +43,10 @@
         </v-col>
       </v-row>
       <v-footer fixed class="font-weight-medium footer">
+        <div>
+          <p class="mb-1 caption">現在、{{ saveSelecyedStaff.length }}人選択中です。</p>
+        </div>
+
         <v-btn
           class="mx-auto my-2 px-12 py-4 submit_btn"
           color="#62ABF8"
@@ -37,7 +55,7 @@
           depressed
           width="220"
           type="submit"
-          @click="pushSelectedData()"
+          @click="checkSelectedStaffs()"
           >決定</v-btn
         >
       </v-footer>
@@ -51,6 +69,7 @@ export default {
   data: () => ({
     staffs: [],
     saveSelecyedStaff: [],
+    errorDialog: false
   }),
   methods: {
     // 【API】全スタッフ取得
@@ -98,6 +117,14 @@ export default {
           console.log(err.response.data);
         });
     },
+    checkSelectedStaffs: function() {
+      const selectedStaffslength = this.saveSelecyedStaff.length;
+      if (selectedStaffslength == 0) {
+        this.errorDialog = true;
+      } else {
+        this.pushSelectedData();
+      }
+    }
   },
   created() {
     this.fetchStaff();
@@ -110,6 +137,9 @@ export default {
 /* スコープ付きのスタイル */
 .footer {
   background: rgba(255, 0 0, 0.5);
+  display: flex;
+  flex-direction: column;
+
 }
 .name {
   font-size: 17px;
