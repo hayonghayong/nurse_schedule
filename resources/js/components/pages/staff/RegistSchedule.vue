@@ -3,54 +3,23 @@
   <v-container>
     <v-stepper value="3" alt-labels>
       <v-stepper-header>
-        <v-stepper-step step="1" complete color="#5e9ce6">患者選択</v-stepper-step>
+        <v-stepper-step step="1" complete color="#5e9ce6"
+          >患者選択</v-stepper-step
+        >
 
         <v-divider></v-divider>
 
-        <v-stepper-step step="2" complete color="#5e9ce6">処置選択</v-stepper-step>
+        <v-stepper-step step="2" complete color="#5e9ce6"
+          >処置選択</v-stepper-step
+        >
 
         <v-divider></v-divider>
 
-        <v-stepper-step step="3" color="#5e9ce6">スケジュール調整</v-stepper-step>
+        <v-stepper-step step="3" color="#5e9ce6"
+          >スケジュール調整</v-stepper-step
+        >
       </v-stepper-header>
     </v-stepper>
-
-    <!-- <v-card>
-          <ul>
-                    <li v-for="schedule in schedules" v-bind:key="schedule.id">
-                        {{ schedule.id }}
-                        {{ schedule.patient.room }}
-                        {{ schedule.patient.name}}
-                        {{ schedule.treatment.name}}
-                        {{ schedule.treatment.required_flg}}
-                        {{ schedule.treatment.time_required}}
-                        
-                    </li>
-                </ul>
-          <v-text-field placeholder="変更したいスケジュールidを入力" v-model="schedules.id"></v-text-field>
-                <v-btn
-                    class="ma-2"
-                    outlined
-                    color="pink lighten-1"
-                    @click="selectSchedule(schedules.id)"
-                >
-                    選択
-                </v-btn>
-
-      <v-list-item>
-        <v-list-item-content>
-          <v-list>
-          <v-text-field placeholder="処置id integer" v-model="editSchedule.treatment_id">
-          </v-text-field>
-          <v-text-field placeholder="patient_id integer" v-model="editSchedule.patient_id"></v-text-field>
-          <v-text-field placeholder="開始時間 datetime (null ok) 2015-01-01 15:00" v-model="editSchedule.start_date"></v-text-field>
-          <v-btn class="ma-2" outlined color="pink lighten-1"  type="submit" @click="updateSchedule">
-                スケジュール変更
-          </v-btn>
-        </v-list>
-        </v-list-item-content>
-      </v-list-item>
-    </v-card>-->
 
     <!-- ▼カレンダー -->
     <v-row class="fill-height">
@@ -58,7 +27,7 @@
         <v-sheet height="600">
           <v-calendar
             locale="ja-jp"
-            :day-format="timestamp => new Date(timestamp.date).getDate()"
+            :day-format="(timestamp) => new Date(timestamp.date).getDate()"
             ref="calendar"
             v-model="focus"
             color="primary"
@@ -71,6 +40,10 @@
             @mousemove:time="mouseMove"
             @mouseup:time="endDrag"
             @mouseleave.native="cancelDrag"
+            @touchstart:event="startDrag"
+            @touchstart:time="startTime"
+            @touchmove:time="mouseMove"
+            @touchendup:time="endDrag"
           >
             <!-- nowライン設定 -->
             <template #day-body="{ date, week }">
@@ -82,7 +55,7 @@
             </template>
             <!-- nowライン設定ここまで -->
             <!-- ドラック&ドロップ設定 -->
-            <template #event="{ event, timed,eventSummary}">
+            <template #event="{ event, timed, eventSummary }">
               <div class="v-event-draggable" v-html="eventSummary()"></div>
               <!-- <div
                 v-if="timed"
@@ -96,6 +69,37 @@
       </v-col>
     </v-row>
     <!-- ▲カレンダー ここまで -->
+    <!-- フッター -->
+    <v-footer fixed class="font-weight-medium footer">
+      <div class="footer_text" v-if="leftTaskCount != 0">
+        <p class="mb-1 caption">
+          上部のタスクをタッチして、時刻を登録してください。
+        </p>
+        <p class="mb-1 caption">残り {{ leftTaskCount }} つ</p>
+      </div>
+      <div class="footer_conp" v-if="leftTaskCount == 0">
+        <p class="mb-1 caption">ドラッグ&ドロップでタスクを移動できます</p>
+        <router-link
+          :to="{
+            name: 'StaffSchedule',
+            params: {
+              schedule_id: this.$route.params.schedule_id,
+            },
+          }"
+        >
+          <v-btn
+            class="mx-auto my-2 px-12 py-4 submit_btn"
+            color="#62ABF8"
+            rounded
+            dark
+            depressed
+            width="220"
+            type="submit"
+            >決定</v-btn
+          >
+        </router-link>
+      </div>
+    </v-footer>
   </v-container>
 
   <!-- ここまで -->
@@ -112,8 +116,9 @@ export default {
     editSchedule: {
       treatment_id: "",
       patient_id: "",
-      start_date: ""
+      start_date: "",
     },
+    leftTaskCount: 0,
     today: "",
     // ▼カレンダー関連
     //   nowライン
@@ -132,7 +137,7 @@ export default {
     // スケジュール詳細
     selectedEvent: {},
     selectedElement: null,
-    selectedOpen: false
+    selectedOpen: false,
   }),
   created() {
     // this.fetchStaff();
@@ -146,7 +151,7 @@ export default {
     },
     nowY() {
       return this.cal ? this.cal.timeToY(this.cal.times.now) + "px" : "-10px";
-    }
+    },
   },
   mounted() {
     this.setToday();
@@ -159,14 +164,14 @@ export default {
   },
   methods: {
     // 【API】スケジュール取得
-    fetchTasks: function() {
+    fetchTasks: function () {
       axios
         .get("/api/tasks/get/all/" + this.$route.params.schedule_id)
-        .then(res => {
+        .then((res) => {
           this.schedules = res.data;
           this.fetchEvents();
         })
-        .catch(err => {
+        .catch((err) => {
           console.log("err:", err.response.data);
         });
     },
@@ -182,7 +187,7 @@ export default {
     //     });
     // },
     // 【API】スケジュール更新
-    updateSchedule: function() {
+    updateSchedule: function () {
       this.postScheduleData = this.selectedEvent;
       // 時刻の整形
       const setTime = this.postScheduleData.update_time;
@@ -198,16 +203,16 @@ export default {
 
       axios
         .post("/api/tasks/update/" + task_id, this.postScheduleData)
-        .then(res => {
+        .then((res) => {
           this.fetchTasks();
         })
-        .catch(err => {
+        .catch((err) => {
           console.log(err.response.data);
         });
     },
     // DB保存用に日付を整形
 
-    setDatetime: function() {
+    setDatetime: function () {
       var today = new Date();
       var year = today.getFullYear();
       var month = today.getMonth() + 1;
@@ -245,6 +250,7 @@ export default {
     fetchEvents() {
       const events = [];
       const eventCount = this.schedules.length;
+      this.leftTaskCount = 0;
       for (let i = 0; i < eventCount; i++) {
         // 開始時間と終了時刻の定義
         let startdate, endTime, timed;
@@ -259,6 +265,7 @@ export default {
         }
         // 指定されていないイベント
         else {
+          this.leftTaskCount++;
           startdate = this.today;
           endTime = null;
           timed = false;
@@ -281,7 +288,7 @@ export default {
           timed: timed,
           room: this.schedules[i].patient.room,
           treatment: this.schedules[i].treatment.name,
-          patient: this.schedules[i].patient.name
+          patient: this.schedules[i].patient.name,
         });
       }
       this.events = events;
@@ -326,17 +333,11 @@ export default {
         this.selectedEvent.start = today.getTime();
         // 時刻を整形
         const update_time = new Date(this.selectedEvent.start);
-        const hour = update_time
-          .getHours()
-          .toString()
-          .padStart(2, "0");
-        const minutes = update_time
-          .getMinutes()
-          .toString()
-          .padStart(2, "0");
+        const hour = update_time.getHours().toString().padStart(2, "0");
+        const minutes = update_time.getMinutes().toString().padStart(2, "0");
         this.selectedEvent.update_time = {
           HH: hour,
-          mm: minutes
+          mm: minutes,
         };
         this.updateSchedule();
       }
@@ -426,17 +427,11 @@ export default {
       if (this.dragEvent) {
         // 時刻を整形
         const update_time = new Date(this.selectedEvent.start);
-        const hour = update_time
-          .getHours()
-          .toString()
-          .padStart(2, "0");
-        const minutes = update_time
-          .getMinutes()
-          .toString()
-          .padStart(2, "0");
+        const hour = update_time.getHours().toString().padStart(2, "0");
+        const minutes = update_time.getMinutes().toString().padStart(2, "0");
         this.selectedEvent.update_time = {
           HH: hour,
-          mm: minutes
+          mm: minutes,
         };
         // 更新
         this.updateSchedule();
@@ -506,9 +501,9 @@ export default {
       }
 
       nativeEvent.stopPropagation();
-    }
+    },
     // ------------ クリックしたときの詳細画面 ここまで ---------- //
-  }
+  },
 };
 </script>
 
@@ -606,5 +601,18 @@ export default {
 
 .col {
   padding: 0px;
+}
+
+.footer {
+  // background: rgba(255, 0 0, 0.5);
+  display: flex;
+  // justify-content: center;
+  flex-direction: column;
+}
+.footer_text {
+  text-align: center;
+}
+.footer_conp{
+  text-align: center;
 }
 </style>
