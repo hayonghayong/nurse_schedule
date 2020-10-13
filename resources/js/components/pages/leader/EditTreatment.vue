@@ -1,10 +1,9 @@
 <template>
   <v-container class="editTreatment">
     <v-card-text class="text-center">
-      <h1 class="headline">処置編集</h1>
       <v-form ref="form" v-model="valid" lazy-validation>
         <v-row>
-          <v-col cols="12" class="py-0">
+          <v-col cols="12" class="py-0 mb-3">
             <v-text-field
               label="処置名"
               v-model="editTreatment.name"
@@ -12,7 +11,8 @@
               :rules="[validationRules.required]"
             ></v-text-field>
           </v-col>
-          <v-col cols="12" class="py-0">
+
+          <v-col cols="12" class="py-0 mb-3">
             <v-select
               v-model="editTreatment.time_required"
               :items="timeRequired"
@@ -22,25 +22,31 @@
               :rules="[validationRules.required]"
             ></v-select>
           </v-col>
-          <p>スケジュールに表示される色を選択してください</p>
-          <v-col cols="12" class="py-0">
-            <v-color-picker
+
+          <v-col cols="12" class="py-0 mb-3">
+            <header class="labelFlag text-left">スケジュールに表示される色を選択してください</header>
+            <v-swatches
+                v-model="editTreatment.color_code"
+                :swatches="swatches"
+                shapes="circles"
+                inline
+                class="mt-2 mb-3"></v-swatches>
+            <!--<v-color-picker
               class="ma-2"
               hide-canvas
               hide-inputs
               show-swatches
               swatches-max-height="100px"
               v-model="editTreatment.color_code"
-            ></v-color-picker>
+            ></v-color-picker>-->
           </v-col>
           <v-col cols="12" class="py-0">
-            <header class="labelFlag text-left">優先</header>
+            <header class="labelFlag text-left">時間指定が必要</header>
             <v-switch
               v-model="editTreatment.required_flg"
               :persistent-hint="true"
               :true-value="0"
               :false-value="1"
-              hint="時間不可の場合チェックをつけてください"
               inset
               color="#62ABF8"
               class="mt-2"
@@ -98,10 +104,12 @@
 </template>
 <script>
 // コンポーネントのインポート
-
+import VSwatches from 'vue-swatches'
+// Import the styles too, typically in App.vue or main.js
+import 'vue-swatches/dist/vue-swatches.css'
 // Vue
 export default {
-  components: {},
+  components: { VSwatches },
   data: () => ({
     validationRules: {
       required: value => !!value || "入力必須です。",
@@ -125,7 +133,8 @@ export default {
     axiosErrorMessages: [],
     color: {
       color: ""
-    }
+    },
+    swatches: ['#6495ed','#4DABFF', '#F65161', '#FC78B9', '#FF954A', '#FDD853', '#36C398', '#ADDA49', '#bb99ff','#4e71cc']
   }),
   created() {
     this.getTreatmentData(this.$route.params.treatmentId);
@@ -243,4 +252,8 @@ export default {
 
 <style scoped>
 /* スコープ付きのスタイル */
+.labelFlag{
+  color:rgba(0, 0, 0, 0.6);
+  font-size:12px;
+}
 </style>
