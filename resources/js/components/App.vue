@@ -49,4 +49,11 @@ export default {
 .v-application--is-ltr .v-stepper--vertical .v-stepper__step__step{
     margin-right:0px;
 }
+.vue-swatches__wrapper{
+  width:300px;
+}
+.vue-swatches__swatch{
+  margin-right:11px;
+}
+
 </style>
