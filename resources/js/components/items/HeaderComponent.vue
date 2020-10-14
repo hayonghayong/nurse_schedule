@@ -10,9 +10,9 @@
 
       <v-spacer></v-spacer>
 
-      <v-btn icon>
+      <!--<v-btn icon>
         <v-icon @click="logout" style="cursor: pointer;">mdi-account-cog</v-icon>
-      </v-btn>
+      </v-btn>-->
 
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
 
@@ -34,8 +34,32 @@
 
     <!-- ▼仮ルーティングナビゲーション-->
     <!--  ※作業が進んできたら消します -->
-    <v-navigation-drawer v-model="drawer" absolute temporary>
-      <v-list nav dense>
+    <v-navigation-drawer v-model="drawer" absolute temporary >
+      <v-toolbar
+      color="#2196F3"
+      dark
+      >
+        <v-toolbar-title></v-toolbar-title>
+        <v-spacer></v-spacer>
+
+        <!--<v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>-->
+      </v-toolbar>
+      <v-list nav dense >
+        <v-list-item-group v-model="group" active-class="primary--text text--accent-4">
+          <router-link :to="{ name: 'UpdateUsersPatients' }">
+            <v-list-item>
+              <v-list-item-title>担当患者引継ぎ</v-list-item-title>
+            </v-list-item>
+          </router-link>
+        <v-divider></v-divider>
+          <router-link :to="{ name: 'LogoutCheck' }">
+            <v-list-item>
+              <v-list-item-title>ログアウト</v-list-item-title>
+            </v-list-item>
+          </router-link>
+        </v-list-item-group>
+
+
         <v-list-item-group v-model="group" active-class="deep-purple--text text--accent-4">
           スタッフページ
           <router-link :to="{ name: 'SelectRole' }">
@@ -197,4 +221,8 @@ export default {
 .title {
   font-weight: bold;
 }
+ a{
+  text-decoration:none;
+}
+
 </style>

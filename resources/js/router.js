@@ -5,6 +5,7 @@ import store from "./store";
 Vue.use(VueRouter);
 
 // ▼ページコンポーネントのインポート
+import LogoutCheck from "./components/pages/LogoutCheck.vue";
 
 // スタッフページ
 import SelectRole from "./components/pages/staff/SelectRole.vue";
@@ -65,6 +66,13 @@ const routes = [
         name: "PatientSchedule",
         meta: { title: "患者別スケジュール" }
     },
+    {
+        path: "/LogoutCheck",
+        component: LogoutCheck,
+        name: "LogoutCheck",
+        meta: { title: "ログアウト確認" }
+    },
+
 
     // リーダーページ：10
     {
