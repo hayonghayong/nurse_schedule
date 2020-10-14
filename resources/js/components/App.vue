@@ -8,7 +8,7 @@
         </main>
         <!-- フッターコンポーネント読み込み -->
         <footer-component v-if="$route.name !== 'SelectRole' && $route.name !== 'SelectStaff' && $route.name !== 'SelectPatients' 
-                             && $route.name !== 'RegistSchedule' && $route.name !== 'RegistTreatmentSchedule'"></footer-component>
+                             && $route.name !== 'RegistSchedule' && $route.name !== 'RegistTreatmentSchedule' && $route.name !== 'LogoutCheck'"></footer-component>
         <leader-footer-component v-if="$route.name !== 'SelectRole' && $route.name !== 'SelectStaff' && $route.name !== 'SelectPatients' 
                              && $route.name !== 'RegistSchedule' && $route.name !== 'RegistTreatmentSchedule' && $route.name !== 'StaffSchedule'
                               && $route.name !== 'PatientSchedule' && $route.name !== 'SelectStaff'"></leader-footer-component>
