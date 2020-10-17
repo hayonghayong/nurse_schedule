@@ -102,6 +102,8 @@
                             hour-label="時"
                             minute-label="分"
                             input-class="form-control"
+                            drop-direction="up"
+                            close-on-complete
                         ></vue-timepicker>
                     </div>
                 </v-card-text>
@@ -145,7 +147,7 @@
                         dark
                         color="#62ABF8"
                         class="mx-auto px-6"
-                        @click="updateSchedule()"
+                        @click="updateSchedule(), (selectedOpen = false)"
                         >変更を保存</v-btn
                     >
                 </v-card-actions>
@@ -442,7 +444,6 @@ export default {
                 const endFlagData = "";
                 // 完了しているかでタスクの色を変更
                 if (endFlag == 0) {
-                    console.log(this.schedules[i].treatment.color_code);
                     endFlagData = this.schedules[i].treatment.color_code;
                 } else if (endFlag == 1) {
                     endFlagData = "grey darken-1";
@@ -866,11 +867,15 @@ body {
     justify-content: flex-start;
     align-items: center;
 }
-.display-time {
-    border-radius: 2px;
-}
 /* スケジュール登録のスタイル ここまで */
 #app > div > main > div > div > .col {
     padding: 0px;
+}
+/* vue-timepicker　の選択時のカラーを変更 */
+.time_input >>> .vue__time-picker .dropdown ul li:not([disabled]).active,
+.time_input >>> .vue__time-picker .dropdown ul li:not([disabled]).active:focus,
+.time_input >>> .vue__time-picker .dropdown ul li:not([disabled]).active:hover {
+    background: #e6f4ff;
+    color: #000;
 }
 </style>
