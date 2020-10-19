@@ -56,4 +56,22 @@ export default {
   margin-right:11px;
 }
 
+/* カレンダーの日付を非表示 */
+.v-calendar-daily_head-weekday {
+  display: none;
+}
+.v-calendar-daily_head-day-label {
+  display: none;
+}
+
+/* カレンダーのカテゴリーサイズ調整 */
+/* .v-calendar-category__column {
+  flex-shrink: 0 !important;
+  width: 200px !important;
+}
+.v-calendar-category__column-header {
+  flex-shrink: 0 !important;
+  width: 200px !important;
+} */
+
 </style>

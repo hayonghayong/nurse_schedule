@@ -32,6 +32,7 @@
             v-model="focus"
             color="primary"
             type="day"
+            interval-height="100px"
             :events="events"
             :event-color="getEventColor"
             :event-ripple="false"
