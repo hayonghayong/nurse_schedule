@@ -88,37 +88,37 @@ const routes = [
         meta: { title: "スタッフスケジュール" }
     },
     {
-        path: "/leader/patients-list",
+        path: "/leader/patients-list/:team_id",
         component: PatientsList,
         name: "PatientsList",
         meta: { title: "患者一覧" }
     },
     {
-        path: "/leader/regist-patient",
+        path: "/leader/regist-patient/:team_id",
         component: RegistPatient,
         name: "RegistPatient",
         meta: { title: "患者登録" }
     },
     {
-        path: "/leader/edit-patient/:patientId",
+        path: "/leader/edit-patient/:patientId/:team_id",
         component: EditPatient,
         name: "EditPatient",
         meta: { title: "患者詳細情報" }
     },
     {
-        path: "/leader/edit-treatment/:treatmentId",
+        path: "/leader/edit-treatment/:treatmentId/:team_id",
         component: EditTreatment,
         name: "EditTreatment",
         meta: { title: "処置編集" }
     },
     {
-        path: "/leader/regist-treatment",
+        path: "/leader/regist-treatment/:team_id",
         component: RegistTreatment,
         name: "RegistTreatment",
         meta: { title: "処置登録" }
     },
     {
-        path: "/leader/treatment-list",
+        path: "/leader/treatment-list/:team_id",
         component: TreatmentList,
         name: "TreatmentList",
         meta: { title: "処置一覧" }

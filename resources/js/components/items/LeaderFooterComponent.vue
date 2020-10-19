@@ -5,17 +5,17 @@
     color="blue lighten-1"
     fixed absolute
   >
-    <v-btn :to="{ name: 'ScheduleList' }">
+    <v-btn :to="{ name: 'ScheduleList',params:{team_id:this.$route.params.team_id} }">
       <span>スタッフスケジュール</span>
       <v-icon>mdi-history</v-icon>
     </v-btn>
 
-    <v-btn :to="{ name: 'TreatmentList' }">
+    <v-btn :to="{ name: 'TreatmentList' ,params:{team_id:this.$route.params.team_id}}">
       <span>処置一覧</span>
       <v-icon>mdi-account-group</v-icon>
     </v-btn>
 
-    <v-btn :to="{ name: 'PatientsList' }">
+    <v-btn :to="{ name: 'PatientsList' ,params:{team_id:this.$route.params.team_id}}">
       <span>患者一覧</span>
       <v-icon>mdi-account-group</v-icon>
     </v-btn>
