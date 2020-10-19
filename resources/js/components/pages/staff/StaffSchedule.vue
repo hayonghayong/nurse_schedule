@@ -39,7 +39,7 @@
                         </template>
                         <!-- nowライン設定ここまで -->
                         <!-- ドラック&ドロップ設定 -->
-                        <template #event="{ event, timed, eventSummary}">
+                        <template #event="{eventSummary}">
                             <div
                                 class="v-event-draggable"
                                 v-html="eventSummary()"
@@ -234,6 +234,18 @@
             </v-card>
         </transition>
         <!-- タスク作成時に開く詳細画面 ここまで-->
+        <!-- スケジュール追加ボタン -->
+        <v-btn
+        class="mx-2 regist_float_btn"
+        fab
+        dark
+        small
+        color="#62ABF8"
+        @click="registOpen = true"
+        >
+            <v-icon dark>mdi-plus</v-icon>
+        </v-btn>
+    <!-- スケジュール追加ボタンここまで -->
     </div>
     <!-- ここまで -->
 </template>
@@ -454,7 +466,7 @@ export default {
                     treatment_id: this.schedules[i].treatment.id,
                     name:
                         this.schedules[i].patient.name +
-                        " / " +
+                        " ： " +
                         this.schedules[i].treatment.name, // 処置の名前
                     start: unixStartdate, // 開始時刻
                     // start: this.schedules[i].start_date, // 開始時刻
@@ -729,9 +741,7 @@ body {
     user-select: none;
     -webkit-user-select: none;
 }
-// .test {
-//     position: relative;
-// }
+
 
 .v-event-drag-bottom {
     position: absolute;
@@ -877,5 +887,13 @@ body {
 .time_input >>> .vue__time-picker .dropdown ul li:not([disabled]).active:hover {
     background: #e6f4ff;
     color: #000;
+}
+
+
+// 追加ボタン
+.regist_float_btn {
+  position: fixed;
+  bottom: 100px;
+  right: 20px;
 }
 </style>

@@ -16,7 +16,7 @@ use Illuminate\Database\Seeder;
 
             DB::table('users')->insert([
                 "ward_id" => 1,
-                "name" => '中村ダイスケ',
+                "name" => '看護師A',
                 "login_id" => 'nurse1',
                 "password" => bcrypt('nurse1'),
                 "admin_flg" => 0,
@@ -26,7 +26,7 @@ use Illuminate\Database\Seeder;
 
             DB::table('users')->insert([
                 "ward_id" => 1,
-                "name" => '山本篤',
+                "name" => '看護師B',
                 "login_id" => 'nurse2',
                 "password" => bcrypt('nurse2'),
                 "admin_flg" => 0,
@@ -36,7 +36,7 @@ use Illuminate\Database\Seeder;
 
             DB::table('users')->insert([
                 "ward_id" => 1,
-                "name" => '阿部 圭史',
+                "name" => '看護師C',
                 "login_id" => 'nurse3',
                 "password" =>  bcrypt('nurse3'),
                 "admin_flg" => 0,
@@ -75,7 +75,7 @@ use Illuminate\Database\Seeder;
 
             DB::table('users')->insert([
                 "ward_id" => 1,
-                "name" => 'みっしー',
+                "name" => '看護師D',
                 "login_id" => 'nurse7',
                 "password" => bcrypt('nurse7'),
                 "admin_flg" => 0,
@@ -85,7 +85,7 @@ use Illuminate\Database\Seeder;
 
             DB::table('users')->insert([
                 "ward_id" => 1,
-                "name" => 'いまっぱ',
+                "name" => '看護師E',
                 "login_id" => 'nurse8',
                 "password" => bcrypt('nurse8'),
                 "admin_flg" => 0,

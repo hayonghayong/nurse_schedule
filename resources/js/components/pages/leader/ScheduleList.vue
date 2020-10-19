@@ -3,46 +3,13 @@
         <!-- ▼カレンダー -->
         <v-row class="fill-height">
             <v-col class="pa-0">
-                <v-sheet height="64">
-                    <v-toolbar flat color="white">
-                        <v-btn
-                            outlined
-                            class="mr-4"
-                            color="grey darken-2"
-                            @click="setToday"
-                            >Today</v-btn
-                        >
-                        <v-btn
-                            fab
-                            text
-                            small
-                            color="grey darken-2"
-                            @click="prev"
-                        >
-                            <v-icon small>mdi-chevron-left</v-icon>
-                        </v-btn>
-                        <v-btn
-                            fab
-                            text
-                            small
-                            color="grey darken-2"
-                            @click="next"
-                        >
-                            <v-icon small>mdi-chevron-right</v-icon>
-                        </v-btn>
-                        <v-toolbar-title v-if="$refs.calendar">
-                            {{ $refs.calendar.title }}
-                        </v-toolbar-title>
-                        <v-spacer></v-spacer>
-                    </v-toolbar>
-                </v-sheet>
-
                 <!-- ▼カレンダー設定 -->
-                <v-sheet height="600">
+                <v-sheet height="700">
                     <v-calendar
                         class="test"
                         ref="calendar"
                         v-model="focus"
+                        interval-height="100px"
                         color="primary"
                         type="category"
                         category-show-all
@@ -56,6 +23,11 @@
                         @mouseup:time="endDrag"
                         @mouseleave.native="cancelDrag"
                         @click:event="showEvent"
+                        @touchstart:event="startDrag"
+                        @touchstart:time-category="startTime"
+                        @touchmove:time-category="mouseMove"
+                        @touchendup:time="endDrag"
+                        @touchleace.native="cancelDrag"
                     >
                         <!-- nowライン設定 -->
                         <template #day-body="{ date, week }">
@@ -266,6 +238,18 @@
             </v-card>
         </transition>
         <!-- タスク作成時に開く詳細画面 ここまで-->
+        <!-- スケジュール追加ボタン -->
+        <v-btn
+            class="mx-2 regist_float_btn"
+            fab
+            dark
+            small
+            color="#62ABF8"
+            @click="registOpen = true"
+        >
+            <v-icon dark>mdi-plus</v-icon>
+        </v-btn>
+        <!-- スケジュール追加ボタンここまで -->
     </div>
 </template>
 <script>
@@ -936,4 +920,10 @@ export default {
     align-items: center;
 }
 /* スケジュール登録のスタイル ここまで */
+// 追加ボタン
+.regist_float_btn {
+    position: fixed;
+    bottom: 100px;
+    right: 20px;
+}
 </style>

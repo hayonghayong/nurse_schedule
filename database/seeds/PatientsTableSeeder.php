@@ -16,7 +16,7 @@ use Illuminate\Database\Seeder;
             
             DB::table('patients')->insert([
                 "ward_id" => 1,
-                "name" => '佐藤智哉',
+                "name" => '山田太郎',
                 "birthday" => $faker->date()." ".$faker->time(),
                 "sex" => 1,
                 "room" => 101,
@@ -29,7 +29,7 @@ use Illuminate\Database\Seeder;
             ]);
             DB::table('patients')->insert([
                 "ward_id" => 1,
-                "name" => '崔　賀英',
+                "name" => '田中二郎',
                 "birthday" => $faker->date()." ".$faker->time(),
                 "sex" => 2,
                 "room" => 201,
@@ -70,7 +70,7 @@ use Illuminate\Database\Seeder;
  
             DB::table('patients')->insert([
                 "ward_id" => 3,
-                "name" => '川邊拓哉',
+                "name" => '山本三郎',
                 "birthday" => $faker->date()." ".$faker->time(),
                 "sex" => 1,
                 "room" => 101,
@@ -111,7 +111,33 @@ use Illuminate\Database\Seeder;
 
             DB::table('patients')->insert([
                 "ward_id" => 1,
-                "name" => 'Mayo Nakamura',
+                "name" => '高橋花子',
+                "birthday" => $faker->date()." ".$faker->time(),
+                "sex" => 2,
+                "room" => 201,
+                "hospitalization_date" => $faker->date()." ".$faker->time(),
+                "surgery_date" => $faker->date()." ".$faker->time(),
+                "memo" => 'マヨです',
+                "discharge_flg" => 0,
+                "created_at" => $faker->dateTime("now"),
+                "updated_at" => $faker->dateTime("now")
+            ]);
+            DB::table('patients')->insert([
+                "ward_id" => 1,
+                "name" => '吉田幸子',
+                "birthday" => $faker->date()." ".$faker->time(),
+                "sex" => 2,
+                "room" => 201,
+                "hospitalization_date" => $faker->date()." ".$faker->time(),
+                "surgery_date" => $faker->date()." ".$faker->time(),
+                "memo" => 'マヨです',
+                "discharge_flg" => 0,
+                "created_at" => $faker->dateTime("now"),
+                "updated_at" => $faker->dateTime("now")
+            ]);
+            DB::table('patients')->insert([
+                "ward_id" => 1,
+                "name" => '佐藤正子',
                 "birthday" => $faker->date()." ".$faker->time(),
                 "sex" => 2,
                 "room" => 201,
