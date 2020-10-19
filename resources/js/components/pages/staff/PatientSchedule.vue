@@ -3,48 +3,15 @@
         <!-- ▼カレンダー -->
         <v-row class="fill-height">
             <v-col>
-                <v-sheet height="64">
-                    <v-toolbar flat color="white">
-                        <v-btn
-                            outlined
-                            class="mr-4"
-                            color="grey darken-2"
-                            @click="setToday"
-                            >Today</v-btn
-                        >
-                        <v-btn
-                            fab
-                            text
-                            small
-                            color="grey darken-2"
-                            @click="prev"
-                        >
-                            <v-icon small>mdi-chevron-left</v-icon>
-                        </v-btn>
-                        <v-btn
-                            fab
-                            text
-                            small
-                            color="grey darken-2"
-                            @click="next"
-                        >
-                            <v-icon small>mdi-chevron-right</v-icon>
-                        </v-btn>
-                        <v-toolbar-title v-if="$refs.calendar">
-                            {{ $refs.calendar.title }}
-                        </v-toolbar-title>
-                        <v-spacer></v-spacer>
-                    </v-toolbar>
-                </v-sheet>
-
                 <!-- ▼カレンダー設定 -->
-                <v-sheet height="600">
+                <v-sheet height="700">
                     <v-calendar
                         class="test"
                         ref="calendar"
                         v-model="focus"
                         color="primary"
                         type="category"
+                        interval-height="100px"
                         category-show-all
                         :categories="categories"
                         :events="events"
@@ -56,6 +23,10 @@
                         @mouseup:time="endDrag"
                         @mouseleave.native="cancelDrag"
                         @click:event="showEvent"
+                        @touchstart:event="startDrag"
+                        @touchstart:time="startTime"
+                        @touchmove:time="mouseMove"
+                        @touchendup:time="endDrag"
                     >
                         <!-- nowライン設定 -->
                         <template #day-body="{ date, week }">
@@ -67,7 +38,7 @@
                         </template>
                         <!-- nowライン設定ここまで -->
                         <!-- ドラック&ドロップ設定 -->
-                        <template #event="{ event, timed,eventSummary}">
+                        <template #event="{eventSummary}">
                             <div
                                 class="v-event-draggable"
                                 v-html="eventSummary()"
@@ -76,7 +47,7 @@
                                 v-if="timed"
                                 class="v-event-drag-bottom"
                                 @mousedown.stop="extendBottom(event)"
-              ></div>-->
+                            ></div>-->
                         </template>
                         <!-- ドラック&ドロップ設定ここまで -->
                     </v-calendar>
@@ -249,7 +220,7 @@ export default {
         // 【API】患者を取得
         fetchStaff: function() {
             axios
-                .get("/api/users_patients/get/all/")
+                .get(`/api/users_patients/get/all/${this.$route.params.schedule_id}`)
                 .then(res => {
                     this.staffs = res.data;
                     //   カレンダー表記用の配列に格納
@@ -399,29 +370,17 @@ export default {
                 this.selectedStaff = event.category;
                 // postデータ保持
                 this.selectedEvent = event;
+                console.log(event)
             }
         },
         startTime(tms) {
             const mouse = this.toTime(tms);
             if (this.dragEvent && this.dragTime === null) {
                 const start = this.dragEvent.start;
-
                 this.dragTime = mouse - start;
+            }else{
+
             }
-            //    else {
-            //     // イベント追加
-            //     this.createStart = this.roundTime(mouse);
-            //     this.createEvent = {
-            //       name: `Event`,
-            //       color: this.rndElement(this.colors),
-            //       start: this.createStart,
-            //       end: this.createStart,
-            //       timed: true,
-            //       // 追記
-            //       category: tms.category
-            //     };
-            //     this.events.push(this.createEvent);
-            //   }
         },
         // イベントを伸ばした後の処理
         extendBottom(event) {
