@@ -85,7 +85,7 @@ const routes = [
         path: "/leader/schedule-list/:team_id",
         component: ScheduleList,
         name: "ScheduleList",
-        meta: { title: "スタッフスケジュール" }
+        meta: { title: "スケジュール" }
     },
     {
         path: "/leader/patients-list/:team_id",

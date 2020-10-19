@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="login_right">
-        <a href="/admin/login" class="login_link">管理者ログイン</a>
+        <!-- <a href="/admin/login" class="login_link">管理者ログイン</a> -->
     </div>
     <div class="row justify-content-center">
         <div class="col-md-12">
