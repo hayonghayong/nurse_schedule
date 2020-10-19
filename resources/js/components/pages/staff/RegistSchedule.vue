@@ -602,6 +602,9 @@ export default {
 .col {
   padding: 0px;
 }
+.footer_conp a{
+  text-decoration:none;
+}
 
 .footer {
   // background: rgba(255, 0 0, 0.5);

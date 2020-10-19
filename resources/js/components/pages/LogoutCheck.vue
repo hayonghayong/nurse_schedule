@@ -1,45 +1,40 @@
 <template>
   <!-- 仮オブジェクト -->
-  <div>
-    <v-app-bar flat color="white" fixed light>
-      <!--ここにログアウト付けたかった -->
-      <span @click="logout" style="cursor: pinter; color:#2196F3;">
-        <span class="mdi mdi-chevron-left"></span> ログアウト
-      </span>
-    </v-app-bar>
-
+  <div class="text-center">
+    <div class="sentense">
+    <p>本当にログアウトしますか？</p>
+    </div>
     <div class="message">
-      <h1>ログアウト確認</h1>
+      <v-icon class="alert" x-large> mdi-alert-octagram</v-icon>
+      <p>本日の予定データが消えてしまうため</p>
+      <p>退勤する時までは絶対に</p>
+      <p>ログアウトしないでください</p>
     </div>
-    <!-- ▼リーダーボタン -->
-    <div class="button_wrap my-3">
-      <v-btn
-        depressed
-        dark
-        x-large
-        height="110"
-        width="260"
-        class="button"
-        color="#2196F3"
-        @click="postTeam()"
-      >リーダー</v-btn>
-    </div>
-    <!-- ▲リーダーボタンここまで -->
+  
+    <v-btn
+      class="mx-auto my-2 px-12 py-4 submit_btn"
+      color="rgb(98, 171, 248)"
+      rounded
+      dark
+      depressed
+      width="260"
+      height="50"
+      type="submit"
+      @click="back" style="cursor: pinter;"
+    >勤務中なので戻ります</v-btn>
 
-    <!-- ▼スタッフボタン -->
-    <div class="button_wrap my-3">
-      <v-btn
-        depressed
-        dark
-        x-large
-        height="110"
-        width="260"
-        class="button"
-        color="#ff8000"
-        @click="postSchedule()"
-      >スタッフ</v-btn>
-    </div>
-    <!-- ▲スタッフボタンここまで -->
+    <v-btn
+      class="mx-auto mt-4 my-2 px-12 py-4 submit_btn"
+      outlined
+      rounded
+      depressed
+      color="#999"
+      width="260"
+      height="50"
+      type="submit"
+      @click="logout" style="cursor: pointer;"
+    >退勤するのでログアウトします</v-btn>
+
   </div>
   <!-- ここまで -->
 </template>
@@ -108,7 +103,11 @@ export default {
           location.href = "/";
         })
         .catch(err => console.log(err));
+    },
+    back() {
+      this.$router.back();
     }
+    
   }
 };
 </script>
@@ -119,11 +118,25 @@ h1 {
   font-size: 22px;
   margin-bottom: 1.4rem;
 }
+.sentense{
+  margin-top: 110px;
+  font-weight:bold;
+  color:#666;
+}
 
 .message {
-  text-align: center;
+  margin:15px 28px 40px;
   margin-bottom: 40px;
-  margin-top: 100px;
+  border:3px solid #F15A55;
+  border-radius:30px;   
+  color:#666;
+  padding:20px 10px;
+  font-weight:bold;
+
+}
+.alert{
+  color:#F15A55;
+  margin-bottom:15px;
 }
 
 .v-application p {

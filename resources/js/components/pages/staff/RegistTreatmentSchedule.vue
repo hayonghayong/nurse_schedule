@@ -88,7 +88,7 @@
       </tbody>
     </table>
 
-    <v-footer fixed class="font-weight-medium footer">
+    <v-footer absolute class="font-weight-medium footer">
       <v-btn
         class="mx-auto my-2 px-12 py-4 submit_btn"
         color="#62ABF8"
@@ -258,6 +258,9 @@ export default {
 
 <style scoped>
 /* スコープ付きのスタイル */
+body{
+  overflow-x: hidden;
+}
 .patient_wrap {
   margin: 1em;
 }
@@ -327,7 +330,7 @@ export default {
 }
 .cp_ipselect.cp_sl02::before {
   position: absolute;
-  top: 0.8em;
+  top: 1.1em;
   right: 0.9em;
   width: 0;
   height: 0;
@@ -348,7 +351,7 @@ export default {
   border-left: 1px solid #bbbbbb;
 }
 .cp_ipselect.cp_sl02 select {
-  padding: 8px 38px 8px 8px;
+  padding: 10px 38px 8px 8px;
   color: #666666;
 }
 .button {
