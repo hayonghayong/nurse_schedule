@@ -9,6 +9,7 @@
                         class="test"
                         ref="calendar"
                         v-model="focus"
+                        locale="ja-jp"
                         interval-height="100px"
                         color="primary"
                         type="category"
