@@ -27,7 +27,7 @@ class AppServiceProvider extends ServiceProvider
         if (\App::environment('production')) {
             \URL::forceScheme('https');
         }
-        // 文字数制限
+        // herokuデプロイ時の文字数制限
         Schema::defaultStringLength(191);
         //  管理画面用のクッキー名称、セッションテーブル名を変更する < いったんコメントアウト
         // $uri = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
