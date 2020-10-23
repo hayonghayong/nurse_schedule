@@ -14,8 +14,9 @@ class Treatment extends Model
 
   public function tasks()
   {
-    return $this->hasMany('App\task');
+    return $this->hasMany('App\Task');
   }
+
 
 }
 

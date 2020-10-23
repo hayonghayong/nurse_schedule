@@ -12,6 +12,7 @@ use App\Task;
 use App\Team;
 use App\TeamUser;
 use App\User;
+use App\Treatment;
 use Illuminate\Support\Arr;
 
     

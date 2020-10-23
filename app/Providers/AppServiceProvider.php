@@ -23,6 +23,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {        
+        // 本番環境(Heroku)でhttpsを強制する
+        if (\App::environment('production')) {
+            \URL::forceScheme('https');
+        }
+        // 文字数制限
         Schema::defaultStringLength(191);
         //  管理画面用のクッキー名称、セッションテーブル名を変更する < いったんコメントアウト
         // $uri = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';

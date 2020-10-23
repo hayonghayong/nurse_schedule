@@ -20,13 +20,38 @@ class SchedulesTableSeeder extends Seeder
         ]);
       
       DB::table('schedules')->insert([
-        "user_id" => 2,
+        "user_id" => 11,
         "created_at" => $faker->dateTime("now"),
         "updated_at" => $faker->dateTime("now")
         ]);
       
       DB::table('schedules')->insert([
-        "user_id" => 8,
+        "user_id" => 21,
+        "created_at" => $faker->dateTime("now"),
+        "updated_at" => $faker->dateTime("now")
+        ]);
+      DB::table('schedules')->insert([
+        "user_id" => 31,
+        "created_at" => $faker->dateTime("now"),
+        "updated_at" => $faker->dateTime("now")
+        ]);
+      DB::table('schedules')->insert([
+        "user_id" => 41,
+        "created_at" => $faker->dateTime("now"),
+        "updated_at" => $faker->dateTime("now")
+        ]);
+      DB::table('schedules')->insert([
+        "user_id" => 51,
+        "created_at" => $faker->dateTime("now"),
+        "updated_at" => $faker->dateTime("now")
+        ]);
+      DB::table('schedules')->insert([
+        "user_id" => 61,
+        "created_at" => $faker->dateTime("now"),
+        "updated_at" => $faker->dateTime("now")
+        ]);
+      DB::table('schedules')->insert([
+        "user_id" => 71,
         "created_at" => $faker->dateTime("now"),
         "updated_at" => $faker->dateTime("now")
         ]);
