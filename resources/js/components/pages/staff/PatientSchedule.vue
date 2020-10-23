@@ -27,7 +27,7 @@
                         @touchstart:event="startDrag"
                         @touchstart:time-category="startTime"
                         @touchmove:time-category="mouseMove"
-                        @touchendup:time="endDrag"
+                        @touchend:time="endDrag"
                     >
                         <!-- nowライン設定 -->
                         <template #day-body="{ date, week }">

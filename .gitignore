@@ -10,7 +10,7 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
-# /public/js/app.js
-# /public/css/app.css
-# /public/js/admin_app.js
-# /public/css/admin_app.css
+/public/js/app.js
+/public/css/app.css
+/public/js/admin_app.js
+/public/css/admin_app.css
