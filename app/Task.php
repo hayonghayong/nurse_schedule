@@ -14,18 +14,15 @@ class Task extends Model
   
   public function schedule()
   {
-    return $this->belongsTo('App\schedule');
+    return $this->belongsTo('App\Schedule');
   }
-
   public function treatment()
   {
-    return $this->belongsTo('App\treatment');
+    return $this->belongsTo('App\Treatment');
   }
-
   public function patient()
   {
-    return $this->belongsTo('App\patient');
+    return $this->belongsTo('App\Patient');
   }
-
 }
 
