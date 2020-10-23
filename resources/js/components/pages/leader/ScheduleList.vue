@@ -27,7 +27,7 @@
                         @touchstart:event="startDrag"
                         @touchstart:time-category="startTime"
                         @touchmove:time-category="mouseMove"
-                        @touchendup:time="endDrag"
+                        @touchend:time="endDrag"
                         @touchleace.native="cancelDrag"
                     >
                         <!-- nowライン設定 -->
@@ -40,7 +40,7 @@
                         </template>
                         <!-- nowライン設定ここまで -->
                         <!-- ドラック&ドロップ設定 -->
-                        <template #event="{ event, timed, eventSummary }">
+                        <template #event="{ eventSummary }">
                             <div
                                 class="v-event-draggable"
                                 v-html="eventSummary()"
@@ -177,9 +177,21 @@
                     </v-btn>
                 </v-card-actions>
                 <v-card-text class="pt-0">
-                    <p class="mb-0">
-                        登録するスタッフ:{{ registEvent.category }}
-                    </p>
+                    <div class="card_selectBox">
+                        <label>スタッフ</label>
+                        <div class="cp_ipselect cp_sl02">
+                            <select v-model="registEvent.user_id">
+                                <option disabled value>選択してください</option>
+                                <option
+                                    v-for="staff in staffs"
+                                    :value="staff.id"
+                                    :key="staff.id"
+                                >
+                                    {{ staff.name }}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
                     <div class="card_selectBox">
                         <label>患者</label>
                         <div class="cp_ipselect cp_sl02">
@@ -331,6 +343,7 @@ export default {
                 .get("/api/team_users/get/all/" + this.$route.params.team_id)
                 .then(res => {
                     this.staffs = res.data;
+                    console.log(this.staffs)
                     //   カレンダー表記用の配列に格納
                     this.categories = this.staffs.map(el => el.name);
                 })
@@ -405,7 +418,7 @@ export default {
         registTask: function() {
             // schedule_idを取得して格納
             const target = this.staffs.find(el => {
-                return el.name === this.registEvent.category;
+                return el.id === this.registEvent.user_id;
             });
             this.registEvent.schedule_id = target.schedule.id;
             //   時刻をDB登録用に整形

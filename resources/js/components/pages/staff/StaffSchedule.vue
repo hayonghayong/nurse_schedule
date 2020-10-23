@@ -24,7 +24,7 @@
                         @mousemove:time="mouseMove"
                         @touchmove:time="mouseMove"
                         @mouseup:time="endDrag"
-                        @touchendup:time="endDrag"
+                        @touchend:time="endDrag"
                         @mouseleave.native="cancelDrag"
                         @touchleave.native="cancelDrag"
                         @click:event="showEvent"
