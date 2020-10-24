@@ -536,10 +536,10 @@ export default {
   padding-left: 6px;
 }
 
-.v-event-timed {
-  user-select: none;
-  -webkit-user-select: none;
-}
+// .v-event-timed {
+//   user-select: none;
+//   -webkit-user-select: none;
+// }
 // .test {
 //     position: relative;
 // }
