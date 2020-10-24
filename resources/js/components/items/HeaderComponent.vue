@@ -59,7 +59,7 @@
           </router-link>
         </v-list-item-group>
 
-<!-- 
+
         <v-list-item-group v-model="group" active-class="deep-purple--text text--accent-4">
           スタッフページ
           <router-link :to="{ name: 'SelectRole' }">
@@ -157,7 +157,7 @@
               <v-list-item-title>【管理者】スタッフ編集</v-list-item-title>
             </v-list-item>
           </router-link>
-        </v-list-item-group> -->
+        </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
     <!-- ▲仮ルーティングナビゲーション -->

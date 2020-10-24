@@ -293,7 +293,6 @@ export default {
         });
       }
       this.events = events;
-      this.events.forEach(el=>console.log(el));
     },
     // -----------  イベント取得&表示ここまで ---------- //
 
