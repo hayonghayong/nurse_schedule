@@ -512,7 +512,7 @@ export default {
                 this.dragTime = mouse - start;
             }else{
                 tms.start = this.roundTime(mouse);
-                this.showRegistEvent(tms);
+                // this.showRegistEvent(tms);
                 this.createStart = this.roundTime(mouse);
             }
         },

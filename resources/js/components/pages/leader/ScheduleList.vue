@@ -558,7 +558,7 @@ export default {
             } else {
                 // イベント追加処理
                 tms.start = this.roundTime(mouse);
-                this.showRegistEvent(tms);
+                // this.showRegistEvent(tms);
                 this.createStart = this.roundTime(mouse);
                 // this.createEvent = {
                 //   name: `Event`,
