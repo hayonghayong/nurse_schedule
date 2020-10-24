@@ -25,7 +25,8 @@ Route::post('/admin/logout','Admin\Auth\LoginController@logout')->name('admin.lo
 
 // ▼ログイン後はフロント側(VueRouter)で全てのルーティングを管理する：一番下に書く
 // ユーザー
-Route::get('/', fn() => view('index'))->middleware('auth:user');
+Route::get('/', fn() => view('index'));
+// ->middleware('auth:user');
 // アドミン
 Route::get('/admin', fn() => view('admin'))->middleware('auth:admin');
 
