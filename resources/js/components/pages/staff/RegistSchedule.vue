@@ -293,6 +293,7 @@ export default {
         });
       }
       this.events = events;
+      console.log(this.events);
     },
     // -----------  イベント取得&表示ここまで ---------- //
 
