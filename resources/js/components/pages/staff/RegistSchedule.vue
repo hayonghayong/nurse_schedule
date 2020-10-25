@@ -294,6 +294,7 @@ export default {
         });
       }
       this.events = events;
+            this.events.forEach(el=>console.log(el.name));
     },
     // -----------  イベント取得&表示ここまで ---------- //
 
@@ -554,7 +555,7 @@ export default {
   cursor: ns-resize;
 
   &::after {
-    display: none;
+    // display: none;
     position: absolute;
     left: 50%;
     height: 4px;
