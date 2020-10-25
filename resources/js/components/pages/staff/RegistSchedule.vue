@@ -162,6 +162,7 @@ export default {
     this.updateTime();
     //   予定
     this.$refs.calendar.checkChange();
+    this.fetchEvents();
   },
   methods: {
     // 【API】スケジュール取得
