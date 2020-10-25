@@ -36,6 +36,7 @@
             :events="events"
             :event-color="getEventColor"
             :event-ripple="false"
+            @change="fetchEvents"
             @mousedown:event="startDrag"
             @mousedown:time="startTime"
             @mousemove:time="mouseMove"
@@ -162,7 +163,6 @@ export default {
     this.updateTime();
     //   予定
     this.$refs.calendar.checkChange();
-    this.fetchEvents();
   },
   methods: {
     // 【API】スケジュール取得
