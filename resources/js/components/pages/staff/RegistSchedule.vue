@@ -545,31 +545,31 @@ export default {
 //     position: relative;
 // }
 
-// .v-event-drag-bottom {
-//   position: absolute;
-//   left: 0;
-//   right: 0;
-//   bottom: 4px;
-//   height: 4px;
-//   cursor: ns-resize;
+.v-event-drag-bottom {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 4px;
+  height: 4px;
+  cursor: ns-resize;
 
-//   &::after {
-//     display: none;
-//     position: absolute;
-//     left: 50%;
-//     height: 4px;
-//     border-top: 1px solid white;
-//     border-bottom: 1px solid white;
-//     width: 16px;
-//     margin-left: -8px;
-//     opacity: 0.8;
-//     content: "";
-//   }
+  &::after {
+    display: none;
+    position: absolute;
+    left: 50%;
+    height: 4px;
+    border-top: 1px solid white;
+    border-bottom: 1px solid white;
+    width: 16px;
+    margin-left: -8px;
+    opacity: 0.8;
+    content: "";
+  }
 
-//   &:hover::after {
-//     display: block;
-//   }
-// }
+  &:hover::after {
+    display: block;
+  }
+}
 
 .v-stepper {
   box-shadow: none;

@@ -35,11 +35,11 @@ export default {
 
 <style>
 /* 全てのファイルにかけるCSS */
-/* @media only screen and (max-width: 959px){ */
+@media only screen and (max-width: 959px){
 .v-stepper:not(.v-stepper--vertical) .v-stepper__label {
     display: flex;
 }
-/* } */
+}
 .v-stepper__label{
     font-size:8px;
 }
@@ -57,12 +57,12 @@ export default {
 }
 
 /* カレンダーの日付を非表示 */
-.v-calendar-daily_head-weekday {
+/* .v-calendar-daily_head-weekday {
   display: none;
 }
 .v-calendar-daily_head-day-label {
   display: none;
-}
+} */
 
 /* カレンダーのカテゴリーサイズ調整 */
 /* .v-calendar-category__column {
