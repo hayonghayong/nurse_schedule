@@ -29,7 +29,7 @@
                         @click:event="showEvent"
                     >
                         <!-- nowライン設定 -->
-                        <template #day-body="{ date, week }">
+                        <template slot="day-body" slot-scope="{ date, week }">
                             <div
                                 class="v-current-time"
                                 :class="{ first: date === week[0].date }"
@@ -38,7 +38,7 @@
                         </template>
                         <!-- nowライン設定ここまで -->
                         <!-- ドラック&ドロップ設定 -->
-                        <template #event="{eventSummary}">
+                        <template slot="event" slot-scope="{eventSummary}">
                             <div
                                 class="v-event-draggable"
                                 v-html="eventSummary()"
