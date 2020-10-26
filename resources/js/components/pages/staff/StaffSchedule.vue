@@ -17,6 +17,7 @@
                         :event-ripple="false"
                         interval-height="80px"
                         type="day"
+                        @change="fetchSchedule"
                         @mousedown:event="startDrag"
                         @touchstart:event="startDrag"
                         @mousedown:time="startTime"

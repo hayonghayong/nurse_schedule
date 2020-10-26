@@ -541,9 +541,6 @@ export default {
   user-select: none;
   -webkit-user-select: none;
 }
-// .test {
-//     position: relative;
-// }
 
 .v-event-drag-bottom {
   position: absolute;
