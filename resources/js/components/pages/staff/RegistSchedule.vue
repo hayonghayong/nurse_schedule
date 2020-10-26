@@ -257,10 +257,10 @@ export default {
         // 開始時間と終了時刻の定義
         let startdate, endTime, timed;
         const requiredTime = this.schedules[i].treatment.time_required;
-
         // 指定されているイベント
         if (this.schedules[i].start_date) {
-          startdate = new Date(this.schedules[i].start_date);
+          const dateTime = this.replaceDate(this.schedules[i].start_date)
+          startdate = new Date(dateTime);
           const addition_time = requiredTime * 60 * 1000;
           endTime = startdate.getTime() + addition_time;
           timed = true;
@@ -296,7 +296,12 @@ export default {
       this.events = events;
     },
     // -----------  イベント取得&表示ここまで ---------- //
-
+    replaceDate(dateStr) {
+        const regexp = /^([0-9]{2,4})-([0-1][0-9])-([0-3][0-9])(?:( [0-2][0-9]):([0-5][0-9]):([0-5][0-9]))?$/;
+        return dateStr.replace(regexp, (match, year, month, day, hour, minutes, seconds) => {
+            return `${year}/${month}/${ day} ${hour}:${minutes}:${seconds}`;
+        });
+    } ,
     // ------------ ▼nowライン ---------- //
     getCurrentTime() {
       return this.cal

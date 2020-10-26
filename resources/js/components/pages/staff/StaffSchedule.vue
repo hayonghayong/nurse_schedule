@@ -446,7 +446,8 @@ export default {
             const eventCount = this.schedules.length;
             for (let i = 0; i < eventCount; i++) {
                 // 開始時間と終了時刻の定義
-                const startdate = new Date(this.schedules[i].start_date);
+                const dateTime = this.replaceDate(this.schedules[i].start_date)
+                const startdate = new Date(dateTime);
                 const unixStartdate = startdate.getTime();
                 const requiredTime = this.schedules[i].treatment.time_required;
                 const addition_time = requiredTime * 60 * 1000;
@@ -459,7 +460,6 @@ export default {
                 } else if (endFlag == 1) {
                     endFlagData = "grey darken-1";
                 }
-
                 // イベントにpush
                 getEventsData.push({
                     patient_id: this.schedules[i].patient.id,
@@ -481,25 +481,6 @@ export default {
                 });
                 
             }
-            const startdate = new Date('2020-10-26 10:00:00');
-            const unixStartdate = startdate.getTime();
-            const requiredTime = 30;
-            const addition_time = requiredTime * 60 * 1000;
-            const endTime = unixStartdate + addition_time;
-            // テストデータ入れる
-            getEventsData.push({
-                patient_id: 1,
-                treatment_id: 1,
-                name:'テスト', // 処置の名前
-                start: unixStartdate, // 開始時刻
-                // start: this.schedules[i].start_date, // 開始時刻
-                end: endTime, // 終了時刻(UNIX型)
-                color: 'blue', // end_flgで判定した色
-                timed: true,
-                id: 1,
-                room: 202,
-            })
-            
             this.events = getEventsData;
             console.log(this.events)
         },
@@ -507,7 +488,12 @@ export default {
             return event.color;
         },
         // ------------ イベントの生成ここまで ---------- //
-
+        replaceDate(dateStr) {
+            const regexp = /^([0-9]{2,4})-([0-1][0-9])-([0-3][0-9])(?:( [0-2][0-9]):([0-5][0-9]):([0-5][0-9]))?$/;
+            return dateStr.replace(regexp, (match, year, month, day, hour, minutes, seconds) => {
+                return `${year}/${month}/${ day} ${hour}:${minutes}:${seconds}`;
+            });
+        } ,
         // ------------ ▼Drag and Drop ---------- //
         startDrag({ event, timed }) {
             if (event && timed) {
