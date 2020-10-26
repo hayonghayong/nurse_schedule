@@ -443,7 +443,7 @@ export default {
         next() {
             this.$refs.calendar.next();
         },
-        fetchEvents() {
+        async fetchEvents() {
             const getEventsData = [];
             const eventCount = this.schedules.length;
             for (let i = 0; i < eventCount; i++) {
@@ -461,6 +461,7 @@ export default {
                 } else if (endFlag == 1) {
                     endFlagData = "grey darken-1";
                 }
+
                 // イベントにpush
                 getEventsData.push({
                     patient_id: this.schedules[i].patient.id,
@@ -481,6 +482,8 @@ export default {
                     end_flg: this.schedules[i].end_flg
                 });
             }
+            const sleep = (msec) => new Promise((resolve) => setTimeout(resolve, msec));
+            await sleep(3000);
             this.events = getEventsData;
         },
         getEventColor(event) {
