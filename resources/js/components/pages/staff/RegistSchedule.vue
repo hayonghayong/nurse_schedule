@@ -57,7 +57,7 @@
             </template>
             <!-- nowライン設定ここまで -->
             <!-- ドラック&ドロップ設定 -->
-            <template #event="{ event, timed, eventSummary }">
+            <template #event="{eventSummary }">
               <div class="v-event-draggable" v-html="eventSummary()"></div>
               <!-- <div
                 v-if="timed"
