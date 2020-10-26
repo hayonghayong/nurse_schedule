@@ -17,7 +17,6 @@
                         :event-ripple="false"
                         interval-height="80px"
                         type="day"
-                        @change="fetchSchedule"
                         @mousedown:event="startDrag"
                         @touchstart:event="startDrag"
                         @mousedown:time="startTime"
@@ -27,7 +26,6 @@
                         @mouseup:time="endDrag"
                         @touchend:time="endDrag"
                         @mouseleave.native="cancelDrag"
-                        @touchleave.native="cancelDrag"
                         @click:event="showEvent"
                     >
                         <!-- nowライン設定 -->
@@ -596,6 +594,7 @@ export default {
             this.extendOriginal = null;
         },
         cancelDrag() {
+            console.log('cancel')
             if (this.createEvent) {
                 if (this.extendOriginal) {
                     this.createEvent.end = this.extendOriginal;
