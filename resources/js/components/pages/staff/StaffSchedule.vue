@@ -473,7 +473,8 @@ export default {
                     start: unixStartdate, // 開始時刻
                     // start: this.schedules[i].start_date, // 開始時刻
                     end: endTime, // 終了時刻(UNIX型)
-                    color: endFlagData, // end_flgで判定した色
+                    // color: endFlagData, // end_flgで判定した色
+                    color: 'blue', // end_flgで判定した色
                     timed: true,
                     id: this.schedules[i].id,
                     room: this.schedules[i].patient.room,
@@ -482,8 +483,6 @@ export default {
                     end_flg: this.schedules[i].end_flg
                 });
             }
-            const sleep = (msec) => new Promise((resolve) => setTimeout(resolve, msec));
-            await sleep(3000);
             this.events = getEventsData;
         },
         getEventColor(event) {
