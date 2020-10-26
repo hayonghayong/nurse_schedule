@@ -473,8 +473,7 @@ export default {
                     start: unixStartdate, // 開始時刻
                     // start: this.schedules[i].start_date, // 開始時刻
                     end: endTime, // 終了時刻(UNIX型)
-                    // color: endFlagData, // end_flgで判定した色
-                    color: 'blue', // end_flgで判定した色
+                    color: endFlagData, // end_flgで判定した色
                     timed: true,
                     id: this.schedules[i].id,
                     room: this.schedules[i].patient.room,
@@ -482,8 +481,29 @@ export default {
                     patient: this.schedules[i].patient.name,
                     end_flg: this.schedules[i].end_flg
                 });
+                
             }
+            const startdate = new Date('2020-10-26 10:00:00');
+            const unixStartdate = startdate.getTime();
+            const requiredTime = 30;
+            const addition_time = requiredTime * 60 * 1000;
+            const endTime = unixStartdate + addition_time;
+            // テストデータ入れる
+            getEventsData.push({
+                patient_id: 1,
+                treatment_id: 1,
+                name:'テスト', // 処置の名前
+                start: unixStartdate, // 開始時刻
+                // start: this.schedules[i].start_date, // 開始時刻
+                end: endTime, // 終了時刻(UNIX型)
+                color: 'blue', // end_flgで判定した色
+                timed: true,
+                id: 1,
+                room: 202,
+            })
+            
             this.events = getEventsData;
+            console.log(this.events)
         },
         getEventColor(event) {
             return event.color;
