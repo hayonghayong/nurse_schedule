@@ -4,7 +4,7 @@
         <v-row class="fill-height">
             <v-col>
                 <!-- ▼カレンダー設定 -->
-                <v-sheet height="700">
+                <v-sheet :height="this.$store.state.calenderHeight">
                     <v-calendar
                         class="test"
                         ref="calendar"

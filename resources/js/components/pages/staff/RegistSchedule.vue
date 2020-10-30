@@ -1,7 +1,13 @@
 <template>
-  <!-- 仮オブジェクト -->
-  <v-container>
-    <v-stepper value="3" alt-labels>
+  <v-container
+  >
+  <!-- ステッパー -->
+  <div
+      ref="getParentHeight"
+  >
+    <v-stepper 
+      value="3" 
+      alt-labels>
       <v-stepper-header>
         <v-stepper-step step="1" complete color="#5e9ce6"
           >患者選択</v-stepper-step
@@ -20,11 +26,11 @@
         >
       </v-stepper-header>
     </v-stepper>
-
+</div>
     <!-- ▼カレンダー -->
     <v-row class="fill-height">
       <v-col>
-        <v-sheet height="600">
+          <v-sheet :height="this.$store.state.calenderHeight - this.stepperHeight">
           <v-calendar
             locale="ja-jp"
             :day-format="(timestamp) => new Date(timestamp.date).getDate()"
@@ -140,6 +146,8 @@ export default {
     selectedEvent: {},
     selectedElement: null,
     selectedOpen: false,
+    // その他
+    stepperHeight:""//ステッパーの高さ
   }),
   created() {
     // this.fetchStaff();
@@ -156,6 +164,10 @@ export default {
     },
   },
   mounted() {
+    // 要素の幅を取得するメソッド
+    this.getTargetHeight()
+    // ユーザーがウィンドウサイズを変更したら実行されるようにする
+    window.addEventListener('resize', this.getTargetHeight)
     this.setToday();
     //   nowライン
     this.ready = true;
@@ -165,6 +177,11 @@ export default {
     this.$refs.calendar.checkChange();
   },
   methods: {
+    getTargetHeight () {
+      let targetHeight = this.$refs.getParentHeight.clientHeight
+      this.stepperHeight = targetHeight;
+      // console.log(stepperHeight) // 要素の幅をInt型で取得する事ができる
+    },
     // 【API】スケジュール取得
     fetchTasks: function () {
       axios

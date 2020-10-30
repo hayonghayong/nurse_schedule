@@ -2,7 +2,7 @@
     <div class="staffSchedule">
         <v-row class="fill-height">
             <v-col>
-                <v-sheet height="700">
+                <v-sheet :height="this.$store.state.calenderHeight">
                     <v-calendar
                         locale="ja-jp"
                         hide-header
