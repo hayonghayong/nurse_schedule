@@ -4,7 +4,7 @@
         <v-row class="fill-height">
             <v-col class="pa-0">
                 <!-- ▼カレンダー設定 -->
-                <v-sheet height="700">
+                <v-sheet :height="this.$store.state.calenderHeight">
                     <v-calendar
                         class="test"
                         ref="calendar"
@@ -343,7 +343,6 @@ export default {
                 .get("/api/team_users/get/all/" + this.$route.params.team_id)
                 .then(res => {
                     this.staffs = res.data;
-                    console.log(this.staffs)
                     //   カレンダー表記用の配列に格納
                     this.categories = this.staffs.map(el => el.name);
                 })
@@ -357,7 +356,6 @@ export default {
                 .get(`/api/tasks/get/team/${this.$route.params.team_id}`)
                 .then(res => {
                     this.schedules = res.data;
-                    console.log(res.data);
                     //  イベントを取得
                     this.fetchEvents();
                 })
@@ -473,11 +471,13 @@ export default {
         },
         // イベント登録
         fetchEvents() {
-            const events = [];
+            let events = [];
             const eventCount = this.schedules.length;
             for (let i = 0; i < eventCount; i++) {
                 // 開始時間と終了時刻の定義
-                const startdate = new Date(this.schedules[i].start_date);
+                const dateTime = this.replaceDate(this.schedules[i].start_date)
+                const startdate = new Date(dateTime);
+                const unixStartdate = startdate.getTime();
                 const requiredTime = this.schedules[i].treatment.time_required;
                 const addition_time = requiredTime * 60 * 1000;
                 const endTime = startdate.getTime() + addition_time;
@@ -506,7 +506,7 @@ export default {
                         this.schedules[i].patient.name +
                         " / " +
                         this.schedules[i].treatment.name, // 処置の名前
-                    start: startdate, // 開始時刻
+                    start: unixStartdate, // 開始時刻
                     end: endTime, // 終了時刻
                     color: endFlagData, // end_flgで判定した色
                     timed: true,
@@ -515,11 +515,17 @@ export default {
                     patient: this.schedules[i].patient.name,
                     end_flg: this.schedules[i].end_flg
                 });
-            }
+            };
             this.events = events;
+            console.log(this.events)
         },
         // -----------  イベント取得&表示ここまで ---------- //
-
+        replaceDate(dateStr) {
+            const regexp = /^([0-9]{2,4})-([0-1][0-9])-([0-3][0-9])(?:( [0-2][0-9]):([0-5][0-9]):([0-5][0-9]))?$/;
+            return dateStr.replace(regexp, (match, year, month, day, hour, minutes, seconds) => {
+                return `${year}/${month}/${ day} ${hour}:${minutes}:${seconds}`;
+            });
+        },
         // ------------ ▼nowライン ---------- //
         getCurrentTime() {
             return this.cal
@@ -558,7 +564,7 @@ export default {
             } else {
                 // イベント追加処理
                 tms.start = this.roundTime(mouse);
-                this.showRegistEvent(tms);
+                // this.showRegistEvent(tms);
                 this.createStart = this.roundTime(mouse);
                 // this.createEvent = {
                 //   name: `Event`,

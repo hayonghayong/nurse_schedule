@@ -19,10 +19,11 @@
         "lodash": "^4.17.19",
         "popper.js": "^1.12",
         "resolve-url-loader": "^2.3.1",
-        "sass": "^1.20.1",
-        "sass-loader": "^8.0.0",
+        "sass": "^1.27.0",
+        "sass-loader": "^8.0.2",
         "vue": "^2.5.17",
-        "vue-template-compiler": "^2.6.10"
+        "vue-template-compiler": "^2.6.10",
+        "vuetify": "^2.3.10"
     },
     "dependencies": {
         "axios": "^0.19",
@@ -32,8 +33,6 @@
         "moment": "^2.29.1",
         "popper.js": "^1.12",
         "resolve-url-loader": "^2.3.1",
-        "sass": "^1.20.1",
-        "sass-loader": "^8.0.0",
         "vue": "^2.5.17",
         "vue-router": "^3.4.3",
         "vue-swatches": "^2.1.0",

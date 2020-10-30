@@ -3,6 +3,8 @@ require("./bootstrap");
 window.Vue = require("vue");
 // Vuetify読み込み
 import vuetify from "./vuetify";
+
+
 // VueRouter読み込み
 import router from "./router";
 // VueX読み込み

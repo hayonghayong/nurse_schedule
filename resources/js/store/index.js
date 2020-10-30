@@ -14,6 +14,9 @@ export default new Vuex.Store({
             namespaced: true,
             state: {
               pageTitle: 'Home',
+              headerHeight: "", //ヘッダーの高さ
+              footerHeight: "", //フッターの高さ
+              calenderHeight:"" //カレンダーの高さ
             },
             actions: {
               changePage({ commit }, title) {

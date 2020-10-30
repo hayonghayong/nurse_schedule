@@ -2,7 +2,7 @@
     <v-app>
         <!-- ヘッダーコンポーネント読み込み -->
         <header-component v-if="$route.name !== 'SelectRole'"></header-component>
-        <main>
+        <main id="main_content">
             <!-- VueRouter読み込み -->
             <router-view></router-view>
         </main>
@@ -28,6 +28,11 @@ export default {
         HeaderComponent,
         FooterComponent,
         LeaderFooterComponent
+    },
+    mounted(){
+      console.log(this.$store.state.headerHeight)
+      this.$store.state.footerHeight = 56;
+      this.$store.state.calenderHeight =  window.innerHeight - this.$store.state.headerHeight - this.$store.state.footerHeight;
     }
 };
 </script>

@@ -4,7 +4,7 @@
         <v-row class="fill-height">
             <v-col>
                 <!-- ▼カレンダー設定 -->
-                <v-sheet height="700">
+                <v-sheet :height="this.$store.state.calenderHeight">
                     <v-calendar
                         class="test"
                         ref="calendar"
@@ -442,7 +442,8 @@ export default {
             const eventCount = this.schedules.length;
             for (let i = 0; i < eventCount; i++) {
                 // 開始時間と終了時刻の定義
-                const startdate = new Date(this.schedules[i].start_date);
+               const dateTime = this.replaceDate(this.schedules[i].start_date)
+                const startdate = new Date(dateTime);
                 const requiredTime = this.schedules[i].treatment.time_required;
                 const addition_time = requiredTime * 60 * 1000;
                 const endTime = startdate.getTime() + addition_time;
@@ -475,7 +476,12 @@ export default {
             this.events = events;
         },
         // -----------  イベント取得&表示ここまで ---------- //
-
+        replaceDate(dateStr) {
+            const regexp = /^([0-9]{2,4})-([0-1][0-9])-([0-3][0-9])(?:( [0-2][0-9]):([0-5][0-9]):([0-5][0-9]))?$/;
+            return dateStr.replace(regexp, (match, year, month, day, hour, minutes, seconds) => {
+                return `${year}/${month}/${ day} ${hour}:${minutes}:${seconds}`;
+            });
+        } ,
         // ------------ ▼nowライン ---------- //
         getCurrentTime() {
             return this.cal
@@ -512,7 +518,7 @@ export default {
                 this.dragTime = mouse - start;
             }else{
                 tms.start = this.roundTime(mouse);
-                this.showRegistEvent(tms);
+                // this.showRegistEvent(tms);
                 this.createStart = this.roundTime(mouse);
             }
         },
