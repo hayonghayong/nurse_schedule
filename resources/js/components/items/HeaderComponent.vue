@@ -1,6 +1,6 @@
 <template>
   <!-- 仮ヘッダー -->
-  <div>
+  <div id="header_content" ref="getParentHeight">
     <v-app-bar color="blue" dark>
       <div>
         <span @click="back" style="cursor: pinter;">＜戻る</span>
@@ -190,7 +190,19 @@ export default {
       pageTitle: "common/pageTitle"
     })
   },
+  mounted(){
+    // 要素の幅を取得するメソッド
+    this.getTargetHeight()
+    // ユーザーがウィンドウサイズを変更したら実行されるようにする
+    window.addEventListener('resize', this.getTargetHeight)
+  },
   methods: {
+    getTargetHeight () {
+    let targetHeight = this.$refs.getParentHeight.clientHeight
+    this.$store.state.headerHeight = targetHeight;
+    // console.log(targetHeight) // 要素の幅をInt型で取得する事ができる
+    },
+
     //ログインしているユーザーの情報を取得：Actionsを参照
     ...mapActions("auth", ["getLoginUserData"]),
     //ログアウト

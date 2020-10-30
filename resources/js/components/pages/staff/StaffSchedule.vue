@@ -2,7 +2,7 @@
     <div class="staffSchedule">
         <v-row class="fill-height">
             <v-col>
-                <v-sheet height="700">
+                <v-sheet :height="this.$store.state.calenderHeight">
                     <v-calendar
                         locale="ja-jp"
                         hide-header
@@ -26,11 +26,10 @@
                         @mouseup:time="endDrag"
                         @touchend:time="endDrag"
                         @mouseleave.native="cancelDrag"
-                        @touchleave.native="cancelDrag"
                         @click:event="showEvent"
                     >
                         <!-- nowライン設定 -->
-                        <template #day-body="{ date, week }">
+                        <template slot="day-body" slot-scope="{ date, week }">
                             <div
                                 class="v-current-time"
                                 :class="{ first: date === week[0].date }"
@@ -39,7 +38,7 @@
                         </template>
                         <!-- nowライン設定ここまで -->
                         <!-- ドラック&ドロップ設定 -->
-                        <template #event="{eventSummary}">
+                        <template slot="event" slot-scope="{eventSummary}">
                             <div
                                 class="v-event-draggable"
                                 v-html="eventSummary()"
@@ -442,12 +441,13 @@ export default {
         next() {
             this.$refs.calendar.next();
         },
-        fetchEvents() {
+        async fetchEvents() {
             const getEventsData = [];
             const eventCount = this.schedules.length;
             for (let i = 0; i < eventCount; i++) {
                 // 開始時間と終了時刻の定義
-                const startdate = new Date(this.schedules[i].start_date);
+                const dateTime = this.replaceDate(this.schedules[i].start_date)
+                const startdate = new Date(dateTime);
                 const unixStartdate = startdate.getTime();
                 const requiredTime = this.schedules[i].treatment.time_required;
                 const addition_time = requiredTime * 60 * 1000;
@@ -479,14 +479,21 @@ export default {
                     patient: this.schedules[i].patient.name,
                     end_flg: this.schedules[i].end_flg
                 });
+                
             }
             this.events = getEventsData;
+            console.log(this.events)
         },
         getEventColor(event) {
             return event.color;
         },
         // ------------ イベントの生成ここまで ---------- //
-
+        replaceDate(dateStr) {
+            const regexp = /^([0-9]{2,4})-([0-1][0-9])-([0-3][0-9])(?:( [0-2][0-9]):([0-5][0-9]):([0-5][0-9]))?$/;
+            return dateStr.replace(regexp, (match, year, month, day, hour, minutes, seconds) => {
+                return `${year}/${month}/${ day} ${hour}:${minutes}:${seconds}`;
+            });
+        } ,
         // ------------ ▼Drag and Drop ---------- //
         startDrag({ event, timed }) {
             if (event && timed) {
@@ -505,7 +512,7 @@ export default {
             } else {
                 // 👷‍♂️イベント追加処理
                 tms.start = this.roundTime(mouse);
-                this.showRegistEvent(tms);
+                // this.showRegistEvent(tms);
                 this.createStart = this.roundTime(mouse);
                 // イベント追加
                 // this.createStart = this.roundTime(mouse);
@@ -573,6 +580,7 @@ export default {
             this.extendOriginal = null;
         },
         cancelDrag() {
+            console.log('cancel')
             if (this.createEvent) {
                 if (this.extendOriginal) {
                     this.createEvent.end = this.extendOriginal;

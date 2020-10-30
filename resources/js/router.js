@@ -6,6 +6,7 @@ Vue.use(VueRouter);
 
 // ▼ページコンポーネントのインポート
 import LogoutCheck from "./components/pages/LogoutCheck.vue";
+import test from "./components/pages/test.vue";
 
 // スタッフページ
 import SelectRole from "./components/pages/staff/SelectRole.vue";
@@ -30,6 +31,11 @@ import UpdateUsersPatients from "./components/pages/leader/UpdateUsersPatients.v
 // ▼ルーティング１１
 const routes = [
     // スタッフページ：7
+    {
+        path: "/test",
+        component: test,
+        name: "test"
+    },
     {
         path: "/",
         component: SelectRole,
